@@ -1,13 +1,39 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  @apply text-sky-800;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  @apply min-h-screen bg-slate-200;
+}
+
+button {
+  @apply hover:scale-105 hover:shadow-md active:scale-95 duration-300;
+}
+
+.btn-primary {
+  @apply px-3 py-2 bg-sky-700 hover:bg-sky-600 text-sm text-white rounded-md font-medium;
+}
+
+form {
+  @apply bg-white/70 rounded-md px-5 py-10 shadow-md;
+}
+
+.custom-label {
+  @apply flex items-center gap-x-2 bg-white rounded-md px-2 py-1 outline outline-[0.08rem] outline-sky-600/20;
+}
+
+.custom-label:focus-within {
+  @apply outline-sky-600/50 shadow-md shadow-sky-400/10;
+}
+
+.custom-label input {
+  @apply text-sky-800 outline-none w-full text-sm tracking-wide py-1;
+}
+
+.custom-label path {
+  @apply fill-sky-800;
 }
