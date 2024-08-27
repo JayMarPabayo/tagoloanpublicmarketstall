@@ -1,8 +1,71 @@
+import { useRef, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
+import { setCredentials } from "./authSlice";
+import { useLoginMutation } from "./authApiSlice";
+
+import FullScreenLoading from "../../utils/FullScreenLoading";
+import usePersist from "../../hooks/usePersist";
+
 const Login = () => {
-  return (
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+  const [persist, setPersist] = usePersist();
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    setErrMsg("");
+  }, [username, password]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { accessToken } = await login({ username, password }).unwrap();
+      dispatch(setCredentials({ accessToken }));
+
+      sessionStorage.removeItem("hasRefreshed");
+      setUsername("");
+      setPassword("");
+      navigate("/dashboard");
+    } catch (err) {
+      if (!err.status) {
+        setErrMsg("No Server Response");
+      } else if (err.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg(err.data?.message);
+      }
+      // errRef.current.focus();
+    }
+  };
+
+  const handleUserInput = (e) => setUsername(e.target.value);
+  const handlePwdInput = (e) => setPassword(e.target.value);
+  const handleToggle = () => setPersist((prev) => !prev);
+
+  const errClass = errMsg ? "error" : "hidden";
+
+  if (isLoading) return <FullScreenLoading />;
+
+  const content = (
     <section className="bg-cover bg-center h-screen flex items-center justify-center gap-x-10">
       <img
         src="/meedo.png"
@@ -10,7 +73,7 @@ const Login = () => {
         className="w-[20rem] animate-slow-spin rounded-full shadow-lg p-0"
       />
       <main className="text-indigo-900 w-[35rem]">
-        <form action="#" method="POST">
+        <form onSubmit={handleSubmit}>
           <section className="flex flex-col gap-y-1 mb-8">
             <h3 className="text-xl text-sky-800 font-medium">Log in</h3>
             <div className="flex items-center gap-x-5">
@@ -23,7 +86,16 @@ const Login = () => {
           <section className="flex flex-col gap-y-5">
             <label htmlFor="username" className="custom-label">
               <FontAwesomeIcon icon={faUser} />
-              <input type="text" name="username" placeholder="Username" />
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                ref={userRef}
+                value={username}
+                onChange={handleUserInput}
+                autoComplete="off"
+                required
+              />
             </label>
             <label htmlFor="password" className="custom-label">
               <FontAwesomeIcon icon={faKey} />
@@ -32,14 +104,30 @@ const Login = () => {
                 name="password"
                 placeholder="Password"
                 autoComplete="off"
+                onChange={handlePwdInput}
+                value={password}
+                required
               />
             </label>
+            <p ref={errRef} className={errClass} aria-live="assertive">
+              {errMsg}
+            </p>
             <button className="btn-primary">Log in</button>
+            <label className="cursor-pointer py-1 px-2 w-fit flex items-center gap-x-2 text-sm text-white rounded-md bg-slate-500">
+              <input
+                type="checkbox"
+                onChange={handleToggle}
+                checked={persist}
+              />
+              <div>Trust this device?</div>
+            </label>
           </section>
         </form>
       </main>
     </section>
   );
+
+  return content;
 };
 
 export default Login;

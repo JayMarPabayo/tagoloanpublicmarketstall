@@ -15,11 +15,35 @@ button {
 }
 
 .btn-primary {
-  @apply px-3 py-2 bg-sky-700 hover:bg-sky-600 text-sm text-white rounded-md font-medium;
+  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-sky-700 hover:bg-sky-600 text-sm text-white rounded-md font-medium cursor-pointer;
+}
+
+.btn-secondary {
+  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-slate-700 hover:bg-slate-600 text-sm text-white rounded-md font-medium cursor-pointer;
 }
 
 form {
   @apply bg-white/70 rounded-md px-5 py-10 shadow-md;
+}
+
+table {
+  @apply table-auto shadow-md rounded-md text-sm text-sky-950;
+}
+
+thead {
+  @apply bg-white/70 text-sky-800 border-b border-sky-800 text-sm;
+}
+
+tbody {
+  @apply bg-white/60;
+}
+
+th {
+  @apply px-4 py-2 text-left;
+}
+
+td {
+  @apply px-4 py-2;
 }
 
 .custom-label {
@@ -36,4 +60,19 @@ form {
 
 .custom-label path {
   @apply fill-sky-800;
+}
+
+.form-input {
+  @apply pt-7;
+}
+.form-input label {
+  @apply text-sky-950 col-span-1;
+}
+.form-input input,
+.form-input select {
+  @apply text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-full text-sm tracking-wide p-2 col-span-4;
+}
+
+.error {
+  @apply text-xs text-rose-500;
 }

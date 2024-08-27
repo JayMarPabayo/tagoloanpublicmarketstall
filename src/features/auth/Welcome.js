@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -5,13 +6,26 @@ import {
   faUsers,
   faPersonShelter,
   faUserGear,
+  faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
+import useAuth from "../../hooks/useAuth";
+
 const Welcome = () => {
+  const { isAdministrator } = useAuth();
+
+  useEffect(() => {
+    // Check if the page has already been refreshed
+    if (!sessionStorage.getItem("hasRefreshed")) {
+      sessionStorage.setItem("hasRefreshed", "true");
+      window.location.reload();
+    }
+  }, []);
+
   const content = (
-    <section className="px-3 flex flex-col gap-y-2">
+    <section className="flex flex-col gap-y-2">
       <Link
-        to="/dash/stalls"
+        to="/dashboard/stalls"
         className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
       >
         <FontAwesomeIcon className="w-[15px]" icon={faStore} />
@@ -19,23 +33,35 @@ const Welcome = () => {
       </Link>
 
       <Link
-        to="/dash/users"
+        to="/dashboard/vendors"
         className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
       >
         <FontAwesomeIcon className="w-[15px]" icon={faPersonShelter} />
         <p>View Vendors</p>
       </Link>
 
-      <Link
-        to="/dash/users"
-        className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
-      >
-        <FontAwesomeIcon className="w-[15px]" icon={faUsers} />
-        <p>View Users</p>
-      </Link>
+      {isAdministrator && (
+        <Link
+          to="/dashboard/users"
+          className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+        >
+          <FontAwesomeIcon className="w-[15px]" icon={faUsers} />
+          <p>View Users</p>
+        </Link>
+      )}
+
+      {isAdministrator && (
+        <Link
+          to="/dashboard/users/create"
+          className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+        >
+          <FontAwesomeIcon className="w-[15px]" icon={faUserPlus} />
+          <p>Add New User</p>
+        </Link>
+      )}
 
       <Link
-        to="/dash/users"
+        to="/dashboard/users"
         className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
       >
         <FontAwesomeIcon className="w-[15px]" icon={faUserGear} />

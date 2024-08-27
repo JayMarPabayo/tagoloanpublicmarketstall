@@ -18,6 +18,7 @@ export const stallsApiSlice = apiSlice.injectEndpoints({
           stall.id = stall._id;
           return stall;
         });
+        return stallsAdapter.setAll(initialState, loadedStalls);
       },
       providesTags: (result, error, arg) => {
         if (result?.ids) {
