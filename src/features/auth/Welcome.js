@@ -15,7 +15,6 @@ const Welcome = () => {
   const { isAdministrator } = useAuth();
 
   useEffect(() => {
-    // Check if the page has already been refreshed
     if (!sessionStorage.getItem("hasRefreshed")) {
       sessionStorage.setItem("hasRefreshed", "true");
       window.location.reload();
@@ -39,6 +38,16 @@ const Welcome = () => {
         <FontAwesomeIcon className="w-[15px]" icon={faPersonShelter} />
         <p>View Vendors</p>
       </Link>
+
+      {isAdministrator && (
+        <Link
+          to="/dashboard/vendors/create"
+          className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+        >
+          <FontAwesomeIcon className="w-[15px]" icon={faUserPlus} />
+          <p>Add New Vendor</p>
+        </Link>
+      )}
 
       {isAdministrator && (
         <Link

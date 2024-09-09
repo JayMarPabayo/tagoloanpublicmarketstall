@@ -26,8 +26,14 @@ const DashHeader = () => {
 
   if (isError) return <p>Error: {error.data?.message}</p>;
 
+  const isOnDashboard = window.location.pathname === "/dashboard";
+
   const onLogoutUserClicked = async () => {
-    setIsLogoutModalOpen(true);
+    if (isOnDashboard) {
+      setIsLogoutModalOpen(true);
+    } else {
+      navigate("/dashboard");
+    }
   };
 
   const handleLogoutConfirm = async () => {

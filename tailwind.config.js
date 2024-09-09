@@ -4,7 +4,10 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        "slow-spin": "spin 120s linear infinite", // Adjust the duration as needed
+        "slow-spin": "spin 120s linear infinite",
+      },
+      gridTemplateColumns: {
+        18: "repeat(18, minmax(0, 1fr))",
       },
     },
   },

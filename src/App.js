@@ -4,11 +4,17 @@ import Public from "./components/Public";
 import Login from "./features/auth/Login";
 import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
+
 import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
 import EditUser from "./features/users/EditUser";
+
 import StallsList from "./features/stalls/StallsList";
+
 import VendorsList from "./features/vendors/VendorsList";
+import NewVendorForm from "./features/vendors/NewVendorForm";
+import EditVendor from "./features/vendors/EditVendor";
+
 import Prefetch from "./features/auth/Prefetch";
 import PersistLogin from "./features/auth/PersistLogin";
 import RequireAuth from "./features/auth/RequireAuth";
@@ -35,6 +41,8 @@ function App() {
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
+                  <Route path=":id" element={<EditVendor />} />
+                  <Route path="create" element={<NewVendorForm />} />
                 </Route>
                 <Route
                   element={<RequireAuth allowedRoles={[ROLES.Administrator]} />}

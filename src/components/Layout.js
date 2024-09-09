@@ -7,7 +7,7 @@ const Layout = () => {
       <img
         src={`${process.env.PUBLIC_URL}/market.png`}
         alt="Market"
-        className="opacity-70 fixed bottom-10 right-0 max-w-[50rem] -z-50"
+        className="opacity-50 fixed bottom-10 right-0 max-w-[50rem] -z-50"
       />
     </div>
   );
