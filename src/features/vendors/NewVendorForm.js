@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSpinner,
-  faPersonCirclePlus,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
 
 import { useAddNewVendorMutation } from "./vendorsApiSlice";
 
@@ -129,7 +126,7 @@ const NewVendorForm = () => {
         onSubmit={onSaveVendorClicked}
       >
         <div className="flex items-center gap-x-3 text-lg mb-7">
-          <FontAwesomeIcon icon={faPersonCirclePlus} />
+          <FontAwesomeIcon icon={faPersonShelter} />
           <h3 className="text-sky-800 font-medium">Create new vendor</h3>
         </div>
         <section className="grid grid-cols-5 items-center gap-y-4 mb-10">

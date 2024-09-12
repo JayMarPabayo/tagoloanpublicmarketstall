@@ -3,8 +3,6 @@ import React from "react";
 const DeleteConfirmationModal = ({ onConfirm, onCancel }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50">
-      {" "}
-       
       <div className="bg-white p-5 rounded-lg shadow-md">
         <h3 className="text-base mb-2">
           Are you sure you want to delete this data?

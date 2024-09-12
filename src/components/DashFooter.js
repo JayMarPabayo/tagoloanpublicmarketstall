@@ -29,7 +29,7 @@ const DashFooter = () => {
   }).format(date);
 
   const content = (
-    <footer className="font-medium text-sm border-t border-sky-700 px-3 h-10 absolute bottom-0 flex gap-x-10 items-center w-full">
+    <footer className="font-medium text-sm border-t border-sky-700 px-3 h-10 flex gap-x-10 items-center w-full">
       {goHomeButton}
       <p className="font-light">
         <span className="font-extrabold">Current User:</span> {fullname}

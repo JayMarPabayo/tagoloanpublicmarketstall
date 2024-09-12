@@ -1,8 +1,10 @@
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
+
 import { store } from "../../app/store";
 import { vendorsApiSlice } from "../vendors/vendorsApiSlice";
 import { usersApiSlice } from "../users/usersApiSlice";
-import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { sectionsApiSlice } from "../stalls/sectionsApiSlice";
 
 const Prefetch = () => {
   useEffect(() => {
@@ -13,6 +15,11 @@ const Prefetch = () => {
     );
     store.dispatch(
       usersApiSlice.util.prefetch("getUsers", "usersList", { force: true })
+    );
+    store.dispatch(
+      sectionsApiSlice.util.prefetch("getSections", "sectionsList", {
+        force: true,
+      })
     );
   }, []);
 

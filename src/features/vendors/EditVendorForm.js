@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
 
 import {
   useUpdateVendorMutation,
@@ -47,7 +47,6 @@ const EditVendorForm = ({ vendor }) => {
 
   useEffect(() => {
     setValidStorename(storename !== "");
-    console.log(storename);
   }, [storename]);
 
   useEffect(() => {
@@ -150,9 +149,10 @@ const EditVendorForm = ({ vendor }) => {
           method="POST"
           onSubmit={(e) => e.preventDefault()}
         >
-          <h3 className="text-lg text-sky-800 font-medium mb-7">
-            Update vendor
-          </h3>
+          <div className="flex items-center gap-x-3 text-lg mb-7">
+            <FontAwesomeIcon icon={faPersonShelter} />
+            <h3 className="text-sky-800 font-medium">Update vendor</h3>
+          </div>
           <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
             <label htmlFor="fullname">Owner</label>
             <input
@@ -188,7 +188,7 @@ const EditVendorForm = ({ vendor }) => {
               onChange={onTypeChanged}
             />
 
-            <label htmlFor="fullname">Address</label>
+            <label htmlFor="address">Address</label>
             <input
               type="text"
               name="address"
@@ -200,7 +200,7 @@ const EditVendorForm = ({ vendor }) => {
               }
             />
 
-            <label htmlFor="fullname">Contact</label>
+            <label htmlFor="contact">Contact</label>
             <input
               type="tel"
               name="contact"

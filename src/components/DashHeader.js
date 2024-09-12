@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 
 import { useSendLogoutMutation } from "../features/auth/authApiSlice";
 
@@ -9,30 +9,35 @@ import LogoutConfirmationModal from "../utils/LogoutConfirmationModal";
 
 const DashHeader = () => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
 
+  const getParentPath = () => {
+    const pathArray = location.pathname.split("/");
+    pathArray.pop();
+    return pathArray.join("/") || "/";
+  };
+
   useEffect(() => {
     if (isSuccess) {
       console.log("logged out");
       navigate("/login");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigate, location]);
 
   if (isLoading) return <p>Loading...</p>;
 
   if (isError) return <p>Error: {error.data?.message}</p>;
 
-  const isOnDashboard = window.location.pathname === "/dashboard";
-
-  const onLogoutUserClicked = async () => {
-    if (isOnDashboard) {
+  const onLogoutUserClicked = () => {
+    if (location.pathname === "/dashboard") {
       setIsLogoutModalOpen(true);
     } else {
-      navigate("/dashboard");
+      navigate(getParentPath());
     }
   };
 

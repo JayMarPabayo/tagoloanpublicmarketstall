@@ -14,6 +14,7 @@ const SelectVendorTypes = ({ valid, touched, state, onChange }) => {
     control: (provided) => ({
       ...provided,
     }),
+
     option: (provided, state) => ({
       ...provided,
     }),

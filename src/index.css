@@ -66,13 +66,14 @@ td {
   @apply pt-7;
 }
 .form-input label {
-  @apply text-sky-950 col-span-1;
+  @apply text-sky-950 col-span-1 self-baseline;
 }
 .form-input input,
+.form-input textarea,
 .form-input select {
   @apply text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-full text-sm tracking-wide p-2 col-span-4;
 }
 
 .error {
-  @apply text-xs text-rose-500;
+  @apply text-xs font-semibold text-rose-500;
 }

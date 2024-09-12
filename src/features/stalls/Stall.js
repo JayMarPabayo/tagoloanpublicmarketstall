@@ -16,7 +16,7 @@ const Stall = ({ occupied, number }) => {
         >
           {number}
         </h1>
-        {occupied && <FontAwesomeIcon icon={faShop} className="text-sky-800" />}
+        <FontAwesomeIcon icon={faShop} className="text-sky-800" />
       </div>
     </div>
   );

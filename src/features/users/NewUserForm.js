@@ -94,6 +94,7 @@ const NewUserForm = () => {
         <div className="flex items-center gap-x-3 text-lg mb-7">
           <FontAwesomeIcon icon={faUserPlus} />
           <h3 className="text-sky-800 font-medium">Create new user</h3>
+          <span className="error ms-auto">{error?.data?.message}</span>
         </div>
         <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
           <label htmlFor="fullname">Full name</label>
@@ -135,7 +136,6 @@ const NewUserForm = () => {
             {options}
           </select>
         </section>
-        <p className="error">{error?.data?.message}</p>
         <div className="flex">
           <button
             title="Save"

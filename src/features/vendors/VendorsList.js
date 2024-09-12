@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useGetVendorsQuery } from "./vendorsApiSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShop,
@@ -7,6 +6,8 @@ import {
   faStore,
   faStoreSlash,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { useGetVendorsQuery } from "./vendorsApiSlice";
 
 import Vendor from "./Vendor";
 import Spinner from "../../utils/Spinner";

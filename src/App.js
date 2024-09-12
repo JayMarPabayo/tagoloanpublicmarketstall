@@ -10,6 +10,8 @@ import NewUserForm from "./features/users/NewUserForm";
 import EditUser from "./features/users/EditUser";
 
 import StallsList from "./features/stalls/StallsList";
+import EditStall from "./features/stalls/EditStall";
+import Sections from "./features/stalls/Sections";
 
 import VendorsList from "./features/vendors/VendorsList";
 import NewVendorForm from "./features/vendors/NewVendorForm";
@@ -38,6 +40,8 @@ function App() {
                 <Route index element={<Welcome />} />
                 <Route path="stalls">
                   <Route index element={<StallsList />} />
+                  <Route path=":id" element={<EditStall />} />
+                  <Route path="sections" element={<Sections />} />
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
