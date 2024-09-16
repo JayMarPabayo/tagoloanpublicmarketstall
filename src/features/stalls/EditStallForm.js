@@ -68,7 +68,6 @@ const EditStallForm = ({ stall }) => {
   const onUpdateStallClicked = async () => {
     setTouchedNumber(true);
     setTouchedCost(true);
-    console.log(canSave);
     await updateStall({
       id: stall.id,
       number,

@@ -10,6 +10,16 @@ export const authApiSlice = apiSlice.injectEndpoints({
         body: { ...credentials },
       }),
     }),
+    updateAccount: builder.mutation({
+      query: (initialUserData) => ({
+        url: "/auth/update",
+        method: "PATCH",
+        body: {
+          ...initialUserData,
+        },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "User", id: arg.id }],
+    }),
     sendLogout: builder.mutation({
       query: () => ({
         url: "/auth/logout",
@@ -46,5 +56,9 @@ export const authApiSlice = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useLoginMutation, useSendLogoutMutation, useRefreshMutation } =
-  authApiSlice;
+export const {
+  useLoginMutation,
+  useSendLogoutMutation,
+  useRefreshMutation,
+  useUpdateAccountMutation,
+} = authApiSlice;

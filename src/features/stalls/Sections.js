@@ -94,34 +94,33 @@ const Sections = () => {
                 (stall) => stall.section === section.id
               );
 
-              const gridCols = [
-                "grid-cols-1",
-                "grid-cols-2",
-                "grid-cols-3",
-                "grid-cols-4",
-                "grid-cols-5",
-                "grid-cols-6",
-                "grid-cols-7",
-                "grid-cols-8",
-                "grid-cols-9",
-                "grid-cols-10",
-                "grid-cols-11",
-                "grid-cols-12",
-                "grid-cols-13",
-                "grid-cols-14",
-                "grid-cols-15",
-                "grid-cols-16",
-                "grid-cols-17",
-                "grid-cols-18",
-                "grid-cols-19",
-                "grid-cols-20",
-                "grid-cols-21",
-                "grid-cols-22",
-                "grid-cols-23",
-                "grid-cols-24",
-              ];
+              // const gridCols = [
+              //   "grid-cols-1",
+              //   "grid-cols-2",
+              //   "grid-cols-3",
+              //   "grid-cols-4",
+              //   "grid-cols-5",
+              //   "grid-cols-6",
+              //   "grid-cols-7",
+              //   "grid-cols-8",
+              //   "grid-cols-9",
+              //   "grid-cols-10",
+              //   "grid-cols-11",
+              //   "grid-cols-12",
+              //   "grid-cols-13",
+              //   "grid-cols-14",
+              //   "grid-cols-15",
+              //   "grid-cols-16",
+              //   "grid-cols-17",
+              //   "grid-cols-18",
+              //   "grid-cols-19",
+              //   "grid-cols-20",
+              //   "grid-cols-21",
+              //   "grid-cols-22",
+              //   "grid-cols-23",
+              //   "grid-cols-24",
+              // ];
 
-              console.log(gridCols.length);
               return (
                 <div key={section.id}>
                   <h1 className="mb-2">{section.name}</h1>

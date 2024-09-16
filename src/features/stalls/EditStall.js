@@ -12,9 +12,9 @@ const EditStall = () => {
     }),
   });
 
-  const content = stall ? <EditStallForm stall={stall} /> : <p>Loading...</p>;
+  const stallForm = stall ? <EditStallForm stall={stall} /> : <p>Loading...</p>;
 
-  return content;
+  return <div>{stallForm}</div>;
 };
 
 export default EditStall;

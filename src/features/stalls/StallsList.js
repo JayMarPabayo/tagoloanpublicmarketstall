@@ -6,8 +6,8 @@ import { useGetStallsQuery } from "./stallsApiSlice";
 
 import Stall from "./Stall";
 
-const StallsList = () => {
-  const [selectedSectionGroup, setSelectedSectionGroup] = useState("");
+const StallsList = ({ group = "" }) => {
+  const [selectedSectionGroup, setSelectedSectionGroup] = useState(group);
 
   const { data: sections } = useGetSectionsQuery("sectionsList", {
     pollingInterval: 60000,

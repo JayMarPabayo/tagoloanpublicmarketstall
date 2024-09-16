@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSpinner } from "@fortawesome/free-solid-svg-icons";
+import { faSpinner, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
 import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { ROLES } from "../../config/roles";
@@ -111,7 +111,11 @@ const EditUserForm = ({ user }) => {
           method="POST"
           onSubmit={(e) => e.preventDefault()}
         >
-          <h3 className="text-lg text-sky-800 font-medium mb-7">Update user</h3>
+          <div className="flex items-center gap-x-3 text-lg mb-7">
+            <FontAwesomeIcon icon={faUserPlus} />
+            <h3 className="text-sky-800 font-medium">Update User</h3>
+            <span className="error ms-auto">{errMessage}</span>
+          </div>
           <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
             <label htmlFor="fullname">Full name</label>
             <input
@@ -170,8 +174,6 @@ const EditUserForm = ({ user }) => {
               </div>
             </div>
           </section>
-
-          <p className="error">{errMessage}</p>
 
           <div className="flex items-center gap-x-5 justify-end">
             <button

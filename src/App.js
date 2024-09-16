@@ -23,6 +23,8 @@ import RequireAuth from "./features/auth/RequireAuth";
 import { ROLES } from "./config/roles";
 import useTitle from "./hooks/useTitle";
 
+import Account from "./features/auth/Account";
+
 function App() {
   useTitle("Tagoloan Public Market Stall FMS");
   return (
@@ -41,12 +43,17 @@ function App() {
                 <Route path="stalls">
                   <Route index element={<StallsList />} />
                   <Route path=":id" element={<EditStall />} />
-                  <Route path="sections" element={<Sections />} />
+                </Route>
+                <Route path="sections">
+                  <Route index element={<Sections />} />
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
                   <Route path=":id" element={<EditVendor />} />
                   <Route path="create" element={<NewVendorForm />} />
+                </Route>
+                <Route path="account">
+                  <Route index element={<Account />} />
                 </Route>
                 <Route
                   element={<RequireAuth allowedRoles={[ROLES.Administrator]} />}
