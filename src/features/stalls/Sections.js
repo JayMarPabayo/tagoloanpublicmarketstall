@@ -94,6 +94,8 @@ const Sections = () => {
                 (stall) => stall.section === section.id
               );
 
+              filteredStalls.sort((a, b) => a.number - b.number);
+
               // const gridCols = [
               //   "grid-cols-1",
               //   "grid-cols-2",

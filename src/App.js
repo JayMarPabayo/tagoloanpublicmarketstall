@@ -5,6 +5,8 @@ import Login from "./features/auth/Login";
 import DashLayout from "./components/DashLayout";
 import Welcome from "./features/auth/Welcome";
 
+import NotFound from "./NotFound";
+
 import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
 import EditUser from "./features/users/EditUser";
@@ -68,6 +70,9 @@ function App() {
             </Route>
           </Route>
         </Route>
+
+        {/* Wildcard Route for 404 */}
+        <Route path="*" element={<NotFound />} />
       </Route>
     </Routes>
   );

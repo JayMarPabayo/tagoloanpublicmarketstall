@@ -18,8 +18,14 @@ const DashHeader = () => {
 
   const getParentPath = () => {
     const pathArray = location.pathname.split("/");
-    pathArray.pop();
-    return pathArray.join("/") || "/";
+    const lastSegment = pathArray[pathArray.length - 1];
+
+    if (lastSegment === "create") {
+      return "/dashboard";
+    }
+
+    pathArray.pop(); // remove the last segment
+    return pathArray.join("/") || "/dashboard";
   };
 
   useEffect(() => {
@@ -50,7 +56,10 @@ const DashHeader = () => {
   };
 
   const logoutButton = (
-    <button title="Logout" onClick={onLogoutUserClicked}>
+    <button
+      title={location.pathname === "/dashboard" ? "Logout" : "Back"}
+      onClick={onLogoutUserClicked}
+    >
       <FontAwesomeIcon icon={faRightFromBracket} />
     </button>
   );
