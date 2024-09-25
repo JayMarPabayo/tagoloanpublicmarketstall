@@ -65,6 +65,7 @@ const UsersList = () => {
       <div className="grid grid-cols-12 p-5 gap-x-5">
         <div className="bg-white/80 h-full col-span-2 p-2 text-sm">
           <h3 className="mb-2 opacity-70">Filter</h3>
+
           <div
             className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer hover:bg-sky-400/30 duration-300 ${
               activeFilter === "active"
@@ -108,7 +109,6 @@ const UsersList = () => {
                 : setRoleFilter("staff")
             }
           >
-            {" "}
             <FontAwesomeIcon icon={faUser} />
             <span>Staff</span>
           </div>

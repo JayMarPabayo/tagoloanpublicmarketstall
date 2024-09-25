@@ -72,6 +72,8 @@ const StallsList = ({ group = "" }) => {
               (stall) => stall.section === section.id
             );
 
+            filteredStalls.sort((a, b) => a.number - b.number);
+
             // let gridCols;
             // gridCols = [
             //   "grid-cols-1",
@@ -99,6 +101,7 @@ const StallsList = ({ group = "" }) => {
             //   "grid-cols-23",
             //   "grid-cols-24",
             // ];
+
             return (
               <div key={section.id}>
                 <h1 className="mb-2">{section.name}</h1>
