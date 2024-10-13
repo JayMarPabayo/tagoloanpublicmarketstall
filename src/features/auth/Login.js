@@ -113,7 +113,7 @@ const Login = () => {
               {errMsg}
             </p>
             <button className="btn-primary">Log in</button>
-            <label className="cursor-pointer py-1 px-2 w-fit flex items-center gap-x-2 text-sm text-white rounded-md bg-slate-500">
+            <label className="hidden cursor-pointer py-1 px-2 w-fit items-center gap-x-2 text-sm text-white rounded-md bg-slate-500">
               <input
                 type="checkbox"
                 onChange={handleToggle}

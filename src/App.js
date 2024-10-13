@@ -15,6 +15,8 @@ import StallsList from "./features/stalls/StallsList";
 import EditStall from "./features/stalls/EditStall";
 import Sections from "./features/stalls/Sections";
 
+import SectionsList from "./features/rentals/SectionsList";
+
 import VendorsList from "./features/vendors/VendorsList";
 import NewVendorForm from "./features/vendors/NewVendorForm";
 import EditVendor from "./features/vendors/EditVendor";
@@ -46,13 +48,20 @@ function App() {
                   <Route index element={<StallsList />} />
                   <Route path=":id" element={<EditStall />} />
                 </Route>
-                <Route path="sections">
-                  <Route index element={<Sections />} />
+                <Route path="rentals">
+                  <Route index element={<SectionsList />} />
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
                   <Route path=":id" element={<EditVendor />} />
-                  <Route path="create" element={<NewVendorForm />} />
+                  <Route
+                    path="create"
+                    element={
+                      <RequireAuth allowedRoles={[ROLES.Administrator]} />
+                    }
+                  >
+                    <Route index element={<NewVendorForm />} />
+                  </Route>
                 </Route>
                 <Route path="account">
                   <Route index element={<Account />} />
@@ -64,6 +73,9 @@ function App() {
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="create" element={<NewUserForm />} />
+                  </Route>
+                  <Route path="sections">
+                    <Route index element={<Sections />} />
                   </Route>
                 </Route>
               </Route>
