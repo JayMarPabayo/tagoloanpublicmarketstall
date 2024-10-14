@@ -1,20 +1,18 @@
-import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
 import { useGetVendorsQuery } from "../features/vendors/vendorsApiSlice";
 
 const SelectVendorTypes = ({ valid, touched, state, onChange }) => {
-  const { data: vendors } = useGetVendorsQuery("vendorsList", {
-    pollingInterval: 60000,
-    refetchOnFocus: true,
-    refetchOnMountOrArgChange: true,
-  });
+  const { data: vendors } = useGetVendorsQuery();
 
   const options = vendors
-    ? [...new Set(vendors.ids.map((id) => vendors.entities[id].type))].map(
-        (type) => {
-          return { value: type, label: type };
-        }
+    ? [...new Set(vendors.ids.map((id) => vendors.entities[id]))].map(
+        (vendor) => ({
+          value: vendor.id,
+          label: `${vendor.name} (${vendor.owner})`,
+        })
       )
     : [];
+
   const styles = {
     control: (provided) => ({
       ...provided,
@@ -25,7 +23,7 @@ const SelectVendorTypes = ({ valid, touched, state, onChange }) => {
     }),
   };
 
-  const handleVendorChange = (selectedOption) => {
+  const handleTypeChange = (selectedOption) => {
     if (selectedOption) {
       onChange({ target: { value: selectedOption.value } });
     } else {
@@ -34,8 +32,8 @@ const SelectVendorTypes = ({ valid, touched, state, onChange }) => {
   };
 
   return (
-    <CreatableSelect
-      name="vendor"
+    <Select
+      name="type"
       options={options}
       styles={styles}
       value={
@@ -44,13 +42,12 @@ const SelectVendorTypes = ({ valid, touched, state, onChange }) => {
           value: state,
         }
       }
-      onChange={handleVendorChange}
+      onChange={handleTypeChange}
       className={
         !valid && touched
           ? "border border-red-500 col-span-4 rounded-md"
           : "text-sky-800 col-span-4 rounded-md"
       }
-      placeholder="Select a vendor"
     />
   );
 };

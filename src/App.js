@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+
 import Layout from "./components/Layout";
 import Public from "./components/Public";
 import Login from "./features/auth/Login";
@@ -16,6 +17,7 @@ import EditStall from "./features/stalls/EditStall";
 import Sections from "./features/stalls/Sections";
 
 import SectionsList from "./features/rentals/SectionsList";
+import RentStall from "./features/rentals/RentStall";
 
 import VendorsList from "./features/vendors/VendorsList";
 import NewVendorForm from "./features/vendors/NewVendorForm";
@@ -50,6 +52,7 @@ function App() {
                 </Route>
                 <Route path="rentals">
                   <Route index element={<SectionsList />} />
+                  <Route path=":id" element={<RentStall />} />
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />

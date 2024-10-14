@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMapLocation } from "@fortawesome/free-solid-svg-icons";
 
@@ -18,6 +20,8 @@ const SectionsList = () => {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
+
+  const navigate = useNavigate();
 
   const uniqueGroups = new Set();
 
@@ -67,11 +71,18 @@ const SectionsList = () => {
                           className={`grid grid-cols-${section.stallsPerRow} gap-2`}
                         >
                           {filteredStalls.map((stall) => (
-                            <Stall
-                              occupied={!stall.available}
-                              number={stall.number}
+                            <button
                               key={stall.id}
-                            />
+                              onDoubleClick={() =>
+                                navigate(`/dashboard/rentals/${stall.id}`)
+                              }
+                            >
+                              <Stall
+                                occupied={!stall.available}
+                                number={stall.number}
+                                key={stall.id}
+                              />
+                            </button>
                           ))}
                         </div>
                       </div>
