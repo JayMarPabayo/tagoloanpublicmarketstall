@@ -9,7 +9,6 @@ import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 
 import FullScreenLoading from "../../utils/FullScreenLoading";
-import usePersist from "../../hooks/usePersist";
 
 const Login = () => {
   const userRef = useRef();
@@ -18,7 +17,6 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
-  const [persist, setPersist] = usePersist();
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -59,7 +57,6 @@ const Login = () => {
 
   const handleUserInput = (e) => setUsername(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
-  const handleToggle = () => setPersist((prev) => !prev);
 
   const errClass = errMsg ? "error" : "hidden";
 
@@ -113,14 +110,6 @@ const Login = () => {
               {errMsg}
             </p>
             <button className="btn-primary">Log in</button>
-            <label className="hidden cursor-pointer py-1 px-2 w-fit items-center gap-x-2 text-sm text-white rounded-md bg-slate-500">
-              <input
-                type="checkbox"
-                onChange={handleToggle}
-                checked={persist}
-              />
-              <div>Trust this device?</div>
-            </label>
           </section>
         </form>
       </main>

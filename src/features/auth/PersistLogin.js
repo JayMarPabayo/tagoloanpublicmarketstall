@@ -1,12 +1,10 @@
 import { Outlet, Link } from "react-router-dom";
 import { useEffect, useRef, useState } from "react";
 import { useRefreshMutation } from "./authApiSlice";
-import usePersist from "../../hooks/usePersist";
 import { useSelector } from "react-redux";
 import { selectCurrentToken } from "./authSlice";
 
 const PersistLogin = () => {
-  const [persist] = usePersist();
   const token = useSelector(selectCurrentToken);
   const effectRan = useRef(false);
 
@@ -29,7 +27,7 @@ const PersistLogin = () => {
         }
       };
 
-      if (!token && persist) verifyRefreshToken();
+      if (!token) verifyRefreshToken();
     }
 
     return () => (effectRan.current = true);
@@ -38,12 +36,7 @@ const PersistLogin = () => {
   }, []);
 
   let content;
-  if (!persist) {
-    // persist: no
-    console.log("no persist");
-    content = <Link to="/login">Please login</Link>;
-  } else if (isLoading) {
-    //persist: yes, token: no
+  if (isLoading) {
     console.log("loading");
     content = <p>Loading...</p>;
   } else if (isError) {
