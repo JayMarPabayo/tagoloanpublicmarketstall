@@ -38,7 +38,10 @@ export const rentalsApiSlice = apiSlice.injectEndpoints({
           ...initialRentalData,
         },
       }),
-      invalidatesTags: [{ type: "Rental", id: "LIST" }],
+      invalidatesTags: [
+        { type: "Rental", id: "LIST" },
+        { type: "Stall", id: "LIST" },
+      ],
     }),
     updateRental: builder.mutation({
       query: (initialRentalData) => ({
