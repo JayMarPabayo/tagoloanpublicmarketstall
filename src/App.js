@@ -18,6 +18,8 @@ import Sections from "./features/stalls/Sections";
 
 import SectionsList from "./features/rentals/SectionsList";
 import RentStall from "./features/rentals/RentStall";
+import ViewStall from "./features/rentals/ViewStall";
+import RentalsList from "./features/rentals/RentalsList";
 
 import VendorsList from "./features/vendors/VendorsList";
 import NewVendorForm from "./features/vendors/NewVendorForm";
@@ -53,6 +55,10 @@ function App() {
                 <Route path="rentals">
                   <Route index element={<SectionsList />} />
                   <Route path=":id" element={<RentStall />} />
+                  <Route path="view/:id" element={<ViewStall />} />
+                </Route>
+                <Route path="collection">
+                  <Route index element={<RentalsList />} />
                 </Route>
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
@@ -79,6 +85,9 @@ function App() {
                   </Route>
                   <Route path="sections">
                     <Route index element={<Sections />} />
+                  </Route>
+                  <Route path="rental-payment">
+                    <Route index element={<RentalsList />} />
                   </Route>
                 </Route>
               </Route>

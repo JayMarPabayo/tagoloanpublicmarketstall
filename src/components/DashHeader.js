@@ -18,13 +18,22 @@ const DashHeader = () => {
 
   const getParentPath = () => {
     const pathArray = location.pathname.split("/");
-    const lastSegment = pathArray[pathArray.length - 1];
 
+    const lastSegment = pathArray[pathArray.length - 1];
+    const secondLastSegment = pathArray[pathArray.length - 2];
+
+    // Check if the last segment is 'create'
     if (lastSegment === "create") {
       return "/dashboard";
     }
 
-    pathArray.pop(); // remove the last segment
+    // Check if the path is 'view/{id}'
+    if (secondLastSegment === "view") {
+      return "/dashboard/rentals";
+    }
+
+    // Default case: remove the last segment and return the path
+    pathArray.pop();
     return pathArray.join("/") || "/dashboard";
   };
 

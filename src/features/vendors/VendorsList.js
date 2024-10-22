@@ -14,6 +14,7 @@ import Spinner from "../../utils/Spinner";
 
 const VendorsList = () => {
   const [sortOption, setSortOption] = useState("name");
+  const [filterOption, setFilterOption] = useState("all");
 
   const {
     data: vendors,
@@ -38,7 +39,16 @@ const VendorsList = () => {
   if (isSuccess) {
     const { ids, entities } = vendors;
 
-    const sortedIds = [...ids].sort((a, b) => {
+    const filteredIds = ids.filter((vendorId) => {
+      if (filterOption === "withStall") {
+        return entities[vendorId].hasRental === true;
+      } else if (filterOption === "withoutStall") {
+        return entities[vendorId].hasRental === false;
+      }
+      return true; // If "all", return all vendors
+    });
+
+    const sortedIds = [...filteredIds].sort((a, b) => {
       if (sortOption === "name") {
         return entities[a].name.localeCompare(entities[b].name);
       } else if (sortOption === "owner") {
@@ -57,11 +67,34 @@ const VendorsList = () => {
       <div className="grid grid-cols-12 p-5 gap-x-5">
         <div className="bg-white/80 h-full col-span-2 p-2 text-sm">
           <h3 className="mb-2 opacity-70">Filter</h3>
-          <div className="flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer hover:bg-sky-400/30 duration-300 ">
+          <div
+            className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
+              filterOption === "withStall"
+                ? "bg-sky-500/30 text-sky-600"
+                : "hover:bg-sky-400/30"
+            }`}
+            onClick={() =>
+              filterOption === "withStall"
+                ? setFilterOption("all")
+                : setFilterOption("withStall")
+            }
+          >
             <FontAwesomeIcon icon={faStore} />
             <span>With stall</span>
           </div>
-          <div className="flex items-center gap-x-2 px-2 py-1 mb-4 rounded-md cursor-pointer hover:bg-sky-400/30 duration-300 ">
+
+          <div
+            className={`flex items-center gap-x-2 px-2 py-1 mb-4 rounded-md cursor-pointer duration-300 ${
+              filterOption === "withoutStall"
+                ? "bg-sky-500/30 text-sky-600"
+                : "hover:bg-sky-400/30"
+            }`}
+            onClick={() =>
+              filterOption === "withoutStall"
+                ? setFilterOption("all")
+                : setFilterOption("withoutStall")
+            }
+          >
             <FontAwesomeIcon icon={faStoreSlash} />
             <span>Without stall</span>
           </div>

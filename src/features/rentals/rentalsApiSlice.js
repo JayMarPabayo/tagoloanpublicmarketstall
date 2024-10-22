@@ -79,6 +79,9 @@ const selectRentalsData = createSelector(
   (rentalsResult) => rentalsResult.data
 );
 
+export const selectRentalsByStallId = (state, stallId) =>
+  selectAllRentals(state).filter((rental) => rental.stall === stallId);
+
 export const {
   selectAll: selectAllRentals,
   selectById: selectRentalById,

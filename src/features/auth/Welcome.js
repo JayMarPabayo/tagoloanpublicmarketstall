@@ -8,12 +8,13 @@ import {
   faUserGear,
   faUserPlus,
   faWarehouse,
+  faHandHoldingHand,
 } from "@fortawesome/free-solid-svg-icons";
 
 import useAuth from "../../hooks/useAuth";
 
 const Welcome = () => {
-  const { isAdministrator } = useAuth();
+  const { isAdministrator, isStaff } = useAuth();
 
   useEffect(() => {
     if (!sessionStorage.getItem("hasRefreshed")) {
@@ -25,12 +26,32 @@ const Welcome = () => {
   const content = (
     <section className="flex flex-col gap-y-2">
       {isAdministrator && (
+        <>
+          <Link
+            to="/dashboard/rentals"
+            className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+          >
+            <FontAwesomeIcon className="w-[15px]" icon={faWarehouse} />
+            <p>Rental System</p>
+          </Link>
+
+          <Link
+            to="/dashboard/rental-payment"
+            className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+          >
+            <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
+            <p>Rental Payment</p>
+          </Link>
+        </>
+      )}
+
+      {isStaff && (
         <Link
-          to="/dashboard/rentals"
+          to="/dashboard/collection"
           className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
         >
-          <FontAwesomeIcon className="w-[15px]" icon={faWarehouse} />
-          <p>Rental System</p>
+          <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
+          <p>Collection</p>
         </Link>
       )}
 

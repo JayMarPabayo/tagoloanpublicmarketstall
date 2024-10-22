@@ -42,11 +42,11 @@ const RentStall = () => {
     }),
   });
 
-  const stallID = stall?.section;
+  const sectionId = stall?.section;
 
   const { section } = useGetSectionsQuery("sectionsList", {
     selectFromResult: ({ data }) => ({
-      section: data?.entities[stallID],
+      section: data?.entities[sectionId],
     }),
   });
 

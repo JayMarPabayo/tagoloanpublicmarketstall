@@ -26,7 +26,7 @@ const StallsList = ({ group = "" }) => {
   const uniqueGroups = new Set();
 
   const filteredSections = selectedSectionGroup
-    ? Object.values(sections.entities)
+    ? Object.values(sections?.entities)
         .filter((section) => section.group === selectedSectionGroup)
         .sort((a, b) => a.name.localeCompare(b.name))
     : [];
@@ -39,20 +39,20 @@ const StallsList = ({ group = "" }) => {
     <div className="grid grid-cols-12 gap-x-5">
       <div className="flex flex-col gap-y-2 col-span-2">
         {sections?.ids?.map((id) => {
-          const group = sections.entities[id].group;
+          const group = sections?.entities[id].group;
 
           if (!uniqueGroups.has(group)) {
             uniqueGroups.add(group);
             return (
               <button
-                key={sections.entities[id].id}
+                key={sections?.entities[id].id}
                 className={`py-2 px-3 rounded-md text-start ${
                   selectedSectionGroup === sections.entities[id].group
                     ? "bg-sky-700 text-white"
                     : "bg-white/70"
                 }`}
                 onClick={() =>
-                  handleSectionGroupClick(sections.entities[id].group)
+                  handleSectionGroupClick(sections?.entities[id].group)
                 }
               >
                 {group}
@@ -68,7 +68,7 @@ const StallsList = ({ group = "" }) => {
           className={`flex flex-col col-span-10 gap-y-5 pb-5 p-2 bg-white/50`}
         >
           {filteredSections.map((section) => {
-            const filteredStalls = Object.values(stalls.entities).filter(
+            const filteredStalls = Object.values(stalls?.entities).filter(
               (stall) => stall.section === section.id
             );
 

@@ -76,7 +76,9 @@ const SectionsList = () => {
                               onDoubleClick={() =>
                                 stall.available === true
                                   ? navigate(`/dashboard/rentals/${stall.id}`)
-                                  : null
+                                  : navigate(
+                                      `/dashboard/rentals/view/${stall.id}`
+                                    )
                               }
                             >
                               <Stall

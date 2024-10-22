@@ -5,6 +5,7 @@ import { jwtDecode } from "jwt-decode";
 const useAuth = () => {
   const token = useSelector(selectCurrentToken);
   let isAdministrator = false;
+  let isStaff = false;
   let status = "Staff";
 
   if (token) {
@@ -12,10 +13,11 @@ const useAuth = () => {
     const { id, username, fullname, role } = decoded.UserInfo;
 
     isAdministrator = role === "Administrator";
+    isStaff = role === "Staff";
 
     if (isAdministrator) status = "Administrator";
 
-    return { id, username, fullname, role, status, isAdministrator };
+    return { id, username, fullname, role, status, isAdministrator, isStaff };
   }
 
   return {
@@ -24,6 +26,7 @@ const useAuth = () => {
     username: "",
     role: "",
     isAdministrator,
+    isStaff,
     status,
   };
 };
