@@ -12,7 +12,7 @@ import UsersList from "./features/users/UsersList";
 import NewUserForm from "./features/users/NewUserForm";
 import EditUser from "./features/users/EditUser";
 
-import StallsList from "./features/stalls/StallsList";
+// import StallsList from "./features/stalls/StallsList";
 import EditStall from "./features/stalls/EditStall";
 import Sections from "./features/stalls/Sections";
 
@@ -48,11 +48,7 @@ function App() {
             <Route element={<Prefetch />}>
               <Route path="dashboard" element={<DashLayout />}>
                 <Route index element={<Welcome />} />
-                <Route path="stalls">
-                  <Route index element={<StallsList />} />
-                  <Route path=":id" element={<EditStall />} />
-                </Route>
-                <Route path="rentals">
+                <Route path="renting">
                   <Route index element={<SectionsList />} />
                   <Route path=":id" element={<RentStall />} />
                   <Route path="view/:id" element={<ViewStall />} />
@@ -72,21 +68,24 @@ function App() {
                     <Route index element={<NewVendorForm />} />
                   </Route>
                 </Route>
-                <Route path="account">
+                <Route path="profile">
                   <Route index element={<Account />} />
                 </Route>
                 <Route
                   element={<RequireAuth allowedRoles={[ROLES.Administrator]} />}
                 >
-                  <Route path="users">
+                  <Route path="accounts">
                     <Route index element={<UsersList />} />
                     <Route path=":id" element={<EditUser />} />
                     <Route path="create" element={<NewUserForm />} />
                   </Route>
                   <Route path="sections">
                     <Route index element={<Sections />} />
+                    <Route path="stalls">
+                      <Route path=":id" element={<EditStall />} />
+                    </Route>
                   </Route>
-                  <Route path="rental-payment">
+                  <Route path="collection">
                     <Route index element={<RentalsList />} />
                   </Route>
                 </Route>

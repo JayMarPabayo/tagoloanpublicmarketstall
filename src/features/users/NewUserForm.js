@@ -87,7 +87,7 @@ const NewUserForm = () => {
   const content = (
     <div className="p-5">
       <form
-        className="w-[40rem] form-input"
+        className="w-[40rem] form-input bg-white/20 shadow-md rounded-md p-6"
         method="POST"
         onSubmit={onSaveUserClicked}
       >

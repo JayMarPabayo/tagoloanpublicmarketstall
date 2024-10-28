@@ -99,7 +99,7 @@ const NewStallForm = ({ onCancel }) => {
       <form
         method="POST"
         onSubmit={onSaveSectionClicked}
-        className="form-input min-w-[35rem] bg-white/90"
+        className="form-input min-w-[35rem] bg-white/90 shadow-md rounded-md p-6"
       >
         <div className="flex items-center gap-x-3 text-lg mb-7">
           <FontAwesomeIcon icon={faPersonShelter} />

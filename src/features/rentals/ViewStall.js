@@ -36,7 +36,7 @@ const ViewStall = () => {
   const content = (
     <>
       <div className="p-5">
-        <div className="w-[50rem] bg-sky-300/70 rounded-md p-5 shadow-md">
+        <div className="w-[50rem] bg-white rounded-md p-5 shadow-md">
           <div className="flex items-center gap-x-3 text-lg mb-7">
             <FontAwesomeIcon icon={faStore} />
             <h3 className="text-sky-800 font-medium">Stall Information</h3>

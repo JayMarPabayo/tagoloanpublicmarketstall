@@ -60,7 +60,7 @@ const SectionsList = () => {
                   {filteredSections?.map((section) => {
                     const filteredStalls = Object.values(
                       stalls?.entities || {}
-                    ).filter((stall) => stall.section === section.id);
+                    ).filter((stall) => stall.section._id === section.id);
 
                     filteredStalls.sort((a, b) => a.number - b.number);
 
@@ -75,9 +75,9 @@ const SectionsList = () => {
                               key={stall.id}
                               onDoubleClick={() =>
                                 stall.available === true
-                                  ? navigate(`/dashboard/rentals/${stall.id}`)
+                                  ? navigate(`/dashboard/renting/${stall.id}`)
                                   : navigate(
-                                      `/dashboard/rentals/view/${stall.id}`
+                                      `/dashboard/renting/view/${stall.id}`
                                     )
                               }
                             >

@@ -10,7 +10,7 @@ import LogoutConfirmationModal from "../utils/LogoutConfirmationModal";
 const DashHeader = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const sectionGroup = location.state?.selectedSectionGroup || "";
   const [sendLogout, { isLoading, isSuccess, isError, error }] =
     useSendLogoutMutation();
 
@@ -22,14 +22,14 @@ const DashHeader = () => {
     const lastSegment = pathArray[pathArray.length - 1];
     const secondLastSegment = pathArray[pathArray.length - 2];
 
-    // Check if the last segment is 'create'
-    if (lastSegment === "create") {
-      return "/dashboard";
-    }
-
     // Check if the path is 'view/{id}'
     if (secondLastSegment === "view") {
-      return "/dashboard/rentals";
+      return "/dashboard/renting";
+    }
+
+    // Check if the path is 'stall/{id}'
+    if (secondLastSegment === "stalls") {
+      return "/dashboard/sections";
     }
 
     // Default case: remove the last segment and return the path
@@ -52,7 +52,9 @@ const DashHeader = () => {
     if (location.pathname === "/dashboard") {
       setIsLogoutModalOpen(true);
     } else {
-      navigate(getParentPath());
+      navigate(getParentPath(), {
+        state: { selectedSectionGroup: sectionGroup },
+      });
     }
   };
 

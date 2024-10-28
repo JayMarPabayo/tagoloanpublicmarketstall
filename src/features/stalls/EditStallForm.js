@@ -47,7 +47,9 @@ const EditStallForm = ({ stall }) => {
       setNumber("");
       setNotes("");
       setCost("");
-      navigate("/dashboard/stalls");
+      navigate("/dashboard/sections", {
+        state: { selectedSectionGroup: stall.section.group },
+      });
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
@@ -97,7 +99,7 @@ const EditStallForm = ({ stall }) => {
     <>
       <div className="p-5">
         <form
-          className="w-[40rem] form-input"
+          className="w-[40rem] form-input bg-white/20 shadow-md rounded-md p-6"
           method="POST"
           onSubmit={(e) => e.preventDefault()}
         >

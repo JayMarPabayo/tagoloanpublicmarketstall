@@ -1,10 +1,12 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faShop,
   faCircleUser,
-  faStore,
-  faStoreSlash,
+  faCirclePlus,
+  // faStore,
+  // faStoreSlash,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { useGetVendorsQuery } from "./vendorsApiSlice";
@@ -14,7 +16,7 @@ import Spinner from "../../utils/Spinner";
 
 const VendorsList = () => {
   const [sortOption, setSortOption] = useState("name");
-  const [filterOption, setFilterOption] = useState("all");
+  // const [filterOption, setFilterOption] = useState("all");
 
   const {
     data: vendors,
@@ -28,6 +30,8 @@ const VendorsList = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const navigate = useNavigate();
+
   let content;
 
   if (isLoading) content = <Spinner />;
@@ -39,13 +43,17 @@ const VendorsList = () => {
   if (isSuccess) {
     const { ids, entities } = vendors;
 
-    const filteredIds = ids.filter((vendorId) => {
-      if (filterOption === "withStall") {
-        return entities[vendorId].hasRental === true;
-      } else if (filterOption === "withoutStall") {
-        return entities[vendorId].hasRental === false;
-      }
-      return true; // If "all", return all vendors
+    // const filteredIds = ids.filter((vendorId) => {
+    //   if (filterOption === "withStall") {
+    //     return entities[vendorId].hasRental === true;
+    //   } else if (filterOption === "withoutStall") {
+    //     return entities[vendorId].hasRental === false;
+    //   }
+    //   return true; // If "all", return all vendors
+    // });
+
+    const filteredIds = ids.filter(() => {
+      return true;
     });
 
     const sortedIds = [...filteredIds].sort((a, b) => {
@@ -65,9 +73,19 @@ const VendorsList = () => {
 
     content = (
       <div className="grid grid-cols-12 p-5 gap-x-5">
+        <div className="mb-2 flex items-center justify-between gap-x-4 col-span-full">
+          <h1 className="font-semibold">Vendors</h1>
+          <button
+            className="rounded-md flex items-center text-xs font-medium gap-x-2 bg-white px-2 py-1"
+            onClick={() => navigate(`/dashboard/vendors/create`)}
+          >
+            <FontAwesomeIcon icon={faCirclePlus} className="text-lg" />
+            <div>Add New</div>
+          </button>
+        </div>
         <div className="bg-white/80 h-full col-span-2 p-2 text-sm">
-          <h3 className="mb-2 opacity-70">Filter</h3>
-          <div
+          {/* <h3 className="mb-2 opacity-70">Filter</h3> */}
+          {/* <div
             className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
               filterOption === "withStall"
                 ? "bg-sky-500/30 text-sky-600"
@@ -97,7 +115,7 @@ const VendorsList = () => {
           >
             <FontAwesomeIcon icon={faStoreSlash} />
             <span>Without stall</span>
-          </div>
+          </div> */}
 
           <h3 className="mb-2 opacity-70">Sort</h3>
 

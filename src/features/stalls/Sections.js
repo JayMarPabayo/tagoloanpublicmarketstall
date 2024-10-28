@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
@@ -10,8 +11,12 @@ import NewStallForm from "./NewStallForm";
 import Stall from "./Stall";
 
 const Sections = () => {
+  const location = useLocation();
+  const initialGroup = location.state?.selectedSectionGroup || "";
+
   const [showNewStallForm, setShowNewStallForm] = useState(false);
-  const [selectedSectionGroup, setSelectedSectionGroup] = useState("");
+  const [selectedSectionGroup, setSelectedSectionGroup] =
+    useState(initialGroup);
 
   const { data: sections } = useGetSectionsQuery("sectionsList", {
     pollingInterval: 60000,
@@ -25,10 +30,11 @@ const Sections = () => {
     refetchOnMountOrArgChange: true,
   });
 
+  const navigate = useNavigate();
   const uniqueGroups = new Set();
 
   const filteredSections = selectedSectionGroup
-    ? Object.values(sections.entities)
+    ? Object.values(sections?.entities || {})
         .filter((section) => section.group === selectedSectionGroup)
         .sort((a, b) => a.name.localeCompare(b.name))
     : [];
@@ -79,20 +85,13 @@ const Sections = () => {
 
         <div className="flex items-center gap-x-4 mb-4">
           <h1>Stalls</h1>
-          <div className="flex items-center gap-x-2 text-xs">
-            <div className="bg-white rounded-full p-2"></div>
-            <div>Vacant</div>
-
-            <div className="bg-sky-600 rounded-full p-2 ms-7"></div>
-            <div>Occupied</div>
-          </div>
         </div>
         {selectedSectionGroup && (
           <div className={`flex flex-col gap-y-5 pb-5 p-2 bg-white/50`}>
             {filteredSections.map((section) => {
-              const filteredStalls = Object.values(stalls?.entities).filter(
-                (stall) => stall.section === section.id
-              );
+              const filteredStalls = Object.values(
+                stalls?.entities || {}
+              ).filter((stall) => stall.section._id === section.id);
 
               filteredStalls.sort((a, b) => a.number - b.number);
 
@@ -103,11 +102,19 @@ const Sections = () => {
                     className={`grid grid-cols-${section.stallsPerRow} gap-2`}
                   >
                     {filteredStalls.map((stall) => (
-                      <Stall
-                        occupied={!stall.available}
-                        number={stall.number}
+                      <button
                         key={stall.id}
-                      />
+                        onDoubleClick={() =>
+                          navigate(`/dashboard/sections/stalls/${stall.id}`, {
+                            state: { selectedSectionGroup },
+                          })
+                        }
+                      >
+                        <Stall
+                          occupied={!stall.available}
+                          number={stall.number}
+                        />
+                      </button>
                     ))}
                   </div>
                 </div>

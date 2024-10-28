@@ -18,7 +18,7 @@ const User = ({ userId }) => {
   const navigate = useNavigate();
 
   if (user) {
-    const handleEdit = () => navigate(`/dashboard/users/${userId}`);
+    const handleEdit = () => navigate(`/dashboard/accounts/${userId}`);
 
     const status =
       user.active === true ? (

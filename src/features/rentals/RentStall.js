@@ -62,7 +62,7 @@ const RentStall = () => {
     if (isSuccess) {
       setVendor("");
       setStartDate("");
-      navigate(`/dashboard/rentals`);
+      navigate(`/dashboard/renting`);
     }
   }, [isSuccess, navigate]);
 
@@ -127,7 +127,7 @@ const RentStall = () => {
         <form
           method="POST"
           onSubmit={onSaveRentalClicked}
-          className="form-input w-[50rem]"
+          className="form-input w-[50rem] bg-sky-400/10 rounded-md shadow-md py-2 px-4"
         >
           <div className="flex items-center gap-x-3 text-lg mb-5">
             <FontAwesomeIcon icon={faPersonShelter} />
@@ -163,7 +163,7 @@ const RentStall = () => {
               type="button"
               className="btn-secondary w-32 py-2 rounded-md"
               onClick={() => {
-                navigate(`/dashboard/rentals`);
+                navigate(`/dashboard/renting`);
               }}
             >
               Cancel

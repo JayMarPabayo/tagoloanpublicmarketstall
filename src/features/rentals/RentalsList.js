@@ -44,8 +44,6 @@ const RentalsList = () => {
   if (isSuccess) {
     const { ids, entities } = rentals;
 
-    console.log(entities);
-
     const filteredIds = ids.filter((rentalId) => {
       const rental = entities[rentalId];
       return rental;
@@ -64,7 +62,7 @@ const RentalsList = () => {
     content = (
       <>
         <section className="flex items-center justify-between px-5">
-          <h3 className="text-sky-800 font-medium">Rental Overview</h3>
+          <h3 className="text-sky-800 font-medium">Payment Overview</h3>
 
           {isStaff && (
             <button

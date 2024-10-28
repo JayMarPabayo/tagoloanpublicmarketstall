@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useGetUsersQuery } from "./usersApiSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -6,6 +7,7 @@ import {
   faCircleXmark,
   faUserTie,
   faUser,
+  faCirclePlus,
 } from "@fortawesome/free-solid-svg-icons";
 
 import User from "./User";
@@ -26,6 +28,8 @@ const UsersList = () => {
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,
   });
+
+  const navigate = useNavigate();
 
   let content;
 
@@ -63,6 +67,16 @@ const UsersList = () => {
 
     content = (
       <div className="grid grid-cols-12 p-5 gap-x-5">
+        <div className="mb-2 flex items-center justify-between gap-x-4 col-span-full">
+          <h1 className="font-semibold">Accounts</h1>
+          <button
+            className="rounded-md flex items-center text-xs font-medium gap-x-2 bg-white px-2 py-1"
+            onClick={() => navigate(`/dashboard/account/create`)}
+          >
+            <FontAwesomeIcon icon={faCirclePlus} className="text-lg" />
+            <div>Add New</div>
+          </button>
+        </div>
         <div className="bg-white/80 h-full col-span-2 p-2 text-sm">
           <h3 className="mb-2 opacity-70">Filter</h3>
 
