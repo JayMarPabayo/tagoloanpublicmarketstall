@@ -10,7 +10,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
     isSuccess,
     isError,
     error,
-  } = useGetPaymentsQuery("rentalsList", {
+  } = useGetPaymentsQuery("paymentsList", {
     pollingInterval: 60000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

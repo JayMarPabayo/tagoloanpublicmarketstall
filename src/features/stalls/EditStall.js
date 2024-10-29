@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+
 import { useGetStallsQuery } from "./stallsApiSlice";
 
 import EditStallForm from "./EditStallForm";
