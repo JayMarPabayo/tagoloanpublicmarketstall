@@ -4,7 +4,6 @@ import { faClockRotateLeft } from "@fortawesome/free-solid-svg-icons";
 import { useGetRentalsQuery } from "./rentalsApiSlice";
 
 const RentalHistory = ({ stall }) => {
-  console.log(stall);
   const {
     data: rentals,
     isLoading,
@@ -27,8 +26,17 @@ const RentalHistory = ({ stall }) => {
     const RentalsList = filteredIds.length ? (
       filteredIds.map((id, index) => {
         const rental = entities[id];
-        console.log(rental);
-        if (rental.stall?._id === stall.id) {
+        if (rental.stall?._id === stall?.id) {
+          const startDateFormatted = formatDate(rental.startDate);
+          let dateDisplay;
+
+          if (rental.endDate) {
+            dateDisplay = `${startDateFormatted} - ${formatDate(
+              rental.endDate
+            )}`;
+          } else if (!rental.stall?.available) {
+            dateDisplay = `${startDateFormatted} - Present`;
+          }
           return (
             <div
               key={index}
@@ -39,9 +47,7 @@ const RentalHistory = ({ stall }) => {
                 <div className="text-slate-600">{rental.vendor?.owner}</div>
               </div>
               <div>
-                <div className="text-slate-600">
-                  {`${formatDate(rental.startDate)} - Present`}
-                </div>
+                <div className="text-slate-600">{dateDisplay}</div>
               </div>
             </div>
           );
@@ -59,7 +65,7 @@ const RentalHistory = ({ stall }) => {
           <FontAwesomeIcon icon={faClockRotateLeft} />
           <h3 className="text-sky-800 font-medium">Rental History</h3>
         </div>
-        {RentalsList}
+        <section className="flex flex-col gap-y-4">{RentalsList}</section>
       </div>
     );
   } else return null;

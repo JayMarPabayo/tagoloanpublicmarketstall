@@ -81,8 +81,10 @@ const EditStallForm = ({ stall }) => {
   const onDeleteStallClicked = async () => {
     setIsDeleteModalOpen(true);
   };
+
   const handleDeleteConfirm = async () => {
     setIsDeleteModalOpen(false);
+    console.log(stall.id);
     await deleteStall({ id: stall.id });
   };
   const handleDeleteCancel = () => {

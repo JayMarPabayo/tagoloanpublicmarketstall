@@ -1,16 +1,22 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faStore, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
+import {
+  faStore,
+  faPersonShelter,
+  faLinkSlash,
+} from "@fortawesome/free-solid-svg-icons";
 
 import { useGetStallsQuery } from "../stalls/stallsApiSlice";
 import { useGetSectionsQuery } from "../stalls/sectionsApiSlice";
-import { useGetRentalsQuery } from "./rentalsApiSlice";
+import { useGetRentalsQuery, useVacateRentalMutation } from "./rentalsApiSlice";
 
 import RentalHistory from "./RentalHistory";
 
 const ViewStall = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const { stall } = useGetStallsQuery("stallsList", {
     selectFromResult: ({ data }) => ({
@@ -34,6 +40,19 @@ const ViewStall = () => {
       };
     },
   });
+
+  const [vacateRental, { isLoading }] = useVacateRentalMutation();
+
+  const handleVacate = async () => {
+    if (rental) {
+      try {
+        await vacateRental(rental._id).unwrap();
+        navigate("/dashboard/renting");
+      } catch (error) {
+        console.error("Failed to vacate rental:", error);
+      }
+    }
+  };
 
   const content = (
     <div className="flex gap-x-2">
@@ -113,6 +132,17 @@ const ViewStall = () => {
                     })
                   : "N/A"}
               </p>
+            </div>
+
+            <div className="flex items-center justify-end">
+              <button
+                onClick={handleVacate}
+                disabled={isLoading}
+                className="px-10 py-1 rounded-md bg-black/80 text-white font-medium flex items-center gap-x-2"
+              >
+                <FontAwesomeIcon icon={faLinkSlash} />
+                <div>{isLoading ? "Vacating..." : "Vacate"}</div>
+              </button>
             </div>
           </div>
         </div>

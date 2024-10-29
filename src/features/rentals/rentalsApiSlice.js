@@ -61,6 +61,14 @@ export const rentalsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Rental", id: arg.id }],
     }),
+    vacateRental: builder.mutation({
+      query: (id) => ({
+        url: "/rentals/vacate",
+        method: "POST",
+        body: { id },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Rental", id: arg }],
+    }),
   }),
 });
 
@@ -69,6 +77,7 @@ export const {
   useAddNewRentalMutation,
   useUpdateRentalMutation,
   useDeleteRentalMutation,
+  useVacateRentalMutation,
 } = rentalsApiSlice;
 
 export const selectRentalsResult =
