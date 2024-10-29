@@ -29,7 +29,7 @@ const SectionsList = () => {
     <>
       <div className="p-5">
         <div className="flex items-center justify-between gap-x-4 mb-4">
-          <h1 className="text-lg font-semibold text-sky-950">RENTAL SYSTEM</h1>
+          <h1 className="text-lg font-semibold text-sky-950">MARKET STALL</h1>
           <div className="flex items-center gap-x-2 text-xs">
             <div className="bg-white rounded-full p-2"></div>
             <div>Vacant</div>

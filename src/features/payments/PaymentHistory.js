@@ -4,13 +4,7 @@ import { faCircle, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { useGetPaymentsQuery } from "./paymentsApiSlice";
 
 const PaymentHistory = ({ onCancel, rental }) => {
-  const {
-    data: payments,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetPaymentsQuery("paymentsList", {
+  const { data: payments, isSuccess } = useGetPaymentsQuery("paymentsList", {
     pollingInterval: 60000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

@@ -8,13 +8,7 @@ import { useGetRentalsQuery } from "./rentalsApiSlice";
 import PaymentHistory from "../payments/PaymentHistory";
 
 const RentalHistory = ({ stall }) => {
-  const {
-    data: rentals,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-  } = useGetRentalsQuery("rentalsList", {
+  const { data: rentals, isSuccess } = useGetRentalsQuery("rentalsList", {
     pollingInterval: 60000,
     refetchOnFocus: true,
     refetchOnMountOrArgChange: true,

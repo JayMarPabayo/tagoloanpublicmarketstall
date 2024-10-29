@@ -5,7 +5,10 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 
 import { useGetSectionsQuery } from "./sectionsApiSlice";
-import { useGetStallsQuery } from "./stallsApiSlice";
+import {
+  useGetStallsQuery,
+  useAddStallToSectionMutation,
+} from "./stallsApiSlice";
 
 import NewStallForm from "./NewStallForm";
 import Stall from "./Stall";
@@ -17,6 +20,8 @@ const Sections = () => {
   const [showNewStallForm, setShowNewStallForm] = useState(false);
   const [selectedSectionGroup, setSelectedSectionGroup] =
     useState(initialGroup);
+
+  const [addStallToSection] = useAddStallToSectionMutation();
 
   const { data: sections } = useGetSectionsQuery("sectionsList", {
     pollingInterval: 60000,
@@ -41,6 +46,11 @@ const Sections = () => {
 
   const handleSectionGroupClick = (group) => {
     setSelectedSectionGroup(group);
+  };
+
+  const handleAddStallToSection = async (e, sectionId) => {
+    e.preventDefault();
+    await addStallToSection({ section: sectionId });
   };
 
   const content = (
@@ -99,8 +109,19 @@ const Sections = () => {
               filteredStalls.sort((a, b) => a.number - b.number);
 
               return (
-                <div key={section.id}>
-                  <h1 className="mb-2">{section.name}</h1>
+                <div key={section.id} className="mb-5">
+                  <div className="mb-2 flex items-center gap-x-4">
+                    <h1>{section.name}</h1>
+                    <button
+                      onClick={(e) => handleAddStallToSection(e, section.id)}
+                      className="rounded-full"
+                    >
+                      <FontAwesomeIcon
+                        icon={faCirclePlus}
+                        className="text-lg"
+                      />
+                    </button>
+                  </div>
                   <div
                     className={`grid grid-cols-${section.stallsPerRow} gap-2`}
                   >

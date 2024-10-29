@@ -63,6 +63,16 @@ export const stallsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: [{ type: "Stall", id: "LIST" }],
     }),
+    addStallToSection: builder.mutation({
+      query: (initialStallData) => ({
+        url: "/stalls/add-to-section",
+        method: "POST",
+        body: {
+          ...initialStallData,
+        },
+      }),
+      invalidatesTags: [{ type: "Stall", id: "LIST" }],
+    }),
     updateStall: builder.mutation({
       query: (initialStallData) => ({
         url: "/stalls",
@@ -88,6 +98,7 @@ export const {
   useGetStallsQuery,
   useGetStallsBySectionQuery,
   useAddNewStallMutation,
+  useAddStallToSectionMutation,
   useUpdateStallMutation,
   useDeleteStallMutation,
 } = stallsApiSlice;
