@@ -47,7 +47,7 @@ const EditUserForm = ({ user }) => {
       setPassword("");
       setFullname("");
       setRole("Staff");
-      navigate("/dashboard/users");
+      navigate("/dashboard/accounts");
     }
   }, [isSuccess, isDelSuccess, navigate]);
 
