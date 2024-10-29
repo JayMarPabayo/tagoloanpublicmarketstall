@@ -107,7 +107,7 @@ const RentStall = () => {
               </div>
             </div>
 
-            <section className="flex gap-x-6">
+            <section className="flex">
               <div>
                 <h1 className="text-lg font-medium">{section?.group}</h1>
                 <span className="text-base font-normal">{section?.name}</span>

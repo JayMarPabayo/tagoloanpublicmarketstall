@@ -70,7 +70,7 @@ const ViewStall = () => {
               </div>
             </div>
 
-            <section className="flex gap-x-6 mb-5">
+            <section className="fle mb-5">
               <div>
                 <h1 className="text-lg font-medium">{section?.group}</h1>
                 <span className="text-base font-normal">{section?.name}</span>

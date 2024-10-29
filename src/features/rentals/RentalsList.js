@@ -46,7 +46,7 @@ const RentalsList = () => {
 
     const filteredIds = ids.filter((rentalId) => {
       const rental = entities[rentalId];
-      return rental;
+      return rental && !rental.endDate;
     });
 
     const tableContent = filteredIds.length ? (

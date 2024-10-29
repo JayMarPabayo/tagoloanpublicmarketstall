@@ -36,7 +36,6 @@ const PaymentHistory = ({ onCancel, rental }) => {
     const tableContent = filteredIds.length ? (
       filteredIds.map((id, index) => {
         const payment = entities[id];
-        console.log(payment);
         if (payment.rental?._id === rental?.id) {
           return (
             <tr key={index}>
