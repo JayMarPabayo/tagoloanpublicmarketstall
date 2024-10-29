@@ -42,7 +42,7 @@ const NewUserForm = () => {
       setUsername("");
       setPassword("");
       setRole("Staff");
-      navigate("/dashboard/users");
+      navigate("/dashboard/accounts");
     }
   }, [isSuccess, navigate]);
 
