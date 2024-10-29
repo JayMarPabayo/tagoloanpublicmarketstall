@@ -71,7 +71,7 @@ const UsersList = () => {
           <h1 className="font-semibold">Accounts</h1>
           <button
             className="rounded-md flex items-center text-xs font-medium gap-x-2 bg-white px-2 py-1"
-            onClick={() => navigate(`/dashboard/account/create`)}
+            onClick={() => navigate(`/dashboard/accounts/create`)}
           >
             <FontAwesomeIcon icon={faCirclePlus} className="text-lg" />
             <div>Add New</div>
