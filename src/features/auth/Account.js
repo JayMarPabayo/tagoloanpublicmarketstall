@@ -44,7 +44,7 @@ const Account = () => {
 
   useEffect(() => {
     setValidNewPassword(newPassword !== "" && password !== "");
-  }, [newPassword]);
+  }, [newPassword, password]);
 
   useEffect(() => {
     setUsername(user?.username || "");

@@ -19,20 +19,20 @@ const DashHeader = () => {
   const getParentPath = () => {
     const pathArray = location.pathname.split("/");
 
-    const lastSegment = pathArray[pathArray.length - 1];
     const secondLastSegment = pathArray[pathArray.length - 2];
 
-    // Check if the path is 'view/{id}'
+    if (pathArray.includes("vendors") && pathArray.includes("lease")) {
+      return "/dashboard/vendors";
+    }
+
     if (secondLastSegment === "view") {
       return "/dashboard/renting";
     }
 
-    // Check if the path is 'stall/{id}'
     if (secondLastSegment === "stalls") {
       return "/dashboard/sections";
     }
 
-    // Default case: remove the last segment and return the path
     pathArray.pop();
     return pathArray.join("/") || "/dashboard";
   };

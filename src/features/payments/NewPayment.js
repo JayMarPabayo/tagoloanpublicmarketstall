@@ -93,7 +93,7 @@ const NewPayment = ({ onCancel }) => {
       setFoundRental(null);
       onCancel();
     }
-  }, [isAddSuccess]);
+  }, [isAddSuccess, onCancel]);
 
   let content;
   if (isLoading) {

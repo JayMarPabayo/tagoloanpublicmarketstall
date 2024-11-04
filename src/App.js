@@ -24,6 +24,7 @@ import RentalsList from "./features/rentals/RentalsList";
 import VendorsList from "./features/vendors/VendorsList";
 import NewVendorForm from "./features/vendors/NewVendorForm";
 import EditVendor from "./features/vendors/EditVendor";
+import LeaseForm from "./features/vendors/LeaseForm";
 
 import Prefetch from "./features/auth/Prefetch";
 import PersistLogin from "./features/auth/PersistLogin";
@@ -59,6 +60,7 @@ function App() {
                 <Route path="vendors">
                   <Route index element={<VendorsList />} />
                   <Route path=":id" element={<EditVendor />} />
+                  <Route path="lease/:id" element={<LeaseForm />} />
                   <Route
                     path="create"
                     element={

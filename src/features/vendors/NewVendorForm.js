@@ -20,6 +20,9 @@ const NewVendorForm = () => {
   const [fullname, setFullname] = useState("");
   const [validFullname, setValidFullname] = useState(false);
 
+  const [birthdate, setBirthdate] = useState("");
+  const [validBirthdate, setValidBirthdate] = useState(false);
+
   const [type, setType] = useState("");
   const [validType, setValidType] = useState(false);
 
@@ -31,6 +34,7 @@ const NewVendorForm = () => {
 
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
+  const [touchedBirthdate, setTouchedBirthdate] = useState(false);
   const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
@@ -42,6 +46,13 @@ const NewVendorForm = () => {
   useEffect(() => {
     setValidFullname(fullname !== "");
   }, [fullname]);
+
+  useEffect(() => {
+    const today = new Date();
+    const selectedDate = new Date(birthdate);
+
+    setValidBirthdate(birthdate !== "" && selectedDate <= today);
+  }, [birthdate]);
 
   useEffect(() => {
     setValidType(type !== "");
@@ -58,6 +69,7 @@ const NewVendorForm = () => {
   useEffect(() => {
     if (isSuccess) {
       setFullname("");
+      setBirthdate("");
       setStorename("");
       setType("");
       setAddress("");
@@ -74,6 +86,11 @@ const NewVendorForm = () => {
   const onFullnameChanged = (e) => {
     setFullname(e.target.value);
     setTouchedFullname(true);
+  };
+
+  const onBirthdateChanged = (e) => {
+    setBirthdate(e.target.value);
+    setTouchedBirthdate(true);
   };
 
   const onTypeChanged = (e) => {
@@ -95,6 +112,7 @@ const NewVendorForm = () => {
     [
       validStorename,
       validFullname,
+      validBirthdate,
       validType,
       validAddress,
       validContact,
@@ -103,6 +121,7 @@ const NewVendorForm = () => {
   const onSaveVendorClicked = async (e) => {
     e.preventDefault();
     setTouchedFullname(true);
+    setTouchedBirthdate(true);
     setTouchedStorename(true);
     setTouchedType(true);
     setTouchedAddress(true);
@@ -111,6 +130,7 @@ const NewVendorForm = () => {
       await addNewVendor({
         owner: fullname,
         name: storename,
+        birthdate,
         type,
         address,
         contact,
@@ -139,6 +159,18 @@ const NewVendorForm = () => {
             onChange={onFullnameChanged}
             className={
               !validFullname && touchedFullname ? "border border-red-500" : ""
+            }
+          />
+
+          <label htmlFor="birthdate">Birthdate</label>
+          <input
+            type="date"
+            name="birthdate"
+            placeholder="Vendor's Birthdate"
+            value={birthdate}
+            onChange={onBirthdateChanged}
+            className={
+              !validBirthdate && touchedBirthdate ? "border border-red-500" : ""
             }
           />
 

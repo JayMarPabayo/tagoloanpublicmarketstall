@@ -15,11 +15,15 @@ button {
 }
 
 .btn-primary {
-  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-sky-700 hover:bg-sky-600 text-sm text-white rounded-md font-medium cursor-pointer;
+  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-sky-700 hover:bg-sky-600 text-sm text-white rounded-md font-medium cursor-pointer duration-300;
 }
 
 .btn-secondary {
-  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-slate-700 hover:bg-slate-600 text-sm text-white rounded-md font-medium cursor-pointer;
+  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-slate-700 hover:bg-slate-600 text-sm text-white rounded-md font-medium cursor-pointer duration-300;
+}
+
+.btn-lease {
+  @apply flex items-center gap-x-2 justify-center px-3 py-2 bg-emerald-900 hover:bg-emerald-800 text-sm text-white rounded-md font-medium cursor-pointer duration-300;
 }
 
 form:not("default") {
@@ -97,4 +101,31 @@ td {
 
 .carousel-button:hover {
   background-color: rgba(255, 255, 255, 1); /* Fully white on hover */
+}
+
+@media print {
+  html,
+  body {
+    height: 100vh;
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: white;
+  }
+
+  * {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  page-container {
+    border: none;
+    box-shadow: none;
+    width: 8.5in;
+    height: 11in;
+  }
 }

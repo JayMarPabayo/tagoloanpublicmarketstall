@@ -51,7 +51,7 @@ const EditStallForm = ({ stall }) => {
         state: { selectedSectionGroup: stall.section.group },
       });
     }
-  }, [isSuccess, isDelSuccess, navigate]);
+  }, [isSuccess, isDelSuccess, navigate, stall.section.group]);
 
   const onNumberChanged = (e) => {
     setNumber(e.target.value);
