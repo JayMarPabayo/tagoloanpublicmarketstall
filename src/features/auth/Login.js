@@ -63,25 +63,30 @@ const Login = () => {
   if (isLoading) return <FullScreenLoading />;
 
   const content = (
-    <section className="bg-cover bg-center h-screen flex items-center justify-center gap-x-10">
+    <section className="bg-cover bg-center min-h-screen flex flex-col md:flex-row items-center justify-center p-4 md:p-10 gap-y-8 md:gap-x-10">
       <img
         src="/meedo.png"
         alt="Meedo Logo"
-        className="w-[20rem] animate-slow-spin rounded-full shadow-lg p-0"
+        className="w-[10rem] md:w-[20rem] animate-slow-spin rounded-full shadow-lg p-0"
       />
-      <main className="text-indigo-900 w-[35rem]">
+      <main className="text-indigo-900 w-full md:w-[35rem]">
         <form onSubmit={handleSubmit}>
-          <section className="flex flex-col gap-y-1 mb-8">
-            <h3 className="text-xl text-sky-800 font-medium">Log in</h3>
-            <div className="flex items-center gap-x-5">
-              <p className="text-sm text-slate-500/80">
+          <section className="flex flex-col gap-y-1 mb-4 md:mb-8">
+            <h3 className="text-lg md:text-xl text-sky-800 font-medium">
+              Log in
+            </h3>
+            <div className="flex items-center gap-x-2 md:gap-x-5">
+              <p className="text-xs md:text-sm text-slate-500/80">
                 Please sign in to continue
               </p>
               <div className="h-[0.07rem] bg-sky-700/30 grow"></div>
             </div>
           </section>
-          <section className="flex flex-col gap-y-5">
-            <label htmlFor="username" className="custom-label">
+          <section className="flex flex-col gap-y-4 md:gap-y-5">
+            <label
+              htmlFor="username"
+              className="custom-label flex items-center gap-x-2"
+            >
               <FontAwesomeIcon icon={faUser} />
               <input
                 type="text"
@@ -92,9 +97,13 @@ const Login = () => {
                 onChange={handleUserInput}
                 autoComplete="off"
                 required
+                className="w-full py-2 px-3 text-sm md:text-base border rounded"
               />
             </label>
-            <label htmlFor="password" className="custom-label">
+            <label
+              htmlFor="password"
+              className="custom-label flex items-center gap-x-2"
+            >
               <FontAwesomeIcon icon={faKey} />
               <input
                 type="password"
@@ -104,12 +113,19 @@ const Login = () => {
                 onChange={handlePwdInput}
                 value={password}
                 required
+                className="w-full py-2 px-3 text-sm md:text-base border rounded"
               />
             </label>
-            <p ref={errRef} className={errClass} aria-live="assertive">
+            <p
+              ref={errRef}
+              className={`${errClass} text-sm text-red-600`}
+              aria-live="assertive"
+            >
               {errMsg}
             </p>
-            <button className="btn-primary">Log in</button>
+            <button className="btn-primary w-full md:w-auto py-2 md:py-3 text-sm md:text-base">
+              Log in
+            </button>
           </section>
         </form>
       </main>
