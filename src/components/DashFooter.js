@@ -29,15 +29,16 @@ const DashFooter = () => {
   }).format(date);
 
   const content = (
-    <footer className="font-medium text-sm border-t border-sky-700 px-3 h-10 flex gap-x-10 items-center w-full">
+    <footer className="font-medium text-xs md:text-sm py-2 md:py-0 border-t border-sky-700 px-3 h-20 md:h-10 flex gap-x-10 items-center w-full">
       {goHomeButton}
-      <p className="font-light">
+      <p className="font-light flex flex-col md:block">
         <span className="font-extrabold">Current User:</span> {fullname}
       </p>
-      <p className="font-light">
-        <span className="font-extrabold">Status:</span> {status}
+      <p className="font-light flex flex-col md:block self-start md:self-center">
+        <span className="font-extrabold">Status:</span>
+        {status}
       </p>
-      <p className="ms-auto">{today}</p>
+      <p className="ms-auto self-start md:self-center">{today}</p>
     </footer>
   );
   return content;

@@ -23,15 +23,29 @@ const Rental = ({ rentalId }) => {
           onClick={() => setIsHistoryModalOpen(true)}
           className="border-b border-slate-600/20 hover:scale-[98%] active:scale-[96%] cursor-pointer duration-300"
         >
-          <td>{rental.vendor?.name}</td>
-          <td>{rental.vendor?.owner}</td>
-          <td>
+          <td className="md:hidden">
+            <p className="font-medium">{rental.vendor?.name}</p>
+            <p className="text-xs text-slate-600">{rental.vendor?.owner}</p>
+          </td>
+
+          <td className="hidden md:table-cell">{rental.vendor?.name}</td>
+          <td className="hidden md:table-cell">{rental.vendor?.owner}</td>
+
+          <td className="md:hidden">
+            <p className="font-medium">{rental.stall?.section?.group}</p>
+            <p className="mb-1">{rental.stall?.section?.name}</p>
+            <span className="p-1 bg-sky-900/90 rounded-md text-white">{`Stall ${rental.stall.number}`}</span>
+          </td>
+
+          <td className="hidden md:table-cell">
             <span className="font-medium">{rental.stall?.section?.group}</span>
             <span className="ms-2">{rental.stall?.section?.name}</span>
           </td>
-          <td>
+
+          <td className="hidden md:table-cell">
             <span className="py-1 px-3 bg-sky-900/90 rounded-md text-white">{`Stall No. ${rental.stall.number}`}</span>
           </td>
+
           <td>₱ {rental.stall?.cost?.toFixed(2)}</td>
           <td className="flex flex-col gap-y-1 items-start">
             <div>
@@ -59,36 +73,36 @@ const Rental = ({ rentalId }) => {
 
                   if (diffDays > 0) {
                     return (
-                      <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                      <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                         <FontAwesomeIcon
                           icon={faCircle}
                           className="w-3 text-rose-600"
                         />
-                        <span>
+                        <p>
                           {diffDays === 1
                             ? `Due 1 day ago`
                             : `Due ${diffDays} days ago`}
-                        </span>
+                        </p>
                       </div>
                     );
                   } else if (diffDays === 0) {
                     return (
-                      <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                      <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                         <FontAwesomeIcon
                           icon={faCircle}
                           className="w-3 text-orange-400"
                         />
-                        <span>Due is Today</span>
+                        <p>Due is Today</p>
                       </div>
                     );
                   } else {
                     return (
-                      <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                      <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                         <FontAwesomeIcon
                           icon={faCircle}
                           className="w-3 text-emerald-600"
                         />
-                        <span>Paid</span>
+                        <p>Paid</p>
                       </div>
                     );
                   }

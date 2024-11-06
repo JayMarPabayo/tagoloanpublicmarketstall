@@ -43,7 +43,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
 
     const tableContent = Object.keys(paymentGroups).length ? (
       Object.values(paymentGroups).map((paymentGroup, index) => (
-        <tr key={index}>
+        <tr key={index} className="text-xs md:text-sm">
           <td>{paymentGroup.orNumber}</td>
           <td>{paymentGroup.user?.fullname}</td>
           <td>
@@ -65,9 +65,9 @@ const PaymentHistory = ({ onCancel, rental }) => {
       >
         <div
           onClick={handleModalClick}
-          className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-1/2"
+          className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-full md:w-1/2"
         >
-          <div className="flex justify-between">
+          <div className="flex items-center justify-between">
             <h3 className="text-sky-800 font-medium">Payment History</h3>
             <button onClick={onCancel}>
               <FontAwesomeIcon icon={faXmark} className="h-5" />
@@ -141,7 +141,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
           </div>
 
           <table className="w-full">
-            <thead>
+            <thead className="text-xs">
               <tr>
                 <th>OR#</th>
                 <th>Collector</th>

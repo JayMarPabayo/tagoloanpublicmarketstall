@@ -109,23 +109,35 @@ const NewPayment = ({ onCancel }) => {
         >
           <div className="w-full bg-sky-600/50 rounded-t-md p-2">
             <div className="p-2 w-fit bg-sky-950 rounded-md font-semibold mb-2">
-              <h1>{`Stall No. ${foundRental?.stall?.number}`}</h1>
+              <h1 className="text-sm md:text-base">
+                {`Stall No. ${foundRental?.stall?.number}`}
+              </h1>
             </div>
-            <p className="ml-1">{foundRental?.stall?.section?.group}</p>
-            <p className="ml-1">{foundRental?.stall?.section?.name}</p>
+            <p className="ml-1 text-sm md:text-base">
+              {foundRental?.stall?.section?.group}
+            </p>
+            <p className="ml-1 text-sm md:text-base">
+              {foundRental?.stall?.section?.name}
+            </p>
           </div>
           <div className="w-full text-sky-950 border-2 border-sky-600/50 rounded-b-md p-2">
-            <div className="flex items-start gap-x-2">
+            <div className="flex flex-col items-start gap-y-2 md:flex-row md:items-center md:gap-x-2">
               <FontAwesomeIcon icon={faStore} className="w-5" />
-              <h1>{foundRental?.vendor?.name}</h1>
+              <h1 className="text-sm md:text-base">
+                {foundRental?.vendor?.name}
+              </h1>
             </div>
-            <div className="flex items-start gap-x-2">
+            <div className="flex flex-col items-start gap-y-2 md:flex-row md:items-center md:gap-x-2">
               <FontAwesomeIcon icon={faUser} className="w-5" />
-              <p>{foundRental?.vendor?.owner}</p>
+              <p className="text-sm md:text-base">
+                {foundRental?.vendor?.owner}
+              </p>
             </div>
-            <div className="flex items-start gap-x-2">
+            <div className="flex flex-col items-start gap-y-2 md:flex-row md:items-center md:gap-x-2">
               <FontAwesomeIcon icon={faLocationDot} className="w-5" />
-              <p>{foundRental?.vendor?.address}</p>
+              <p className="text-sm md:text-base">
+                {foundRental?.vendor?.address}
+              </p>
             </div>
           </div>
         </li>
@@ -153,7 +165,7 @@ const NewPayment = ({ onCancel }) => {
   };
   return (
     <div className="fixed top-0 left-0 w-full h-full bg-blur-md bg-gray-800 bg-opacity-20 flex justify-center items-center z-50">
-      <div className="bg-white w-1/3 p-5 rounded-lg shadow-md">
+      <div className="bg-white w-full md:w-1/2 p-5 rounded-lg shadow-md">
         <h1 className="text-center font-semibold text-lg mb-3">Collection</h1>
         <hr className="border-t border-sky-600 mb-5" />
         <label htmlFor="search" className="block">
@@ -192,14 +204,14 @@ const NewPayment = ({ onCancel }) => {
           )}
           <div className="flex justify-end gap-4 mt-5">
             <button
-              className="btn-secondary w-56 py-2 rounded-md"
+              className="btn-secondary w-full md:w-56 py-2 rounded-md"
               onClick={onCancel}
             >
               Cancel
             </button>
             <button
               title="Save"
-              className="btn-primary w-56 py-2 rounded-md"
+              className="btn-primary w-full md:w-56 py-2 rounded-md"
               disabled={isAddLoading}
               type="submit"
             >

@@ -57,9 +57,9 @@ const RentalsList = () => {
 
     const filteredIds = ids.filter((rentalId) => {
       const rental = entities[rentalId];
-      return rental && !rental.endDate;
+      const today = new Date();
+      return rental && !rental.endDate && new Date(rental.startDate) <= today;
     });
-
     const tableContent = filteredIds.length ? (
       filteredIds.map((rentalId) => (
         <Rental key={rentalId} rentalId={rentalId} />
@@ -72,8 +72,10 @@ const RentalsList = () => {
 
     content = (
       <>
-        <section className="flex items-center justify-end gap-x-2 px-5">
-          <h3 className="text-sky-800 font-medium me-auto">Payment Overview</h3>
+        <section className="flex items-center justify-center md:justify-end gap-x-2 px-5">
+          <h3 className="text-sky-800 font-medium md:me-auto text-xs md:text-base">
+            Payment Overview
+          </h3>
 
           <button
             className="btn-secondary"
@@ -87,7 +89,7 @@ const RentalsList = () => {
             onClick={() => setIsSummaryPaymentModalOpen(true)}
           >
             <FontAwesomeIcon icon={faFileInvoice} />
-            <div>Collection Summary</div>
+            <div>Payment Summary</div>
           </button>
           {isStaff && (
             <button
@@ -98,15 +100,18 @@ const RentalsList = () => {
             </button>
           )}
         </section>
-        <div className="grid grid-cols-12 p-5 gap-x-5 ">
+        <div className="grid grid-cols-12 py-5 md:p-5 gap-x-5">
           <div className="col-span-12">
-            <table className="w-full">
+            <table className="w-full text-xs md:text-sm">
               <thead>
                 <tr>
-                  <th>Store</th>
-                  <th>Owner</th>
-                  <th>Section</th>
-                  <th>Stall</th>
+                  <th className="hidden md:table-cell">Store</th>
+                  <th className="hidden md:table-cell">Owner</th>
+                  <th className="md:hidden">Store/Owner</th>
+
+                  <th className="hidden md:table-cell">Section</th>
+                  <th className="hidden md:table-cell">Stall</th>
+                  <th className="md:hidden">Stall Section</th>
                   <th>Cost</th>
                   <th>Due Date</th>
                 </tr>

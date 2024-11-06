@@ -25,7 +25,7 @@ const Welcome = () => {
 
   const content = (
     <div className="flex w-full justify-between -mt-4">
-      <section className="flex flex-col gap-y-2 w-1/4 mt-4">
+      <section className="flex flex-col gap-y-2 w-full md:w-1/4 mt-4">
         {isAdministrator && (
           <>
             <Link
@@ -41,7 +41,7 @@ const Welcome = () => {
         {isStaff && (
           <Link
             to="/dashboard/collection"
-            className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+            className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-full md:w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
           >
             <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
             <p>Collection</p>
@@ -67,7 +67,7 @@ const Welcome = () => {
             </Link>
             <Link
               to="/dashboard/collection"
-              className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+              className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-full md:w-60 text-lg md:text-sm hover:bg-sky-800 hover:w-64 duration-300"
             >
               <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
               <p>Collection</p>
@@ -84,13 +84,13 @@ const Welcome = () => {
 
         <Link
           to="/dashboard/profile"
-          className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+          className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-full md:w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
         >
           <FontAwesomeIcon className="w-[15px]" icon={faUserGear} />
           <p>Profile</p>
         </Link>
       </section>
-      <div className="carousel-section flex-1 h-full rounded-md pe-10">
+      <div className="carousel-section flex-1 h-full rounded-md pe-10 hidden md:block">
         <ImageCarousel />
       </div>
     </div>

@@ -57,7 +57,7 @@ const Account = () => {
       setNewPassword("");
       setRetypeNewPassword("");
       setTouchedNewPassword(false);
-      navigate("/dashboard/account");
+      navigate("/dashboard/profile");
     }
   }, [isSuccess, navigate]);
 
@@ -105,7 +105,7 @@ const Account = () => {
     <>
       <div className="p-5">
         <form
-          className="w-[50rem] form-input bg-white/20 shadow-md rounded-md p-6"
+          className="form-input bg-white/20 shadow-md rounded-md p-6 w-full sm:w-[50rem] mx-auto"
           method="POST"
           onSubmit={(e) => e.preventDefault()}
         >
@@ -116,7 +116,7 @@ const Account = () => {
               {errMessage || successMessage}
             </span>
           </div>
-          <section className="grid grid-cols-5 items-center gap-x-5 gap-y-4 mb-10">
+          <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 items-center gap-x-5 gap-y-4 mb-10">
             <label htmlFor="fullname">Full name</label>
             <input
               type="text"
@@ -124,7 +124,9 @@ const Account = () => {
               placeholder="Full Name"
               value={fullname}
               onChange={onFullnameChanged}
-              className={!validFullname ? "border border-red-500" : ""}
+              className={`w-full ${
+                !validFullname ? "border border-red-500" : ""
+              }`}
             />
             <label htmlFor="username">Username</label>
             <input
@@ -133,10 +135,12 @@ const Account = () => {
               placeholder="Username"
               value={username}
               onChange={onUsernameChanged}
-              className={!validUsername ? "border border-red-500" : ""}
+              className={`w-full ${
+                !validUsername ? "border border-red-500" : ""
+              }`}
             />
 
-            <hr className="col-span-full" />
+            <hr className="col-span-3 md:col-span-full" />
 
             <label htmlFor="password">Current Password</label>
             <input
@@ -146,6 +150,7 @@ const Account = () => {
               autoComplete="off"
               value={password}
               onChange={onPasswordChanged}
+              className="w-full"
             />
 
             <label htmlFor="new-password">New Password</label>
@@ -156,11 +161,11 @@ const Account = () => {
               autoComplete="off"
               value={newPassword}
               onChange={onNewPasswordChanged}
-              className={
+              className={`w-full ${
                 !validNewPassword && touchedNewPassword
                   ? "border border-red-500"
                   : ""
-              }
+              }`}
             />
 
             <label htmlFor="retype-new-password">Retype New Password</label>
@@ -171,16 +176,17 @@ const Account = () => {
               autoComplete="off"
               value={retypeNewPassword}
               onChange={onRetypeNewPasswordChanged}
+              className="w-full"
             />
 
             {!passwordsMatch && retypeNewPassword !== "" && (
-              <p className="error">Passwords do not match.</p>
+              <p className="error col-span-full">Passwords do not match.</p>
             )}
           </section>
-          <div className="flex items-center gap-x-5 justify-end">
+          <div className="flex flex-col sm:flex-row items-center gap-x-5 gap-y-3 justify-end">
             <button
               title="Save"
-              className="btn-primary w-60"
+              className="btn-primary w-full sm:w-60"
               disabled={!canSave}
               onClick={onUpdateUserClicked}
             >

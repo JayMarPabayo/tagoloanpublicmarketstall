@@ -105,7 +105,7 @@ const SummaryPayment = ({ onCancel }) => {
     >
       <div
         onClick={handleModalClick}
-        className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-1/2"
+        className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md md:w-1/2"
       >
         <section className="flex items-center justify-end gap-x-2">
           <h3 className="text-sky-800 font-medium me-auto">

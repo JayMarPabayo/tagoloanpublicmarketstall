@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faShop } from "@fortawesome/free-solid-svg-icons";
 
-const Stall = ({ occupied, number, reserved = false }) => {
+const Stall = ({ occupied, number }) => {
   return (
     <div
       className={`${
@@ -16,11 +16,7 @@ const Stall = ({ occupied, number, reserved = false }) => {
         >
           {number}
         </h1>
-        {reserved ? (
-          <div className="text-xs text-white font-medium">Reserved</div>
-        ) : (
-          <FontAwesomeIcon icon={faShop} className="text-sky-800" />
-        )}
+        <FontAwesomeIcon icon={faShop} className="text-sky-800" />
       </div>
     </div>
   );

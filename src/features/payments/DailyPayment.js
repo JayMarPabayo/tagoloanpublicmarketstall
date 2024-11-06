@@ -99,25 +99,37 @@ const DailyPayment = ({ onCancel }) => {
             key={rentalId} // Add unique key for each row
             className="border-b border-slate-600/20 hover:scale-[98%] active:scale-[96%] cursor-pointer duration-300"
           >
-            <td>{rental.vendor?.name || "N/A"}</td>
-            <td>{rental.vendor?.owner || "N/A"}</td>
-            <td>
+            <td className="md:hidden">
+              <p className="font-medium">{rental.vendor?.name}</p>
+              <p className="text-xs text-slate-600">{rental.vendor?.owner}</p>
+            </td>
+
+            <td className="hidden md:table-cell">{rental.vendor?.name}</td>
+            <td className="hidden md:table-cell">{rental.vendor?.owner}</td>
+
+            <td className="md:hidden">
+              <p className="font-medium">{rental.stall?.section?.group}</p>
+              <p className="mb-1">{rental.stall?.section?.name}</p>
+              <span className="p-1 bg-sky-900/90 rounded-md text-white">{`Stall ${rental.stall.number}`}</span>
+            </td>
+
+            <td className="hidden md:table-cell">
               <span className="font-medium">
-                {rental.stall?.section?.group || "N/A"}
+                {rental.stall?.section?.group}
               </span>
-              <span className="ms-2">
-                {rental.stall?.section?.name || "N/A"}
-              </span>
+              <span className="ms-2">{rental.stall?.section?.name}</span>
             </td>
+
+            <td className="hidden md:table-cell">
+              <span className="py-1 px-3 bg-sky-900/90 rounded-md text-white">{`Stall No. ${rental.stall.number}`}</span>
+            </td>
+
             <td>
-              <span className="py-1 px-3 bg-sky-900/90 rounded-md text-white">
-                {`Stall No. ${rental.stall?.number || "N/A"}`}
-              </span>
-            </td>
-            <td className="text-center">
               <p
-                className={`py-1 px-3 rounded-md font-semibold ${
-                  hasPaid ? "text-green-600" : "text-red-600"
+                className={`md:py-1 md:px-3 rounded-md text-center font-medium md:text-white text-[0.6rem] md:text-xs ${
+                  hasPaid
+                    ? "text-green-700 md:bg-green-600"
+                    : "text-red-700 md:bg-red-600"
                 }`}
               >
                 {hasPaid ? "Paid" : "Not Paid"}
@@ -141,20 +153,22 @@ const DailyPayment = ({ onCancel }) => {
       >
         <div
           onClick={handleModalClick}
-          className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-3/4"
+          className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-full md:w-3/4"
         >
-          <section className="flex items-center justify-end gap-x-2 px-5">
-            <h3 className="text-sky-800 font-medium me-auto">Daily Overview</h3>
+          <section className="flex items-center justify-end gap-x-2 md:px-5">
+            <h3 className="text-sky-800 font-medium me-auto text-xs md:text-base">
+              Daily Overview
+            </h3>
             <input
               type="date"
               value={selectedDate}
               onChange={handleDateChange}
-              className=" cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-36 text-sm tracking-wide p-2"
+              className=" cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-36 text-xs md:text-sm tracking-wide p-2"
             />
             <select
               value={statusFilter}
               onChange={handleFilterChange}
-              className="cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-sm tracking-wide p-2"
+              className="cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-xs md:text-sm tracking-wide p-2"
             >
               <option value="All">All</option>
               <option value="Paid">Paid</option>
@@ -162,15 +176,18 @@ const DailyPayment = ({ onCancel }) => {
             </select>
           </section>
           <hr className="border-t border-slate-400/50 my-3" />
-          <div className="grid grid-cols-12 p-5 gap-x-5 ">
+          <div className="grid grid-cols-12 py-5 md:p-5 gap-x-5 ">
             <div className="col-span-12">
-              <table className="w-full">
+              <table className="w-full text-xs md:text-sm">
                 <thead>
                   <tr>
-                    <th>Store</th>
-                    <th>Owner</th>
-                    <th>Section</th>
-                    <th>Stall</th>
+                    <th className="hidden md:table-cell">Store</th>
+                    <th className="hidden md:table-cell">Owner</th>
+                    <th className="md:hidden">Store/Owner</th>
+
+                    <th className="hidden md:table-cell">Section</th>
+                    <th className="hidden md:table-cell">Stall</th>
+                    <th className="md:hidden">Stall Section</th>
                     <th className="text-center">Status</th>
                   </tr>
                 </thead>

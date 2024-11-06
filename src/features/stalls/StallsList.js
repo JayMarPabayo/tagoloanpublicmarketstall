@@ -106,21 +106,19 @@ const StallsList = ({ group = "" }) => {
               <div key={section.id}>
                 <h1 className="mb-2">{section.name}</h1>
                 <div className={`grid grid-cols-${section.stallsPerRow} gap-2`}>
-                  {filteredStalls.map((stall) => {
-                    return (
-                      <button
-                        key={stall.id}
-                        onDoubleClick={() =>
-                          navigate(`/dashboard/stalls/${stall.id}`)
-                        }
-                      >
-                        <Stall
-                          occupied={!stall.available}
-                          number={stall.number}
-                        />
-                      </button>
-                    );
-                  })}
+                  {filteredStalls.map((stall) => (
+                    <button
+                      key={stall.id}
+                      onDoubleClick={() =>
+                        navigate(`/dashboard/stalls/${stall.id}`)
+                      }
+                    >
+                      <Stall
+                        occupied={!stall.available}
+                        number={stall.number}
+                      />
+                    </button>
+                  ))}
                 </div>
               </div>
             );
