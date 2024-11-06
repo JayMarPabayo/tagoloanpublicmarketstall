@@ -107,7 +107,7 @@ const Sections = () => {
               ).filter((stall) => stall.section._id === section.id);
 
               filteredStalls.sort((a, b) => a.number - b.number);
-
+              console.log(filteredStalls);
               return (
                 <div key={section.id} className="mb-5">
                   <div className="mb-2 flex items-center gap-x-4">
@@ -137,6 +137,7 @@ const Sections = () => {
                         <Stall
                           occupied={!stall.available}
                           number={stall.number}
+                          reserved={stall.reserved}
                         />
                       </button>
                     ))}

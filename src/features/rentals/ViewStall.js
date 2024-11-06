@@ -121,7 +121,9 @@ const ViewStall = () => {
 
             <div className="flex items-center gap-x-2">
               <p className="w-36 text-teal-800/70 text-sm font-medium text-left">
-                Date Started
+                {rental?.startDate && new Date(rental.startDate) > new Date()
+                  ? "Reserved Date"
+                  : "Date Started"}
               </p>
               <p className="text-lg font-medium">
                 {rental?.startDate

@@ -87,7 +87,7 @@ const RentalsList = () => {
             onClick={() => setIsSummaryPaymentModalOpen(true)}
           >
             <FontAwesomeIcon icon={faFileInvoice} />
-            <div>Payment Summary</div>
+            <div>Collection Summary</div>
           </button>
           {isStaff && (
             <button

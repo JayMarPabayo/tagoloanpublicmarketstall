@@ -114,14 +114,14 @@ const DailyPayment = ({ onCancel }) => {
                 {`Stall No. ${rental.stall?.number || "N/A"}`}
               </span>
             </td>
-            <td>
-              <span
-                className={`py-1 px-3 rounded-md text-white ${
-                  hasPaid ? "bg-green-600" : "bg-red-600"
+            <td className="text-center">
+              <p
+                className={`py-1 px-3 rounded-md font-semibold ${
+                  hasPaid ? "text-green-600" : "text-red-600"
                 }`}
               >
                 {hasPaid ? "Paid" : "Not Paid"}
-              </span>
+              </p>
             </td>
           </tr>
         );
@@ -171,7 +171,7 @@ const DailyPayment = ({ onCancel }) => {
                     <th>Owner</th>
                     <th>Section</th>
                     <th>Stall</th>
-                    <th>Status</th>
+                    <th className="text-center">Status</th>
                   </tr>
                 </thead>
                 <tbody>{tableContent}</tbody>
