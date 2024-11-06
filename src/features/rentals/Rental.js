@@ -43,10 +43,17 @@ const Rental = ({ rentalId }) => {
                   })
                 : "N/A"}
             </div>
-            {rental?.dueDate
+            {rental?.dueDate && rental?.startDate
               ? (() => {
                   const dueDate = new Date(rental?.dueDate);
+                  const startDate = new Date(rental?.startDate);
                   const today = new Date();
+
+                  // Check if startDate is in the future
+                  if (startDate > today) {
+                    return null; // Don’t show any status
+                  }
+
                   const diffTime = today - dueDate;
                   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Difference in days
 

@@ -3,7 +3,7 @@ import { useLocation } from "react-router-dom";
 import { useReactToPrint } from "react-to-print";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint, faFilePdf } from "@fortawesome/free-solid-svg-icons";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
 
 const LeaseForm = () => {
   const location = useLocation();

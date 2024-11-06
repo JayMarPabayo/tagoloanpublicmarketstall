@@ -22,25 +22,36 @@ const PaymentHistory = ({ onCancel, rental }) => {
   if (isSuccess) {
     const { ids, entities } = payments;
 
-    const filteredIds = ids.filter((id) => {
+    // -- payments by OR# with accumulated amount
+    const paymentGroups = ids.reduce((acc, id) => {
       const payment = entities[id];
-      return payment;
-    });
+      if (payment && payment.rental?._id === rental?.id) {
+        const { orNumber, amount, user, createdAt } = payment;
 
-    const tableContent = filteredIds.length ? (
-      filteredIds.map((id, index) => {
-        const payment = entities[id];
-        if (payment.rental?._id === rental?.id) {
-          return (
-            <tr key={index}>
-              <td>{payment.orNumber}</td>
-              <td>{payment.user?.fullname}</td>
-              <td>{new Date(payment.createdAt).toLocaleDateString("en-US")}</td>
-              <td>₱ {payment.amount?.toFixed(2)}</td>
-            </tr>
-          );
-        } else return null;
-      })
+        if (!acc[orNumber]) {
+          acc[orNumber] = {
+            orNumber,
+            user,
+            createdAt,
+            amount: 0,
+          };
+        }
+        acc[orNumber].amount += amount;
+      }
+      return acc;
+    }, {});
+
+    const tableContent = Object.keys(paymentGroups).length ? (
+      Object.values(paymentGroups).map((paymentGroup, index) => (
+        <tr key={index}>
+          <td>{paymentGroup.orNumber}</td>
+          <td>{paymentGroup.user?.fullname}</td>
+          <td>
+            {new Date(paymentGroup.createdAt).toLocaleDateString("en-US")}
+          </td>
+          <td>₱{paymentGroup.amount.toFixed(2)}</td>
+        </tr>
+      ))
     ) : (
       <tr>
         <td colSpan="4">No payments found</td>
@@ -134,7 +145,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
               <tr>
                 <th>OR#</th>
                 <th>Collector</th>
-                <th>Date</th>
+                <th>Date Paid</th>
                 <th>Amount</th>
               </tr>
             </thead>

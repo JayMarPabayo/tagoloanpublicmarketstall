@@ -1,4 +1,4 @@
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,7 +16,7 @@ const StallsRented = ({ vendor }) => {
   const navigate = useNavigate();
 
   //   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
-  const [currentStall, setCurrentStall] = useState(null);
+  // const [currentStall, setCurrentStall] = useState(null);
 
   if (isSuccess) {
     const { ids, entities } = rentals;
@@ -44,7 +44,7 @@ const StallsRented = ({ vendor }) => {
             <div
               key={id}
               onClick={() => {
-                setCurrentStall(rental.stall);
+                // setCurrentStall(rental.stall);
                 // setIsHistoryModalOpen(true);
               }}
               className="rounded-md bg-emerald-300 shadow-md p-2 flex items-start justify-between cursor-pointer"

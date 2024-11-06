@@ -34,6 +34,9 @@ const EditVendorForm = ({ vendor }) => {
   const [birthdate, setBirthdate] = useState("");
   const [validBirthdate, setValidBirthdate] = useState(false);
 
+  const [banDeposit, setBanDeposit] = useState(vendor.banDeposit);
+  const [validBanDeposit, setValidBanDeposit] = useState(false);
+
   const [type, setType] = useState(vendor.type);
   const [validType, setValidType] = useState(false);
 
@@ -49,6 +52,7 @@ const EditVendorForm = ({ vendor }) => {
   const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
+  const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidStorename(storename !== "");
@@ -69,7 +73,11 @@ const EditVendorForm = ({ vendor }) => {
     const today = new Date();
     const selectedDate = new Date(birthdate);
 
-    setValidBirthdate(birthdate !== "" && selectedDate <= today);
+    setValidBirthdate(
+      birthdate !== "" &&
+        !isNaN(new Date(birthdate).getTime()) &&
+        selectedDate <= today
+    );
   }, [birthdate]);
 
   useEffect(() => {
@@ -85,6 +93,10 @@ const EditVendorForm = ({ vendor }) => {
   }, [contact]);
 
   useEffect(() => {
+    setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
+  }, [banDeposit]);
+
+  useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setFullname("");
       setBirthdate("");
@@ -92,6 +104,7 @@ const EditVendorForm = ({ vendor }) => {
       setType("");
       setAddress("");
       setContact("");
+      setBanDeposit("");
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, isDelSuccess, navigate]);
@@ -126,6 +139,11 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedContact(true);
   };
 
+  const onBanDepositChanged = (e) => {
+    setBanDeposit(e.target.value);
+    setTouchedBanDeposit(true);
+  };
+
   const onUpdateVendorClicked = async (e) => {
     setTouchedFullname(true);
     setTouchedBirthdate(true);
@@ -133,6 +151,7 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
+    setTouchedBanDeposit(true);
     await updateVendor({
       id: vendor.id,
       owner: fullname,
@@ -141,6 +160,7 @@ const EditVendorForm = ({ vendor }) => {
       type,
       address,
       contact,
+      banDeposit,
     });
   };
 
@@ -165,11 +185,11 @@ const EditVendorForm = ({ vendor }) => {
       validType,
       validAddress,
       validContact,
+      validBanDeposit,
     ].every(Boolean) && !isLoading;
 
   const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
 
-  console.log(vendor);
   const content = (
     <div className="flex gap-x-2">
       <div className="w-1/2">
@@ -255,6 +275,20 @@ const EditVendorForm = ({ vendor }) => {
                 onChange={onContactChanged}
                 className={
                   !validContact && touchedContact ? "border border-red-500" : ""
+                }
+              />
+
+              <label htmlFor="banDeposit">Ban Deposit</label>
+              <input
+                type="number"
+                name="banDeposit"
+                placeholder="Ban Deposit Amount"
+                value={banDeposit}
+                onChange={onBanDepositChanged}
+                className={
+                  !validBanDeposit && touchedBanDeposit
+                    ? "border border-red-500"
+                    : ""
                 }
               />
             </section>

@@ -1,6 +1,14 @@
 import { useState } from "react";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faCalendarDays,
+  faFileInvoice,
+} from "@fortawesome/free-solid-svg-icons";
+
 import Rental from "./Rental";
+import DailyPayment from "../payments/DailyPayment";
+import SummaryPayment from "../payments/SummaryPayment";
 import Spinner from "../../utils/Spinner";
 import NewPayment from "../payments/NewPayment";
 import useAuth from "../../hooks/useAuth";
@@ -9,6 +17,9 @@ import { useGetRentalsQuery } from "../rentals/rentalsApiSlice";
 
 const RentalsList = () => {
   const [isNewPaymentModalOpen, setIsNewPaymentModalOpen] = useState(false);
+  const [isDailyPaymentModalOpen, setIsDailyPaymentModalOpen] = useState(false);
+  const [isSummaryPaymentModalOpen, setIsSummaryPaymentModalOpen] =
+    useState(false);
   const { isStaff } = useAuth();
 
   const {
@@ -61,9 +72,23 @@ const RentalsList = () => {
 
     content = (
       <>
-        <section className="flex items-center justify-between px-5">
-          <h3 className="text-sky-800 font-medium">Payment Overview</h3>
+        <section className="flex items-center justify-end gap-x-2 px-5">
+          <h3 className="text-sky-800 font-medium me-auto">Payment Overview</h3>
 
+          <button
+            className="btn-secondary"
+            onClick={() => setIsDailyPaymentModalOpen(true)}
+          >
+            <FontAwesomeIcon icon={faCalendarDays} />
+            <div>Daily Records</div>
+          </button>
+          <button
+            className="btn-secondary"
+            onClick={() => setIsSummaryPaymentModalOpen(true)}
+          >
+            <FontAwesomeIcon icon={faFileInvoice} />
+            <div>Payment Summary</div>
+          </button>
           {isStaff && (
             <button
               className="btn-primary"
@@ -90,10 +115,21 @@ const RentalsList = () => {
             </table>
           </div>
         </div>
+
         {isNewPaymentModalOpen && (
           <NewPayment
             onConfirm={handlePaymentConfirm}
             onCancel={handleNewPaymentCancel}
+          />
+        )}
+
+        {isDailyPaymentModalOpen && (
+          <DailyPayment onCancel={() => setIsDailyPaymentModalOpen(false)} />
+        )}
+
+        {isSummaryPaymentModalOpen && (
+          <SummaryPayment
+            onCancel={() => setIsSummaryPaymentModalOpen(false)}
           />
         )}
       </>

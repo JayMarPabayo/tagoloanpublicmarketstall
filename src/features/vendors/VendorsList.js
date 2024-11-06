@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faShop,
   faCircleUser,
   faCirclePlus,
   // faStore,
@@ -15,7 +14,7 @@ import Vendor from "./Vendor";
 import Spinner from "../../utils/Spinner";
 
 const VendorsList = () => {
-  const [sortOption, setSortOption] = useState("name");
+  const [sortOption, setSortOption] = useState("owner");
   // const [filterOption, setFilterOption] = useState("all");
 
   const {
@@ -121,18 +120,6 @@ const VendorsList = () => {
 
           <div
             className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
-              sortOption === "name"
-                ? "bg-sky-500/30 text-sky-600"
-                : "hover:bg-sky-400/30"
-            }`}
-            onClick={() => setSortOption("name")}
-          >
-            <FontAwesomeIcon icon={faShop} />
-            <span>Store name</span>
-          </div>
-
-          <div
-            className={`flex items-center gap-x-2 px-2 py-1 mb-4 rounded-md cursor-pointer duration-300 ${
               sortOption === "owner"
                 ? "bg-sky-500/30 text-sky-600"
                 : "hover:bg-sky-400/30"
@@ -142,6 +129,18 @@ const VendorsList = () => {
             <FontAwesomeIcon icon={faCircleUser} />
             <span>Owner name</span>
           </div>
+
+          {/* <div
+            className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
+              sortOption === "name"
+                ? "bg-sky-500/30 text-sky-600"
+                : "hover:bg-sky-400/30"
+            }`}
+            onClick={() => setSortOption("name")}
+          >
+            <FontAwesomeIcon icon={faShop} />
+            <span>Store name</span>
+          </div> */}
         </div>
         <ul className="w-full grid grid-cols-5 gap-x-5 gap-y-5 col-span-10">
           {tableContent}

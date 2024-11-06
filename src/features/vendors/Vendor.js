@@ -32,12 +32,12 @@ const Vendor = ({ vendorId }) => {
           className="py-1 px-2 text-sm bg-sky-800 text-white flex items-center gap-x-2 rounded-t-md"
         >
           <FontAwesomeIcon icon={faShop} />
-          <span>{vendor.name}</span>
+          <span>{vendor.owner}</span>
         </div>
         <div className="p-2 text-sky-800 text-xs flex flex-col gap-y-2">
           <div title="Owner" className="flex items-center gap-x-2">
             <FontAwesomeIcon icon={faCircleUser} />
-            <span className="font-bold">{vendor.owner}</span>
+            <span className="font-bold">{vendor.name}</span>
           </div>
           <div title="Address" className="flex items-start gap-x-2">
             <FontAwesomeIcon icon={faMapLocationDot} />

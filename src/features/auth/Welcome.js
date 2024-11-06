@@ -29,18 +29,11 @@ const Welcome = () => {
         {isAdministrator && (
           <>
             <Link
-              to="/dashboard/collection"
-              className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
-            >
-              <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
-              <p>Collection</p>
-            </Link>
-            <Link
               to="/dashboard/renting"
               className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
             >
               <FontAwesomeIcon className="w-[15px]" icon={faWarehouse} />
-              <p>Renting</p>
+              <p>Market Rental Stall</p>
             </Link>
           </>
         )}
@@ -62,7 +55,7 @@ const Welcome = () => {
               className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
             >
               <FontAwesomeIcon className="w-[15px]" icon={faStore} />
-              <p>Stalls</p>
+              <p>Stall Sections</p>
             </Link>
 
             <Link
@@ -71,6 +64,13 @@ const Welcome = () => {
             >
               <FontAwesomeIcon className="w-[15px]" icon={faPersonShelter} />
               <p>Vendors</p>
+            </Link>
+            <Link
+              to="/dashboard/collection"
+              className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
+            >
+              <FontAwesomeIcon className="w-[15px]" icon={faHandHoldingHand} />
+              <p>Collection</p>
             </Link>
             <Link
               to="/dashboard/accounts"
