@@ -4,6 +4,7 @@ import { useReactToPrint } from "react-to-print";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import "../../lease.css";
 
 const LeaseForm = () => {
   const location = useLocation();

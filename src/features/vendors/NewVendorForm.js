@@ -32,8 +32,8 @@ const NewVendorForm = () => {
   const [contact, setContact] = useState("");
   const [validContact, setValidContact] = useState(false);
 
-  const [banDeposit, setBanDeposit] = useState("");
-  const [validBanDeposit, setValidBanDeposit] = useState(false);
+  // const [banDeposit, setBanDeposit] = useState("");
+  // const [validBanDeposit, setValidBanDeposit] = useState(false);
 
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
@@ -41,7 +41,7 @@ const NewVendorForm = () => {
   const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
-  const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
+  // const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidStorename(storename !== "");
@@ -74,9 +74,9 @@ const NewVendorForm = () => {
     setValidContact(contact !== "");
   }, [contact]);
 
-  useEffect(() => {
-    setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
-  }, [banDeposit]);
+  // useEffect(() => {
+  //   setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
+  // }, [banDeposit]);
 
   useEffect(() => {
     if (isSuccess) {
@@ -86,7 +86,7 @@ const NewVendorForm = () => {
       setType("");
       setAddress("");
       setContact("");
-      setBanDeposit("");
+      // setBanDeposit("");
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, navigate]);
@@ -121,10 +121,10 @@ const NewVendorForm = () => {
     setTouchedContact(true);
   };
 
-  const onBanDepositChanged = (e) => {
-    setBanDeposit(e.target.value);
-    setTouchedBanDeposit(true);
-  };
+  // const onBanDepositChanged = (e) => {
+  //   setBanDeposit(e.target.value);
+  //   setTouchedBanDeposit(true);
+  // };
 
   const canSave =
     [
@@ -134,7 +134,7 @@ const NewVendorForm = () => {
       validType,
       validAddress,
       validContact,
-      validBanDeposit,
+      // validBanDeposit,
     ].every(Boolean) && !isLoading;
 
   const onSaveVendorClicked = async (e) => {
@@ -145,7 +145,7 @@ const NewVendorForm = () => {
     setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
-    setTouchedBanDeposit(true);
+    // setTouchedBanDeposit(true);
     if (canSave) {
       await addNewVendor({
         owner: fullname,
@@ -154,7 +154,7 @@ const NewVendorForm = () => {
         type,
         address,
         contact,
-        banDeposit,
+        // banDeposit,
       });
     }
   };
@@ -239,7 +239,7 @@ const NewVendorForm = () => {
             }
           />
 
-          <label htmlFor="fullname">Ban Deposit</label>
+          {/* <label htmlFor="fullname">Ban Deposit</label>
           <input
             type="number"
             name="banDeposit"
@@ -251,7 +251,7 @@ const NewVendorForm = () => {
                 ? "border border-red-500"
                 : ""
             }
-          />
+          /> */}
         </section>
         <p className="error">{error?.data?.message}</p>
         <div className="flex">

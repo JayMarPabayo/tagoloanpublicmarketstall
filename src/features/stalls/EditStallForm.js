@@ -31,22 +31,31 @@ const EditStallForm = ({ stall }) => {
   const [cost, setCost] = useState(stall.cost);
   const [validCost, setValidCost] = useState(false);
 
+  const [banDeposit, setBanDeposit] = useState(stall.banDeposit);
+  const [validBanDeposit, setValidBanDeposit] = useState(false);
+
   const [touchedNumber, setTouchedNumber] = useState(false);
   const [touchedCost, setTouchedCost] = useState(false);
+  const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidNumber(number !== "");
   }, [number]);
 
   useEffect(() => {
-    setValidCost(cost !== "");
+    setValidCost(!isNaN(cost) && cost >= 0);
   }, [cost]);
+
+  useEffect(() => {
+    setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
+  }, [banDeposit]);
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setNumber("");
       setNotes("");
       setCost("");
+      setBanDeposit("");
       navigate("/dashboard/sections", {
         state: { selectedSectionGroup: stall.section.group },
       });
@@ -63,6 +72,11 @@ const EditStallForm = ({ stall }) => {
     setTouchedCost(true);
   };
 
+  const onBanDepositChanged = (e) => {
+    setBanDeposit(e.target.value);
+    setTouchedBanDeposit(true);
+  };
+
   const onNotesChanged = (e) => {
     setNotes(e.target.value);
   };
@@ -70,10 +84,12 @@ const EditStallForm = ({ stall }) => {
   const onUpdateStallClicked = async () => {
     setTouchedNumber(true);
     setTouchedCost(true);
+    setTouchedBanDeposit(true);
     await updateStall({
       id: stall.id,
       number,
       cost,
+      banDeposit,
       notes,
     });
   };
@@ -93,7 +109,8 @@ const EditStallForm = ({ stall }) => {
 
   let canSave;
 
-  canSave = [number, cost].every(Boolean) && !isLoading;
+  canSave =
+    [validNumber, validCost, validBanDeposit].every(Boolean) && !isLoading;
 
   const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
 
@@ -138,6 +155,20 @@ const EditStallForm = ({ stall }) => {
                 !validCost && touchedCost ? "border border-red-500" : ""
               }
               onChange={onCostChanged}
+            />
+
+            <label htmlFor="banDeposit">Ban Deposit</label>
+            <input
+              type="number"
+              name="banDeposit"
+              placeholder="Ban Deposit Amount"
+              value={banDeposit}
+              className={
+                !validBanDeposit && touchedBanDeposit
+                  ? "border border-red-500"
+                  : ""
+              }
+              onChange={onBanDepositChanged}
             />
 
             <label htmlFor="notes">Notes</label>

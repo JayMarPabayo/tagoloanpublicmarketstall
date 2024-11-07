@@ -22,10 +22,18 @@ const NewStallForm = ({ onCancel }) => {
   const [numberOfStalls, setNumberOfStalls] = useState(0);
   const [validNumberOfStalls, setValidNumberOfStalls] = useState(false);
 
+  const [cost, setCost] = useState(0);
+  const [validCost, setValidCost] = useState(false);
+
+  const [banDeposit, setBanDeposit] = useState(0);
+  const [validBanDeposit, setValidBanDeposit] = useState(false);
+
   const [touchedGroup, setTouchedGroup] = useState(false);
   const [touchedName, setTouchedName] = useState(false);
   const [touchedStallsPerRow, setTouchedStallsPerRow] = useState(false);
   const [touchedNumberOfStalls, setTouchedNumberOfStalls] = useState(false);
+  const [touchedCost, setTouchedCost] = useState(false);
+  const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidGroup(group !== "");
@@ -44,11 +52,21 @@ const NewStallForm = ({ onCancel }) => {
   }, [numberOfStalls]);
 
   useEffect(() => {
+    setValidCost(!isNaN(cost) && cost >= 0);
+  }, [cost]);
+
+  useEffect(() => {
+    setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
+  }, [banDeposit]);
+
+  useEffect(() => {
     if (isSuccess) {
       setGroup("");
       setName("");
       setStallsPerRow(0);
       setNumberOfStalls(0);
+      setCost(0);
+      setBanDeposit(0);
       onCancel();
     }
   }, [isSuccess, onCancel]);
@@ -73,10 +91,25 @@ const NewStallForm = ({ onCancel }) => {
     setTouchedNumberOfStalls(true);
   };
 
+  const onCostChanged = (e) => {
+    setCost(e.target.value);
+    setTouchedCost(true);
+  };
+
+  const onBanDepositChanged = (e) => {
+    setBanDeposit(e.target.value);
+    setTouchedBanDeposit(true);
+  };
+
   const canSave =
-    [validGroup, validName, validStallsPerRow, validNumberOfStalls].every(
-      Boolean
-    ) && !isLoading;
+    [
+      validGroup,
+      validName,
+      validStallsPerRow,
+      validNumberOfStalls,
+      validCost,
+      validBanDeposit,
+    ].every(Boolean) && !isLoading;
 
   const onSaveSectionClicked = async (e) => {
     e.preventDefault();
@@ -84,12 +117,16 @@ const NewStallForm = ({ onCancel }) => {
     setTouchedName(true);
     setTouchedStallsPerRow(true);
     setTouchedNumberOfStalls(true);
+    setTouchedCost(true);
+    setTouchedBanDeposit(true);
     if (canSave) {
       await addNewSection({
         group,
         name,
         stallsPerRow,
         numberOfStalls,
+        cost,
+        banDeposit,
       });
     }
   };
@@ -125,6 +162,31 @@ const NewStallForm = ({ onCancel }) => {
             className={!validName && touchedName ? "border border-red-500" : ""}
           />
 
+          <label htmlFor="fullname">Cost per Stall</label>
+          <input
+            type="number"
+            name="cost"
+            placeholder="Cost Amount"
+            value={cost}
+            onChange={onCostChanged}
+            className={!validCost && touchedCost ? "border border-red-500" : ""}
+          />
+
+          <label htmlFor="fullname">Ban Deposit</label>
+          <input
+            type="number"
+            name="banDeposit"
+            placeholder="Ban Deposit Amount"
+            value={banDeposit}
+            onChange={onBanDepositChanged}
+            className={
+              !validBanDeposit && touchedBanDeposit
+                ? "border border-red-500"
+                : ""
+            }
+          />
+
+          <hr className="col-span-full" />
           <label htmlFor="name">Stalls Each Row</label>
           <input
             type="number"

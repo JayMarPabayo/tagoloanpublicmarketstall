@@ -84,6 +84,7 @@ const SectionsList = () => {
                               <Stall
                                 occupied={!stall.available}
                                 number={stall.number}
+                                reserved={stall.reserved}
                                 key={stall.id}
                               />
                             </button>

@@ -52,6 +52,7 @@ const Welcome = () => {
           <>
             <Link
               to="/dashboard/sections"
+              state={{ selectedSectionGroup: "Vegetables" }}
               className="flex items-center gap-x-4 text-white bg-sky-900 rounded-sm px-3 py-2 w-60 text-sm hover:bg-sky-800 hover:w-64 duration-300"
             >
               <FontAwesomeIcon className="w-[15px]" icon={faStore} />

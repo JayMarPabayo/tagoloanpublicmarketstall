@@ -61,7 +61,8 @@ const DailyPayment = ({ onCancel }) => {
     const formattedSelectedDate = new Date(selectedDate).toDateString();
     const filteredIds = ids.filter((rentalId) => {
       const rental = entities[rentalId];
-      return rental && !rental.endDate;
+      const today = new Date();
+      return rental && !rental.endDate && new Date(rental.startDate) <= today;
     });
 
     // Apply the filter for "Paid", "Not Paid", or "All"

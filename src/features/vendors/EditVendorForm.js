@@ -34,8 +34,8 @@ const EditVendorForm = ({ vendor }) => {
   const [birthdate, setBirthdate] = useState("");
   const [validBirthdate, setValidBirthdate] = useState(false);
 
-  const [banDeposit, setBanDeposit] = useState(vendor.banDeposit);
-  const [validBanDeposit, setValidBanDeposit] = useState(false);
+  // const [banDeposit, setBanDeposit] = useState(vendor.banDeposit);
+  // const [validBanDeposit, setValidBanDeposit] = useState(false);
 
   const [type, setType] = useState(vendor.type);
   const [validType, setValidType] = useState(false);
@@ -52,7 +52,6 @@ const EditVendorForm = ({ vendor }) => {
   const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
-  const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidStorename(storename !== "");
@@ -92,9 +91,9 @@ const EditVendorForm = ({ vendor }) => {
     setValidContact(contact !== "");
   }, [contact]);
 
-  useEffect(() => {
-    setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
-  }, [banDeposit]);
+  // useEffect(() => {
+  //   setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
+  // }, [banDeposit]);
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
@@ -104,7 +103,7 @@ const EditVendorForm = ({ vendor }) => {
       setType("");
       setAddress("");
       setContact("");
-      setBanDeposit("");
+      // setBanDeposit("");
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, isDelSuccess, navigate]);
@@ -139,10 +138,10 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedContact(true);
   };
 
-  const onBanDepositChanged = (e) => {
-    setBanDeposit(e.target.value);
-    setTouchedBanDeposit(true);
-  };
+  // const onBanDepositChanged = (e) => {
+  //   setBanDeposit(e.target.value);
+  //   setTouchedBanDeposit(true);
+  // };
 
   const onUpdateVendorClicked = async (e) => {
     setTouchedFullname(true);
@@ -151,7 +150,7 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
-    setTouchedBanDeposit(true);
+    // setTouchedBanDeposit(true);
     await updateVendor({
       id: vendor.id,
       owner: fullname,
@@ -160,7 +159,7 @@ const EditVendorForm = ({ vendor }) => {
       type,
       address,
       contact,
-      banDeposit,
+      // banDeposit,
     });
   };
 
@@ -185,7 +184,7 @@ const EditVendorForm = ({ vendor }) => {
       validType,
       validAddress,
       validContact,
-      validBanDeposit,
+      // validBanDeposit,
     ].every(Boolean) && !isLoading;
 
   const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
@@ -278,7 +277,7 @@ const EditVendorForm = ({ vendor }) => {
                 }
               />
 
-              <label htmlFor="banDeposit">Ban Deposit</label>
+              {/* <label htmlFor="banDeposit">Ban Deposit</label>
               <input
                 type="number"
                 name="banDeposit"
@@ -290,7 +289,7 @@ const EditVendorForm = ({ vendor }) => {
                     ? "border border-red-500"
                     : ""
                 }
-              />
+              /> */}
             </section>
 
             <p className="error">{errMessage}</p>

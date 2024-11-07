@@ -16,7 +16,6 @@ import Stall from "./Stall";
 const Sections = () => {
   const location = useLocation();
   const initialGroup = location.state?.selectedSectionGroup || "";
-
   const [showNewStallForm, setShowNewStallForm] = useState(false);
   const [selectedSectionGroup, setSelectedSectionGroup] =
     useState(initialGroup);
@@ -66,7 +65,13 @@ const Sections = () => {
           </button>
         </div>
 
-        <div className="flex flex-row gap-y-2 col-span-2 bg-white/50 rounded-md mb-10">
+        <img
+          src={`${process.env.PUBLIC_URL}/images/layout.jpg`}
+          alt="Layout"
+          className="mb-5 h-[40rem] shadow-md border-2 border-sky-700"
+        />
+
+        <div className="flex flex-row gap-y-2 col-span-2 bg-white/50 rounded-md mb-5">
           {sections?.ids?.map((id) => {
             const group = sections.entities[id].group;
 
@@ -137,6 +142,7 @@ const Sections = () => {
                         <Stall
                           occupied={!stall.available}
                           number={stall.number}
+                          reserved={stall.reserved}
                         />
                       </button>
                     ))}
