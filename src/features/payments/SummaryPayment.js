@@ -124,7 +124,7 @@ const SummaryPayment = ({ onCancel }) => {
         </section>
         <hr className="border-t border-slate-400/50 my-3" />
 
-        {content}
+        <div className="max-h-96 overflow-y-auto">{content}</div>
       </div>
     </div>
   );

@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCircleUser,
   faCirclePlus,
-  // faStore,
+  faMagnifyingGlass,
   // faStoreSlash,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -15,7 +15,7 @@ import Spinner from "../../utils/Spinner";
 
 const VendorsList = () => {
   const [sortOption, setSortOption] = useState("owner");
-  // const [filterOption, setFilterOption] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     data: vendors,
@@ -42,17 +42,12 @@ const VendorsList = () => {
   if (isSuccess) {
     const { ids, entities } = vendors;
 
-    // const filteredIds = ids.filter((vendorId) => {
-    //   if (filterOption === "withStall") {
-    //     return entities[vendorId].hasRental === true;
-    //   } else if (filterOption === "withoutStall") {
-    //     return entities[vendorId].hasRental === false;
-    //   }
-    //   return true; // If "all", return all vendors
-    // });
-
-    const filteredIds = ids.filter(() => {
-      return true;
+    const filteredIds = ids.filter((vendorId) => {
+      const vendor = entities[vendorId];
+      return (
+        vendor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        vendor.owner.toLowerCase().includes(searchTerm.toLowerCase())
+      );
     });
 
     const sortedIds = [...filteredIds].sort((a, b) => {
@@ -64,60 +59,38 @@ const VendorsList = () => {
       return 0;
     });
 
-    const tableContent = sortedIds.length
-      ? sortedIds.map((vendorId) => (
-          <Vendor key={vendorId} vendorId={vendorId} />
-        ))
-      : null;
+    const tableContent = sortedIds.length ? (
+      sortedIds.map((vendorId) => <Vendor key={vendorId} vendorId={vendorId} />)
+    ) : (
+      <p>No vendors found.</p>
+    );
 
     content = (
       <div className="grid grid-cols-12 p-5 gap-x-5">
-        <div className="mb-2 flex items-center justify-between gap-x-4 col-span-full">
-          <h1 className="font-semibold">Vendors</h1>
-          <button
-            className="rounded-md flex items-center text-xs font-medium gap-x-2 bg-white px-2 py-1"
-            onClick={() => navigate(`/dashboard/vendors/create`)}
-          >
-            <FontAwesomeIcon icon={faCirclePlus} className="text-lg" />
-            <div>Add New</div>
-          </button>
+        <div className="mb-2 col-span-full grid gap-x-2 grid-cols-12">
+          <div className="col-span-2">
+            <h1 className="font-semibold">Vendors</h1>
+          </div>
+          <div className="col-span-10 flex justify-start items-center gap-x-2">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+            <input
+              type="search"
+              placeholder="Search..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-xs w-96 tracking-wide p-2"
+            />
+            <button
+              className="rounded-md ms-auto flex items-center text-xs font-medium gap-x-2 bg-white px-2 py-1"
+              onClick={() => navigate(`/dashboard/vendors/create`)}
+            >
+              <FontAwesomeIcon icon={faCirclePlus} className="text-lg" />
+              <div>Add New</div>
+            </button>
+          </div>
         </div>
         <div className="bg-white/80 h-full col-span-2 p-2 text-sm">
-          {/* <h3 className="mb-2 opacity-70">Filter</h3> */}
-          {/* <div
-            className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
-              filterOption === "withStall"
-                ? "bg-sky-500/30 text-sky-600"
-                : "hover:bg-sky-400/30"
-            }`}
-            onClick={() =>
-              filterOption === "withStall"
-                ? setFilterOption("all")
-                : setFilterOption("withStall")
-            }
-          >
-            <FontAwesomeIcon icon={faStore} />
-            <span>With stall</span>
-          </div>
-
-          <div
-            className={`flex items-center gap-x-2 px-2 py-1 mb-4 rounded-md cursor-pointer duration-300 ${
-              filterOption === "withoutStall"
-                ? "bg-sky-500/30 text-sky-600"
-                : "hover:bg-sky-400/30"
-            }`}
-            onClick={() =>
-              filterOption === "withoutStall"
-                ? setFilterOption("all")
-                : setFilterOption("withoutStall")
-            }
-          >
-            <FontAwesomeIcon icon={faStoreSlash} />
-            <span>Without stall</span>
-          </div> */}
-
           <h3 className="mb-2 opacity-70">Sort</h3>
-
           <div
             className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
               sortOption === "owner"
@@ -129,18 +102,6 @@ const VendorsList = () => {
             <FontAwesomeIcon icon={faCircleUser} />
             <span>Owner name</span>
           </div>
-
-          {/* <div
-            className={`flex items-center gap-x-2 px-2 py-1 mb-2 rounded-md cursor-pointer duration-300 ${
-              sortOption === "name"
-                ? "bg-sky-500/30 text-sky-600"
-                : "hover:bg-sky-400/30"
-            }`}
-            onClick={() => setSortOption("name")}
-          >
-            <FontAwesomeIcon icon={faShop} />
-            <span>Store name</span>
-          </div> */}
         </div>
         <ul className="w-full grid grid-cols-5 gap-x-5 gap-y-5 col-span-10">
           {tableContent}

@@ -35,17 +35,17 @@ const Sections = () => {
   });
 
   const navigate = useNavigate();
-  const uniqueGroups = new Set();
+  const uniqueGroups = Array.from(
+    new Set(
+      Object.values(sections?.entities || {}).map((section) => section.group)
+    )
+  );
 
   const filteredSections = selectedSectionGroup
     ? Object.values(sections?.entities || {})
         .filter((section) => section.group === selectedSectionGroup)
         .sort((a, b) => a.name.localeCompare(b.name))
     : [];
-
-  const handleSectionGroupClick = (group) => {
-    setSelectedSectionGroup(group);
-  };
 
   const handleAddStallToSection = async (e, sectionId) => {
     e.preventDefault();
@@ -54,7 +54,7 @@ const Sections = () => {
 
   const content = (
     <>
-      <div className="p-5">
+      <div className="px-5 pb-5">
         <div className="mb-2 flex items-center gap-x-4">
           <h1>Groups / Sections</h1>
           <button
@@ -71,34 +71,22 @@ const Sections = () => {
           className="mb-5 h-[40rem] shadow-md border-2 border-sky-700"
         />
 
-        <div className="flex flex-row gap-y-2 col-span-2 bg-white/50 rounded-md mb-5">
-          {sections?.ids?.map((id) => {
-            const group = sections.entities[id].group;
-
-            if (!uniqueGroups.has(group)) {
-              uniqueGroups.add(group);
-              return (
-                <button
-                  key={sections.entities[id].id}
-                  className={`p-2 w-28 rounded-md text-center border border-slate-600/20 text-wrap text-xs font-semibold ${
-                    selectedSectionGroup === sections.entities[id].group
-                      ? "bg-blue-100"
-                      : ""
-                  }`}
-                  onClick={() =>
-                    handleSectionGroupClick(sections.entities[id].group)
-                  }
-                >
-                  {group
-                    .split(" ")
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-                    .join(" ")}
-                </button>
-              );
-            }
-
-            return null;
-          })}
+        <div className="flex flex-row gap-y-2 col-span-2 items-center gap-x-5 rounded-md mb-5">
+          <div className="text-sm">Select Group: </div>
+          <select
+            value={selectedSectionGroup}
+            onChange={(e) => setSelectedSectionGroup(e.target.value)}
+            className="p-2 w-1/4 rounded-md border border-slate-600/20 text-xs font-semibold"
+          >
+            {uniqueGroups.map((group, index) => (
+              <option key={index} value={group}>
+                {group
+                  .split(" ")
+                  .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                  .join(" ")}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="flex items-center gap-x-4 mb-4">

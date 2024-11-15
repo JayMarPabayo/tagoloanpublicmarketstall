@@ -19,9 +19,17 @@ const DashHeader = () => {
   const getParentPath = () => {
     const pathArray = location.pathname.split("/");
 
-    const secondLastSegment = pathArray[pathArray.length - 2];
+    const secondLastSegment = pathArray[pathArray.length - 1];
 
-    if (pathArray.includes("vendors") && pathArray.includes("lease")) {
+    if (location.pathname === "/dashboard/vendors") {
+      return "/dashboard";
+    }
+
+    if (pathArray.includes("lease")) {
+      return -1;
+    }
+
+    if (secondLastSegment === "vendors") {
       return "/dashboard/vendors";
     }
 

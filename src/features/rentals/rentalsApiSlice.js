@@ -1,5 +1,6 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
+import PayBanDeposit from "../vendors/PayBanDeposit";
 
 const rentalsAdapter = createEntityAdapter({});
 
@@ -69,6 +70,26 @@ export const rentalsApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: (result, error, arg) => [{ type: "Rental", id: arg }],
     }),
+    payBanDeposit: builder.mutation({
+      query: ({ id, amount }) => ({
+        url: "/rentals/pay-ban-deposit",
+        method: "POST",
+        body: { id, amount },
+      }),
+      invalidatesTags: (result, error, arg) => [{ type: "Rental", id: arg.id }],
+    }),
+    compensateBanDeposit: builder.mutation({
+      query: ({ id, amount, user, cost }) => ({
+        url: "/rentals/compensate-ban-deposit",
+        method: "POST",
+        body: { id, amount, user, cost },
+      }),
+      invalidatesTags: (result, error, arg) => [
+        { type: "Payment", id: "LIST" },
+        { type: "Stall", id: "LIST" },
+        { type: "Rental", id: "LIST" },
+      ],
+    }),
   }),
 });
 
@@ -78,6 +99,8 @@ export const {
   useUpdateRentalMutation,
   useDeleteRentalMutation,
   useVacateRentalMutation,
+  usePayBanDepositMutation,
+  useCompensateBanDepositMutation,
 } = rentalsApiSlice;
 
 export const selectRentalsResult =

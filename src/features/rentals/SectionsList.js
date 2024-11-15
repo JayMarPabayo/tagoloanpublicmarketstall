@@ -34,7 +34,7 @@ const SectionsList = () => {
             <div className="bg-white rounded-full p-2"></div>
             <div>Vacant</div>
 
-            <div className="bg-sky-600 rounded-full p-2 ms-7"></div>
+            <div className="bg-rose-600/90 rounded-full p-2 ms-7"></div>
             <div>Occupied</div>
           </div>
         </div>

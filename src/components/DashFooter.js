@@ -35,8 +35,7 @@ const DashFooter = () => {
         <span className="font-extrabold">Current User:</span> {fullname}
       </p>
       <p className="font-light flex flex-col md:block self-start md:self-center">
-        <span className="font-extrabold">Status:</span>
-        {status}
+        <span className="font-extrabold">Role:</span> {status}
       </p>
       <p className="ms-auto self-start md:self-center">{today}</p>
     </footer>

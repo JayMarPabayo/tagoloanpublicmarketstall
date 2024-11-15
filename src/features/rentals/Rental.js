@@ -63,13 +63,13 @@ const Rental = ({ rentalId }) => {
                   const startDate = new Date(rental?.startDate);
                   const today = new Date();
 
-                  // Check if startDate is in the future
                   if (startDate > today) {
-                    return null; // Don’t show any status
+                    return null;
                   }
 
                   const diffTime = today - dueDate;
-                  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); // Difference in days
+                  const diffDays =
+                    Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
 
                   if (diffDays > 0) {
                     return (
@@ -80,8 +80,8 @@ const Rental = ({ rentalId }) => {
                         />
                         <p>
                           {diffDays === 1
-                            ? `Due 1 day ago`
-                            : `Due ${diffDays} days ago`}
+                            ? `Due 2 days ago`
+                            : `Due ${diffDays + 1} days ago`}
                         </p>
                       </div>
                     );
@@ -103,6 +103,36 @@ const Rental = ({ rentalId }) => {
                           className="w-3 text-emerald-600"
                         />
                         <p>Paid</p>
+                      </div>
+                    );
+                  }
+                })()
+              : "N/A"}
+          </td>
+          <td>
+            {rental?.dueDate
+              ? (() => {
+                  const dueDate = new Date(rental?.dueDate);
+                  const today = new Date();
+                  today.setHours(0, 0, 0, 0);
+
+                  const diffTime = today - dueDate;
+                  const diffDays =
+                    Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+                  console.log(diffDays);
+                  if (diffDays > 0) {
+                    return (
+                      <p>
+                        ₱ {Number(diffDays * rental?.stall?.cost).toFixed(2)}
+                      </p>
+                    );
+                  } else if (diffDays === 1) {
+                    return <p>₱ {Number(rental?.stall?.cost).toFixed(2)}</p>;
+                  } else if (diffDays === 0) {
+                    return (
+                      <div className="py-1 px-3 bg-emerald-800 text-white font-medium rounded-md">
+                        Paid
                       </div>
                     );
                   }

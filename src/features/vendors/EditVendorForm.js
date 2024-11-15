@@ -10,7 +10,7 @@ import {
 } from "./vendorsApiSlice";
 
 import DeleteConfirmationModal from "../../utils/DeleteConfirmationModal";
-import SelectVendorTypes from "../../utils/SelectVendorTypes";
+// import SelectVendorTypes from "../../utils/SelectVendorTypes";
 import StallsRented from "./StallsRented";
 
 const EditVendorForm = ({ vendor }) => {
@@ -37,8 +37,8 @@ const EditVendorForm = ({ vendor }) => {
   // const [banDeposit, setBanDeposit] = useState(vendor.banDeposit);
   // const [validBanDeposit, setValidBanDeposit] = useState(false);
 
-  const [type, setType] = useState(vendor.type);
-  const [validType, setValidType] = useState(false);
+  // const [type, setType] = useState(vendor.type);
+  // const [validType, setValidType] = useState(false);
 
   const [address, setAddress] = useState(vendor.address);
   const [validAddress, setValidAddress] = useState(false);
@@ -49,7 +49,7 @@ const EditVendorForm = ({ vendor }) => {
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
   const [touchedBirthdate, setTouchedBirthdate] = useState(false);
-  const [touchedtype, setTouchedType] = useState(false);
+  // const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
 
@@ -79,9 +79,9 @@ const EditVendorForm = ({ vendor }) => {
     );
   }, [birthdate]);
 
-  useEffect(() => {
-    setValidType(type !== "");
-  }, [type]);
+  // useEffect(() => {
+  //   setValidType(type !== "");
+  // }, [type]);
 
   useEffect(() => {
     setValidAddress(address !== "");
@@ -100,7 +100,7 @@ const EditVendorForm = ({ vendor }) => {
       setFullname("");
       setBirthdate("");
       setStorename("");
-      setType("");
+      // setType("");
       setAddress("");
       setContact("");
       // setBanDeposit("");
@@ -123,10 +123,10 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedBirthdate(true);
   };
 
-  const onTypeChanged = (e) => {
-    setType(e.target.value);
-    setTouchedType(true);
-  };
+  // const onTypeChanged = (e) => {
+  //   setType(e.target.value);
+  //   setTouchedType(true);
+  // };
 
   const onAddressChanged = (e) => {
     setAddress(e.target.value);
@@ -147,7 +147,7 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedFullname(true);
     setTouchedBirthdate(true);
     setTouchedStorename(true);
-    setTouchedType(true);
+    // setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
     // setTouchedBanDeposit(true);
@@ -156,7 +156,7 @@ const EditVendorForm = ({ vendor }) => {
       owner: fullname,
       birthdate,
       name: storename,
-      type,
+      // type,
       address,
       contact,
       // banDeposit,
@@ -181,7 +181,7 @@ const EditVendorForm = ({ vendor }) => {
       validStorename,
       validFullname,
       validBirthdate,
-      validType,
+      // validType,
       validAddress,
       validContact,
       // validBanDeposit,
@@ -245,13 +245,13 @@ const EditVendorForm = ({ vendor }) => {
                 onChange={onStorenameChanged}
               />
 
-              <label htmlFor="type">Type</label>
+              {/* <label htmlFor="type">Type</label>
               <SelectVendorTypes
                 valid={validType}
                 touched={touchedtype}
                 state={type}
                 onChange={onTypeChanged}
-              />
+              /> */}
 
               <label htmlFor="address">Address</label>
               <input
@@ -276,20 +276,6 @@ const EditVendorForm = ({ vendor }) => {
                   !validContact && touchedContact ? "border border-red-500" : ""
                 }
               />
-
-              {/* <label htmlFor="banDeposit">Ban Deposit</label>
-              <input
-                type="number"
-                name="banDeposit"
-                placeholder="Ban Deposit Amount"
-                value={banDeposit}
-                onChange={onBanDepositChanged}
-                className={
-                  !validBanDeposit && touchedBanDeposit
-                    ? "border border-red-500"
-                    : ""
-                }
-              /> */}
             </section>
 
             <p className="error">{errMessage}</p>

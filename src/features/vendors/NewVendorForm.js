@@ -6,7 +6,7 @@ import { faSpinner, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
 
 import { useAddNewVendorMutation } from "./vendorsApiSlice";
 
-import SelectVendorTypes from "../../utils/SelectVendorTypes";
+// import SelectVendorTypes from "../../utils/SelectVendorTypes";
 
 const NewVendorForm = () => {
   const [addNewVendor, { isLoading, isSuccess, error }] =
@@ -23,8 +23,8 @@ const NewVendorForm = () => {
   const [birthdate, setBirthdate] = useState("");
   const [validBirthdate, setValidBirthdate] = useState(false);
 
-  const [type, setType] = useState("");
-  const [validType, setValidType] = useState(false);
+  // const [type, setType] = useState("");
+  // const [validType, setValidType] = useState(false);
 
   const [address, setAddress] = useState("");
   const [validAddress, setValidAddress] = useState(false);
@@ -38,7 +38,7 @@ const NewVendorForm = () => {
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
   const [touchedBirthdate, setTouchedBirthdate] = useState(false);
-  const [touchedtype, setTouchedType] = useState(false);
+  // const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
   // const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
@@ -62,9 +62,9 @@ const NewVendorForm = () => {
     );
   }, [birthdate]);
 
-  useEffect(() => {
-    setValidType(type !== "");
-  }, [type]);
+  // useEffect(() => {
+  //   setValidType(type !== "");
+  // }, [type]);
 
   useEffect(() => {
     setValidAddress(address !== "");
@@ -83,7 +83,7 @@ const NewVendorForm = () => {
       setFullname("");
       setBirthdate("");
       setStorename("");
-      setType("");
+      // setType("");
       setAddress("");
       setContact("");
       // setBanDeposit("");
@@ -106,10 +106,10 @@ const NewVendorForm = () => {
     setTouchedBirthdate(true);
   };
 
-  const onTypeChanged = (e) => {
-    setType(e.target.value);
-    setTouchedType(true);
-  };
+  // const onTypeChanged = (e) => {
+  //   setType(e.target.value);
+  //   setTouchedType(true);
+  // };
 
   const onAddressChanged = (e) => {
     setAddress(e.target.value);
@@ -131,7 +131,7 @@ const NewVendorForm = () => {
       validStorename,
       validFullname,
       validBirthdate,
-      validType,
+      // validType,
       validAddress,
       validContact,
       // validBanDeposit,
@@ -142,7 +142,7 @@ const NewVendorForm = () => {
     setTouchedFullname(true);
     setTouchedBirthdate(true);
     setTouchedStorename(true);
-    setTouchedType(true);
+    // setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
     // setTouchedBanDeposit(true);
@@ -151,7 +151,7 @@ const NewVendorForm = () => {
         owner: fullname,
         name: storename,
         birthdate,
-        type,
+        // type,
         address,
         contact,
         // banDeposit,
@@ -207,13 +207,13 @@ const NewVendorForm = () => {
             onChange={onStorenameChanged}
           />
 
-          <label htmlFor="type">Type</label>
+          {/* <label htmlFor="type">Type</label>
           <SelectVendorTypes
             valid={validType}
             touched={touchedtype}
             state={type}
             onChange={onTypeChanged}
-          />
+          /> */}
 
           <label htmlFor="fullname">Address</label>
           <input
