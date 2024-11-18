@@ -1,6 +1,5 @@
 import { createSelector, createEntityAdapter } from "@reduxjs/toolkit";
 import { apiSlice } from "../../app/api/apiSlice";
-import PayBanDeposit from "../vendors/PayBanDeposit";
 
 const rentalsAdapter = createEntityAdapter({});
 
