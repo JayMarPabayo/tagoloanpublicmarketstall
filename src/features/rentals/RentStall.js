@@ -63,9 +63,11 @@ const RentStall = () => {
     if (isSuccess) {
       setVendor("");
       setStartDate("");
-      navigate(`/dashboard/renting`);
+      navigate(`/dashboard/renting`, {
+        state: { selectedSectionGroup: stall.section.group },
+      });
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, navigate, stall?.section?.group]);
 
   const onVendorChanged = (e) => {
     setVendor(e.target.value);

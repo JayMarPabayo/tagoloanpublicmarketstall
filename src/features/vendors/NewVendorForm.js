@@ -23,25 +23,17 @@ const NewVendorForm = () => {
   const [birthdate, setBirthdate] = useState("");
   const [validBirthdate, setValidBirthdate] = useState(false);
 
-  // const [type, setType] = useState("");
-  // const [validType, setValidType] = useState(false);
-
   const [address, setAddress] = useState("");
   const [validAddress, setValidAddress] = useState(false);
 
   const [contact, setContact] = useState("");
   const [validContact, setValidContact] = useState(false);
 
-  // const [banDeposit, setBanDeposit] = useState("");
-  // const [validBanDeposit, setValidBanDeposit] = useState(false);
-
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
   const [touchedBirthdate, setTouchedBirthdate] = useState(false);
-  // const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
-  // const [touchedBanDeposit, setTouchedBanDeposit] = useState(false);
 
   useEffect(() => {
     setValidStorename(storename !== "");
@@ -62,31 +54,22 @@ const NewVendorForm = () => {
     );
   }, [birthdate]);
 
-  // useEffect(() => {
-  //   setValidType(type !== "");
-  // }, [type]);
-
   useEffect(() => {
     setValidAddress(address !== "");
   }, [address]);
 
   useEffect(() => {
-    setValidContact(contact !== "");
+    const isValid = contact.length === 11 && /^[0-9]+$/.test(contact);
+    setValidContact(isValid);
   }, [contact]);
-
-  // useEffect(() => {
-  //   setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
-  // }, [banDeposit]);
 
   useEffect(() => {
     if (isSuccess) {
       setFullname("");
       setBirthdate("");
       setStorename("");
-      // setType("");
       setAddress("");
       setContact("");
-      // setBanDeposit("");
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, navigate]);
@@ -106,35 +89,28 @@ const NewVendorForm = () => {
     setTouchedBirthdate(true);
   };
 
-  // const onTypeChanged = (e) => {
-  //   setType(e.target.value);
-  //   setTouchedType(true);
-  // };
-
   const onAddressChanged = (e) => {
     setAddress(e.target.value);
     setTouchedAddress(true);
   };
 
   const onContactChanged = (e) => {
-    setContact(e.target.value);
+    const value = e.target.value.replace(/[^0-9]/g, "");
+
+    if (value.length <= 11) {
+      setContact(value);
+    }
+
     setTouchedContact(true);
   };
-
-  // const onBanDepositChanged = (e) => {
-  //   setBanDeposit(e.target.value);
-  //   setTouchedBanDeposit(true);
-  // };
 
   const canSave =
     [
       validStorename,
       validFullname,
       validBirthdate,
-      // validType,
       validAddress,
       validContact,
-      // validBanDeposit,
     ].every(Boolean) && !isLoading;
 
   const onSaveVendorClicked = async (e) => {
@@ -142,19 +118,15 @@ const NewVendorForm = () => {
     setTouchedFullname(true);
     setTouchedBirthdate(true);
     setTouchedStorename(true);
-    // setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
-    // setTouchedBanDeposit(true);
     if (canSave) {
       await addNewVendor({
         owner: fullname,
         name: storename,
         birthdate,
-        // type,
         address,
         contact,
-        // banDeposit,
       });
     }
   };
@@ -207,14 +179,6 @@ const NewVendorForm = () => {
             onChange={onStorenameChanged}
           />
 
-          {/* <label htmlFor="type">Type</label>
-          <SelectVendorTypes
-            valid={validType}
-            touched={touchedtype}
-            state={type}
-            onChange={onTypeChanged}
-          /> */}
-
           <label htmlFor="fullname">Address</label>
           <input
             type="text"
@@ -227,9 +191,9 @@ const NewVendorForm = () => {
             }
           />
 
-          <label htmlFor="fullname">Contact</label>
+          <label htmlFor="contact">Contact</label>
           <input
-            type="tel"
+            type="number"
             name="contact"
             placeholder="Vendor Tel/Mobile Info"
             value={contact}
@@ -238,20 +202,6 @@ const NewVendorForm = () => {
               !validContact && touchedContact ? "border border-red-500" : ""
             }
           />
-
-          {/* <label htmlFor="fullname">Ban Deposit</label>
-          <input
-            type="number"
-            name="banDeposit"
-            placeholder="Ban Deposit Amount"
-            value={banDeposit}
-            onChange={onBanDepositChanged}
-            className={
-              !validBanDeposit && touchedBanDeposit
-                ? "border border-red-500"
-                : ""
-            }
-          /> */}
         </section>
         <p className="error">{error?.data?.message}</p>
         <div className="flex">

@@ -20,6 +20,7 @@ const DashHeader = () => {
     const pathArray = location.pathname.split("/");
 
     const secondLastSegment = pathArray[pathArray.length - 1];
+    const thirdLastSegment = pathArray[pathArray.length - 2];
 
     if (location.pathname === "/dashboard/vendors") {
       return "/dashboard";
@@ -33,7 +34,7 @@ const DashHeader = () => {
       return "/dashboard/vendors";
     }
 
-    if (secondLastSegment === "view") {
+    if (thirdLastSegment === "view") {
       return "/dashboard/renting";
     }
 

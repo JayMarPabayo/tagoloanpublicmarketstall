@@ -114,7 +114,7 @@ const RentalsList = () => {
                   <th className="md:hidden">Stall Section</th>
                   <th>Cost</th>
                   <th>Due Date</th>
-                  <th>Balance</th>
+                  <th>Outstanding Balance</th>
                 </tr>
               </thead>
               <tbody>{tableContent}</tbody>

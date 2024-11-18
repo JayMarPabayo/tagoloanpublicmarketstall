@@ -129,7 +129,7 @@ const Rental = ({ rentalId }) => {
                     );
                   } else if (diffDays === 1) {
                     return <p>₱ {Number(rental?.stall?.cost).toFixed(2)}</p>;
-                  } else if (diffDays === 0) {
+                  } else if (diffDays <= 0) {
                     return (
                       <div className="py-1 px-3 bg-emerald-800 text-white font-medium rounded-md">
                         Paid

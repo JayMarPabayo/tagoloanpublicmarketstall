@@ -10,7 +10,6 @@ import {
 } from "./vendorsApiSlice";
 
 import DeleteConfirmationModal from "../../utils/DeleteConfirmationModal";
-// import SelectVendorTypes from "../../utils/SelectVendorTypes";
 import StallsRented from "./StallsRented";
 
 const EditVendorForm = ({ vendor }) => {
@@ -34,12 +33,6 @@ const EditVendorForm = ({ vendor }) => {
   const [birthdate, setBirthdate] = useState("");
   const [validBirthdate, setValidBirthdate] = useState(false);
 
-  // const [banDeposit, setBanDeposit] = useState(vendor.banDeposit);
-  // const [validBanDeposit, setValidBanDeposit] = useState(false);
-
-  // const [type, setType] = useState(vendor.type);
-  // const [validType, setValidType] = useState(false);
-
   const [address, setAddress] = useState(vendor.address);
   const [validAddress, setValidAddress] = useState(false);
 
@@ -49,7 +42,6 @@ const EditVendorForm = ({ vendor }) => {
   const [touchedStorename, setTouchedStorename] = useState(false);
   const [touchedFullname, setTouchedFullname] = useState(false);
   const [touchedBirthdate, setTouchedBirthdate] = useState(false);
-  // const [touchedtype, setTouchedType] = useState(false);
   const [touchedAddress, setTouchedAddress] = useState(false);
   const [touchedContact, setTouchedContact] = useState(false);
 
@@ -62,7 +54,6 @@ const EditVendorForm = ({ vendor }) => {
   }, [fullname]);
 
   useEffect(() => {
-    // Set the initial value in YYYY-MM-DD format
     if (vendor.birthdate) {
       setBirthdate(new Date(vendor.birthdate).toISOString().split("T")[0]);
     }
@@ -79,21 +70,14 @@ const EditVendorForm = ({ vendor }) => {
     );
   }, [birthdate]);
 
-  // useEffect(() => {
-  //   setValidType(type !== "");
-  // }, [type]);
-
   useEffect(() => {
     setValidAddress(address !== "");
   }, [address]);
 
   useEffect(() => {
-    setValidContact(contact !== "");
+    const isValid = contact.length === 11 && /^[0-9]+$/.test(contact);
+    setValidContact(isValid);
   }, [contact]);
-
-  // useEffect(() => {
-  //   setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
-  // }, [banDeposit]);
 
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
@@ -123,43 +107,32 @@ const EditVendorForm = ({ vendor }) => {
     setTouchedBirthdate(true);
   };
 
-  // const onTypeChanged = (e) => {
-  //   setType(e.target.value);
-  //   setTouchedType(true);
-  // };
-
   const onAddressChanged = (e) => {
     setAddress(e.target.value);
     setTouchedAddress(true);
   };
 
   const onContactChanged = (e) => {
-    setContact(e.target.value);
+    const value = e.target.value.replace(/[^0-9]/g, "");
+    if (value.length <= 11) {
+      setContact(value);
+    }
     setTouchedContact(true);
   };
-
-  // const onBanDepositChanged = (e) => {
-  //   setBanDeposit(e.target.value);
-  //   setTouchedBanDeposit(true);
-  // };
 
   const onUpdateVendorClicked = async (e) => {
     setTouchedFullname(true);
     setTouchedBirthdate(true);
     setTouchedStorename(true);
-    // setTouchedType(true);
     setTouchedAddress(true);
     setTouchedContact(true);
-    // setTouchedBanDeposit(true);
     await updateVendor({
       id: vendor.id,
       owner: fullname,
       birthdate,
       name: storename,
-      // type,
       address,
       contact,
-      // banDeposit,
     });
   };
 
@@ -181,10 +154,8 @@ const EditVendorForm = ({ vendor }) => {
       validStorename,
       validFullname,
       validBirthdate,
-      // validType,
       validAddress,
       validContact,
-      // validBanDeposit,
     ].every(Boolean) && !isLoading;
 
   const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
@@ -244,14 +215,6 @@ const EditVendorForm = ({ vendor }) => {
                 }
                 onChange={onStorenameChanged}
               />
-
-              {/* <label htmlFor="type">Type</label>
-              <SelectVendorTypes
-                valid={validType}
-                touched={touchedtype}
-                state={type}
-                onChange={onTypeChanged}
-              /> */}
 
               <label htmlFor="address">Address</label>
               <input

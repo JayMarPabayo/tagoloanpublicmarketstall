@@ -78,7 +78,7 @@ td {
 }
 .form-input input,
 .form-input textarea,
-.form-input select {
+.form-input select:not(.group-select) {
   @apply text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-full text-sm tracking-wide p-2 col-span-4;
 }
 
