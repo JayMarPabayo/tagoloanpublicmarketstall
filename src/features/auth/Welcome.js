@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+// import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -15,13 +15,6 @@ import ImageCarousel from "../../components/ImageCarousel";
 
 const Welcome = () => {
   const { isAdministrator, isStaff } = useAuth();
-
-  useEffect(() => {
-    if (!sessionStorage.getItem("hasRefreshed")) {
-      sessionStorage.setItem("hasRefreshed", "true");
-      window.location.reload();
-    }
-  }, []);
 
   const content = (
     <div className="flex w-full justify-between -mt-4">

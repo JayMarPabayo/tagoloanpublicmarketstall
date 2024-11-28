@@ -1,12 +1,19 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStore,
   faPersonShelter,
   faLinkSlash,
+  faQrcode,
+  faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { toast } from "react-toastify";
+
+import QRCode from "react-qr-code";
+import html2canvas from "html2canvas";
 
 import { useGetStallsQuery } from "../stalls/stallsApiSlice";
 import { useGetSectionsQuery } from "../stalls/sectionsApiSlice";
@@ -15,6 +22,9 @@ import { useGetRentalsQuery, useVacateRentalMutation } from "./rentalsApiSlice";
 import RentalHistory from "./RentalHistory";
 
 const ViewStall = () => {
+  const location = useLocation();
+  const sectionGroup = location.state?.selectedSectionGroup || "";
+
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -42,16 +52,50 @@ const ViewStall = () => {
   });
 
   const [vacateRental, { isLoading }] = useVacateRentalMutation();
+  const [showQRCode, setShowQRCode] = useState(false);
 
   const handleVacate = async () => {
     if (rental) {
       try {
         await vacateRental(rental._id).unwrap();
-        navigate("/dashboard/renting");
+        toast.success("Stall vacated successfully!", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+        navigate("/dashboard/renting", {
+          state: {
+            selectedSectionGroup: sectionGroup,
+          },
+        });
       } catch (error) {
         console.error("Failed to vacate rental:", error);
       }
     }
+  };
+
+  const handleShowQRCode = () => {
+    setShowQRCode(true);
+  };
+
+  const handleCloseQRCode = () => {
+    setShowQRCode(false);
+  };
+
+  const handleDownloadQRCode = () => {
+    const qrCodeElement = document.getElementById("qr-code");
+    html2canvas(qrCodeElement).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const a = document.createElement("a");
+      a.href = imgData;
+      a.download = "qr_code.png";
+      a.click();
+    });
   };
 
   const content = (
@@ -134,20 +178,50 @@ const ViewStall = () => {
               </p>
             </div>
 
-            <div className="flex items-center justify-end">
+            <div className="flex items-center justify-end gap-x-2 mt-3">
               <button
                 onClick={handleVacate}
                 disabled={isLoading}
-                className="px-10 py-1 rounded-md bg-black/80 text-white font-medium flex items-center gap-x-2"
+                className="px-10 py-1 rounded-md bg-orange-800/80 text-white font-medium flex items-center gap-x-2"
               >
                 <FontAwesomeIcon icon={faLinkSlash} />
                 <div>{isLoading ? "Vacating..." : "Vacate"}</div>
+              </button>
+              <button
+                onClick={handleShowQRCode}
+                className="px-10 py-1 rounded-md bg-black text-white font-medium flex items-center gap-x-2"
+              >
+                <FontAwesomeIcon icon={faQrcode} />
+                <div>Show QR Code</div>
               </button>
             </div>
           </div>
         </div>
       </div>
       <div className="p-5 w-1/2">{<RentalHistory stall={stall} />}</div>
+
+      {showQRCode && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-5 rounded-md shadow-md w-96 flex flex-col items-center relative">
+            <h3 className="text-lg font-bold mb-4">QR Code</h3>
+            <div id="qr-code">
+              <QRCode value={rental?._id || ""} />
+            </div>
+            <button
+              onClick={handleDownloadQRCode}
+              className="btn-secondary mt-5"
+            >
+              Download QR Code
+            </button>
+            <button
+              onClick={handleCloseQRCode}
+              className="absolute top-2 right-4"
+            >
+              <FontAwesomeIcon icon={faXmark} className="h-7 text-orange-700" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 

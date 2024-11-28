@@ -41,7 +41,7 @@ const RentalHistory = ({ stall }) => {
           }
           return (
             <div
-              key={id} // Change to id for uniqueness
+              key={id}
               onClick={() => {
                 setCurrentRental(rental);
                 setIsHistoryModalOpen(true);

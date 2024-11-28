@@ -40,6 +40,11 @@ const PaymentHistory = ({ onCancel, rental }) => {
       return acc;
     }, {});
 
+    const totalAmount = Object.values(paymentGroups).reduce(
+      (sum, paymentGroup) => sum + paymentGroup.amount,
+      0
+    );
+
     const tableContent = Object.keys(paymentGroups).length ? (
       Object.values(paymentGroups).map((paymentGroup, index) => (
         <tr key={index} className="text-xs md:text-sm">
@@ -48,7 +53,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
           <td>
             {new Date(paymentGroup.createdAt).toLocaleDateString("en-US")}
           </td>
-          <td>₱{paymentGroup.amount.toFixed(2)}</td>
+          <td>₱ {paymentGroup.amount.toFixed(2)}</td>
         </tr>
       ))
     ) : (
@@ -152,6 +157,15 @@ const PaymentHistory = ({ onCancel, rental }) => {
               </thead>
               <tbody>{tableContent}</tbody>
             </table>
+
+            <div className="mt-5">
+              <div className="text-slate-600/80">
+                Total amount accumulated:{" "}
+                <span className="font-semibold text-lg text-sky-800">
+                  ₱ {totalAmount.toFixed(2)}
+                </span>
+              </div>
+            </div>
           </div>
         </div>
       </>

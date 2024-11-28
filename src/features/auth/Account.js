@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faGears } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
 import { useGetUsersQuery } from "../users/usersApiSlice";
 import { useUpdateAccountMutation } from "./authApiSlice";
 import useAuth from "../../hooks/useAuth";
@@ -51,15 +53,43 @@ const Account = () => {
     setFullname(user?.fullname || "");
   }, [user]);
 
+  let errMessage = error?.data?.message ?? "";
+  let successMessage = isSuccess ? "Profile Updated Successfully." : "";
+
   useEffect(() => {
     if (isSuccess) {
       setPassword("");
       setNewPassword("");
       setRetypeNewPassword("");
       setTouchedNewPassword(false);
+      toast.success(successMessage || "Profile updated successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate("/dashboard/profile");
     }
-  }, [isSuccess, navigate]);
+  }, [isSuccess, successMessage, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(errMessage || "An error occurred. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [error, errMessage]);
 
   useEffect(() => {
     setPasswordsMatch(newPassword === retypeNewPassword);
@@ -98,9 +128,6 @@ const Account = () => {
     canSave = [validUsername, validFullname].every(Boolean) && !isLoading;
   }
 
-  const errMessage = error?.data?.message ?? "";
-  const successMessage = isSuccess ? "Account updated" : "";
-
   const content = (
     <>
       <div className="p-5">
@@ -112,9 +139,6 @@ const Account = () => {
           <div className="flex items-center gap-x-3 text-lg mb-7">
             <FontAwesomeIcon icon={faGears} />
             <h3 className="text-sky-800 font-medium">Account</h3>
-            <span className={`${isSuccess ? "success" : "error"} ms-auto`}>
-              {errMessage || successMessage}
-            </span>
           </div>
           <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 items-center gap-x-5 gap-y-4 mb-10">
             <label htmlFor="fullname">Full name</label>

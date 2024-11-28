@@ -120,7 +120,6 @@ const Rental = ({ rentalId }) => {
                   const diffDays =
                     Math.ceil(diffTime / (1000 * 60 * 60 * 24)) + 1;
 
-                  console.log(diffDays);
                   if (diffDays > 0) {
                     return (
                       <p>
@@ -131,8 +130,8 @@ const Rental = ({ rentalId }) => {
                     return <p>₱ {Number(rental?.stall?.cost).toFixed(2)}</p>;
                   } else if (diffDays <= 0) {
                     return (
-                      <div className="py-1 px-3 bg-emerald-800 text-white font-medium rounded-md">
-                        Paid
+                      <div className="text-emerald-800 font-medium">
+                        <span>Paid</span>
                       </div>
                     );
                   }

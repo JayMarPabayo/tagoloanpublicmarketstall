@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
 import { useAddNewUserMutation } from "./usersApiSlice";
 import { ROLES } from "../../config/roles";
 
@@ -42,9 +44,37 @@ const NewUserForm = () => {
       setUsername("");
       setPassword("");
       setRole("Staff");
+      toast.success("User added successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate("/dashboard/accounts");
     }
   }, [isSuccess, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
+  }, [error]);
 
   const onUsernameChanged = (e) => {
     setUsername(e.target.value);
@@ -94,7 +124,6 @@ const NewUserForm = () => {
         <div className="flex items-center gap-x-3 text-lg mb-7">
           <FontAwesomeIcon icon={faUserPlus} />
           <h3 className="text-sky-800 font-medium">Create new user</h3>
-          <span className="error ms-auto">{error?.data?.message}</span>
         </div>
         <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
           <label htmlFor="fullname">Full name</label>

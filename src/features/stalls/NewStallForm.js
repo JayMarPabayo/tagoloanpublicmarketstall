@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
-import { useAddNewSectionMutation } from "./sectionsApiSlice";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPersonShelter, faSpinner } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
+import { useAddNewSectionMutation } from "./sectionsApiSlice";
 import SelectSectionGroup from "../../utils/SelectSectionGroup";
 
 const NewStallForm = ({ onCancel }) => {
@@ -67,9 +69,37 @@ const NewStallForm = ({ onCancel }) => {
       setNumberOfStalls(0);
       setCost(0);
       setBanDeposit(0);
+      toast.success("Stalls added successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       onCancel();
     }
   }, [isSuccess, onCancel]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
+  }, [error]);
 
   const onGroupChanged = (e) => {
     setGroup(e.target.value);
@@ -141,7 +171,6 @@ const NewStallForm = ({ onCancel }) => {
         <div className="flex items-center gap-x-3 text-lg mb-7">
           <FontAwesomeIcon icon={faPersonShelter} />
           <h3 className="text-sky-800 font-medium">Stall Info</h3>
-          <span className="error ms-auto">{error?.data?.message}</span>
         </div>
         <section className="grid grid-cols-5 items-center gap-y-4 gap-x-5 mb-10">
           <label htmlFor="group">Group</label>

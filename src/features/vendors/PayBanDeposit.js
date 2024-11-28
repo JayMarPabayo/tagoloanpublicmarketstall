@@ -2,55 +2,55 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faMoneyBillTransfer,
-  faSpinner,
+  // faSpinner,
   faCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { usePayBanDepositMutation } from "../rentals/rentalsApiSlice";
+// import { usePayBanDepositMutation } from "../rentals/rentalsApiSlice";
 import CompensateBan from "./CompensateBan";
 
 const PayBanDeposit = ({ onCancel, rental }) => {
-  const [payBanDeposit, { isLoading, isSuccess, error }] =
-    usePayBanDepositMutation();
+  // const [payBanDeposit, { isLoading, isSuccess, error }] =
+  //   usePayBanDepositMutation();
 
   const [showCompensateModal, setShowCompensateModal] = useState(false);
   const [showCompensateButton, setShowCompensateButton] = useState(false);
 
-  const [amount, setAmount] = useState(0);
-  const [validAmount, setValidAmount] = useState(false);
+  // const [amount, setAmount] = useState(0);
+  // const [validAmount, setValidAmount] = useState(false);
 
-  const [touchedAmount, setTouchedAmount] = useState(false);
+  // const [touchedAmount, setTouchedAmount] = useState(false);
   const [balance, setBalance] = useState(0);
 
-  useEffect(() => {
-    setValidAmount(amount !== "" && amount > 0);
-  }, [amount]);
+  // useEffect(() => {
+  //   setValidAmount(amount !== "" && amount > 0);
+  // }, [amount]);
 
-  const onAmountChanged = (e) => {
-    setAmount(e.target.value);
-    setTouchedAmount(true);
-  };
+  // const onAmountChanged = (e) => {
+  //   setAmount(e.target.value);
+  //   setTouchedAmount(true);
+  // };
 
-  useEffect(() => {
-    if (isSuccess) {
-      setAmount(0);
-      setTouchedAmount(false);
-    }
-  }, [isSuccess]);
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     setAmount(0);
+  //     setTouchedAmount(false);
+  //   }
+  // }, [isSuccess]);
 
-  let canSave;
+  // let canSave;
 
-  canSave = [validAmount].every(Boolean) && !isLoading;
+  // canSave = [validAmount].every(Boolean) && !isLoading;
 
-  const onPayAmountClicked = async (e) => {
-    setTouchedAmount(true);
-    await payBanDeposit({
-      id: rental.id,
-      amount,
-    });
-  };
+  // const onPayAmountClicked = async (e) => {
+  //   setTouchedAmount(true);
+  //   await payBanDeposit({
+  //     id: rental.id,
+  //     amount,
+  //   });
+  // };
 
-  const errMessage = error?.data?.message ?? "";
+  // const errMessage = error?.data?.message ?? "";
 
   useEffect(() => {
     if (rental) {
@@ -148,8 +148,6 @@ const PayBanDeposit = ({ onCancel, rental }) => {
             </div>
           </div>
 
-          <p className="error">{errMessage}</p>
-
           <hr className="border-t border-sky-600/50 my-3" />
 
           <div>Stall Ban Deposit Cost</div>
@@ -157,19 +155,19 @@ const PayBanDeposit = ({ onCancel, rental }) => {
             rental?.banAmount
           ).toFixed(2)}`}</div>
 
-          <div>Amount Paid</div>
+          {/* <div>Amount Paid</div>
           <div className="bg-white border border-sky-600/50 rounded-md px-3 py-1 text-sky-800 text-lg mb-3">{`₱ ${Number(
             rental?.banPaid
-          ).toFixed(2)}`}</div>
+          ).toFixed(2)}`}</div> */}
 
           <div>Balance</div>
           <div className="bg-slate-800 rounded-md px-3 py-1 text-white text-lg">{`₱ ${Number(
-            rental?.banAmount - rental?.banPaid
+            rental?.banPaid
           ).toFixed(2)}`}</div>
 
           <hr className="border-t border-sky-600/50 my-3" />
 
-          <label htmlFor="amount">Amount</label>
+          {/* <label htmlFor="amount">Amount</label>
           <input
             type="number"
             name="amount"
@@ -179,17 +177,17 @@ const PayBanDeposit = ({ onCancel, rental }) => {
             className={
               !validAmount && touchedAmount ? "border border-red-500" : ""
             }
-          />
+          /> */}
 
-          <div className="flex items-center gap-x-5 justify-end mt-10">
+          <div className="flex items-center gap-x-5 justify-end mt-5">
             <button
-              title="Cancel"
+              title="Close"
               className="btn-secondary w-44"
               onClick={onCancel}
             >
-              <span>Cancel</span>
+              <span>Close</span>
             </button>
-            <button
+            {/* <button
               title="submit"
               className="btn-primary w-44"
               disabled={!canSave}
@@ -199,7 +197,7 @@ const PayBanDeposit = ({ onCancel, rental }) => {
                 <FontAwesomeIcon icon={faSpinner} className="animate-spin" />
               )}
               <span>Submit</span>
-            </button>
+            </button> */}
           </div>
         </form>
       </div>

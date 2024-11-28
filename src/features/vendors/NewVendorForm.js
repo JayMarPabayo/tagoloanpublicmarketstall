@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
 
-import { useAddNewVendorMutation } from "./vendorsApiSlice";
+import { toast } from "react-toastify";
 
-// import SelectVendorTypes from "../../utils/SelectVendorTypes";
+import { useAddNewVendorMutation } from "./vendorsApiSlice";
 
 const NewVendorForm = () => {
   const [addNewVendor, { isLoading, isSuccess, error }] =
@@ -70,9 +70,37 @@ const NewVendorForm = () => {
       setStorename("");
       setAddress("");
       setContact("");
+      toast.success("Vendor Added Successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, navigate]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
+  }, [error]);
 
   const onStorenameChanged = (e) => {
     setStorename(e.target.value);
@@ -165,6 +193,7 @@ const NewVendorForm = () => {
             className={
               !validBirthdate && touchedBirthdate ? "border border-red-500" : ""
             }
+            max={new Date().toISOString().split("T")[0]}
           />
 
           <label htmlFor="storename">Store/Shop</label>
@@ -203,7 +232,6 @@ const NewVendorForm = () => {
             }
           />
         </section>
-        <p className="error">{error?.data?.message}</p>
         <div className="flex">
           <button
             title="Save"

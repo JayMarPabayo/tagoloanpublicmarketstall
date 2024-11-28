@@ -8,6 +8,8 @@ import {
   faSpinner,
 } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
 import { useGetStallsQuery } from "../stalls/stallsApiSlice";
 import { useGetSectionsQuery } from "../stalls/sectionsApiSlice";
 import { useAddNewRentalMutation } from "./rentalsApiSlice";
@@ -63,11 +65,39 @@ const RentStall = () => {
     if (isSuccess) {
       setVendor("");
       setStartDate("");
+      toast.success("Stall rented successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
       navigate(`/dashboard/renting`, {
         state: { selectedSectionGroup: stall.section.group },
       });
     }
   }, [isSuccess, navigate, stall?.section?.group]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(
+        error?.data?.message || "An error occurred. Please try again.",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
+    }
+  }, [error]);
 
   const onVendorChanged = (e) => {
     setVendor(e.target.value);
@@ -136,7 +166,6 @@ const RentStall = () => {
             <div className="flex items-center gap-x-3 text-lg mb-5">
               <FontAwesomeIcon icon={faPersonShelter} />
               <h3 className="text-sky-800 font-medium">Rent Details</h3>
-              <span className="error ms-auto">{error?.data?.message}</span>
             </div>
 
             <label htmlFor="vendor">Select Vendor</label>
@@ -154,6 +183,7 @@ const RentStall = () => {
                 name="startDate"
                 value={startDate}
                 onChange={onStartDateChanged}
+                min={new Date().toISOString().split("T")[0]}
                 className={
                   !validStartDate && touchedStartDate
                     ? "border border-red-500"

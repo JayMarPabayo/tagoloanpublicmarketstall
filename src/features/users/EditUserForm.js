@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faUserPlus } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
 import { useUpdateUserMutation, useDeleteUserMutation } from "./usersApiSlice";
 import { ROLES } from "../../config/roles";
 
@@ -41,15 +43,45 @@ const EditUserForm = ({ user }) => {
     setValidFullname(fullname !== "");
   }, [fullname]);
 
+  let errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
+
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setUsername("");
       setPassword("");
       setFullname("");
       setRole("Staff");
+      toast.success(
+        isSuccess ? "Updated Successfully!" : "Deleted Successfully!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
       navigate("/dashboard/accounts");
     }
   }, [isSuccess, isDelSuccess, navigate]);
+
+  useEffect(() => {
+    if (error || delerror) {
+      toast.error(errMessage || "An error occurred. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [error, delerror, errMessage]);
 
   const onUsernameChanged = (e) => setUsername(e.target.value);
   const onFullnameChanged = (e) => setFullname(e.target.value);
@@ -101,8 +133,6 @@ const EditUserForm = ({ user }) => {
     canSave = [role, validUsername, validFullname].every(Boolean) && !isLoading;
   }
 
-  const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
-
   const content = (
     <>
       <div className="p-5">
@@ -114,7 +144,6 @@ const EditUserForm = ({ user }) => {
           <div className="flex items-center gap-x-3 text-lg mb-7">
             <FontAwesomeIcon icon={faUserPlus} />
             <h3 className="text-sky-800 font-medium">Update User</h3>
-            <span className="error ms-auto">{errMessage}</span>
           </div>
           <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
             <label htmlFor="fullname">Full name</label>

@@ -18,12 +18,15 @@ const DashHeader = () => {
 
   const getParentPath = () => {
     const pathArray = location.pathname.split("/");
-
     const secondLastSegment = pathArray[pathArray.length - 1];
     const thirdLastSegment = pathArray[pathArray.length - 2];
 
     if (location.pathname === "/dashboard/vendors") {
       return "/dashboard";
+    }
+
+    if (thirdLastSegment === "stalls") {
+      return "/dashboard/sections";
     }
 
     if (pathArray.includes("lease")) {
@@ -38,19 +41,12 @@ const DashHeader = () => {
       return "/dashboard/renting";
     }
 
-    if (secondLastSegment === "stalls") {
-      return "/dashboard/sections";
-    }
-
     pathArray.pop();
     return pathArray.join("/") || "/dashboard";
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      console.log("logged out");
-      navigate("/login");
-    }
+    if (isSuccess) navigate("/");
   }, [isSuccess, navigate, location]);
 
   if (isLoading) return <p>Loading...</p>;

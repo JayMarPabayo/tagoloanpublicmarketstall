@@ -5,6 +5,8 @@ import { useDispatch } from "react-redux";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUser, faKey } from "@fortawesome/free-solid-svg-icons";
 
+import { toast } from "react-toastify";
+
 import { setCredentials } from "./authSlice";
 import { useLoginMutation } from "./authApiSlice";
 
@@ -12,7 +14,6 @@ import FullScreenLoading from "../../utils/FullScreenLoading";
 
 const Login = () => {
   const userRef = useRef();
-  const errRef = useRef();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -24,10 +25,6 @@ const Login = () => {
   const [login, { isLoading }] = useLoginMutation();
 
   useEffect(() => {
-    userRef.current.focus();
-  }, []);
-
-  useEffect(() => {
     setErrMsg("");
   }, [username, password]);
 
@@ -36,10 +33,25 @@ const Login = () => {
     try {
       const { accessToken } = await login({ username, password }).unwrap();
       dispatch(setCredentials({ accessToken }));
-
       sessionStorage.removeItem("hasRefreshed");
       setUsername("");
       setPassword("");
+      toast.success("Login successfully!", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        onClose: () => {
+          if (!sessionStorage.getItem("hasRefreshed")) {
+            sessionStorage.setItem("hasRefreshed", "true");
+            window.location.reload();
+          }
+        },
+      });
       navigate("/dashboard");
     } catch (err) {
       if (!err.status) {
@@ -47,7 +59,7 @@ const Login = () => {
       } else if (err.status === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.status === 401) {
-        setErrMsg("Unauthorized");
+        setErrMsg("Incorrect Credentials");
       } else {
         setErrMsg(err.data?.message);
       }
@@ -55,10 +67,23 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (errMsg) {
+      toast.error(errMsg || "An error occurred. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [errMsg]);
+
   const handleUserInput = (e) => setUsername(e.target.value);
   const handlePwdInput = (e) => setPassword(e.target.value);
-
-  const errClass = errMsg ? "error" : "hidden";
 
   if (isLoading) return <FullScreenLoading />;
 
@@ -116,13 +141,6 @@ const Login = () => {
                 className="w-full py-2 px-3 text-sm md:text-base border rounded"
               />
             </label>
-            <p
-              ref={errRef}
-              className={`${errClass} text-sm text-red-600`}
-              aria-live="assertive"
-            >
-              {errMsg}
-            </p>
             <button className="btn-primary w-full md:w-auto py-2 md:py-3 text-sm md:text-base">
               Log in
             </button>

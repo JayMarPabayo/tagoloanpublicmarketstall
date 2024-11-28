@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faPersonShelter } from "@fortawesome/free-solid-svg-icons";
 
@@ -79,18 +81,46 @@ const EditVendorForm = ({ vendor }) => {
     setValidContact(isValid);
   }, [contact]);
 
+  let errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
+
   useEffect(() => {
     if (isSuccess || isDelSuccess) {
       setFullname("");
       setBirthdate("");
       setStorename("");
-      // setType("");
       setAddress("");
       setContact("");
-      // setBanDeposit("");
+      toast.success(
+        isSuccess ? "Updated Successfully!" : "Deleted Successfully!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
       navigate("/dashboard/vendors");
     }
   }, [isSuccess, isDelSuccess, navigate]);
+
+  useEffect(() => {
+    if (error || delerror) {
+      toast.error(errMessage || "An error occurred. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [error, delerror, errMessage]);
 
   const onStorenameChanged = (e) => {
     setStorename(e.target.value);
@@ -157,8 +187,6 @@ const EditVendorForm = ({ vendor }) => {
       validAddress,
       validContact,
     ].every(Boolean) && !isLoading;
-
-  const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
 
   const content = (
     <div className="flex gap-x-2">
@@ -240,8 +268,6 @@ const EditVendorForm = ({ vendor }) => {
                 }
               />
             </section>
-
-            <p className="error">{errMessage}</p>
 
             <div className="flex items-center gap-x-5 justify-end">
               <button

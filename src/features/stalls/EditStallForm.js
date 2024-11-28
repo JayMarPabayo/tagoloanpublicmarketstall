@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner, faStore } from "@fortawesome/free-solid-svg-icons";
 
@@ -46,6 +48,8 @@ const EditStallForm = ({ stall }) => {
     setValidCost(!isNaN(cost) && cost >= 0);
   }, [cost]);
 
+  let errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
+
   useEffect(() => {
     setValidBanDeposit(!isNaN(banDeposit) && banDeposit >= 0);
   }, [banDeposit]);
@@ -56,11 +60,39 @@ const EditStallForm = ({ stall }) => {
       setNotes("");
       setCost("");
       setBanDeposit("");
+      toast.success(
+        isSuccess ? "Updated Successfully!" : "Deleted Successfully!",
+        {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: true,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        }
+      );
       navigate("/dashboard/sections", {
         state: { selectedSectionGroup: stall.section.group },
       });
     }
   }, [isSuccess, isDelSuccess, navigate, stall.section.group]);
+
+  useEffect(() => {
+    if (error || delerror) {
+      toast.error(errMessage || "An error occurred. Please try again.", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+    }
+  }, [error, delerror, errMessage]);
 
   const onNumberChanged = (e) => {
     setNumber(e.target.value);
@@ -112,8 +144,6 @@ const EditStallForm = ({ stall }) => {
   canSave =
     [validNumber, validCost, validBanDeposit].every(Boolean) && !isLoading;
 
-  const errMessage = (error?.data?.message || delerror?.data?.message) ?? "";
-
   const content = (
     <>
       <div className="px-5">
@@ -125,7 +155,6 @@ const EditStallForm = ({ stall }) => {
           <div className="flex items-center gap-x-3 text-lg mb-7">
             <FontAwesomeIcon icon={faStore} />
             <h3 className="text-sky-800 font-medium">Update Stall</h3>
-            <span className="error ms-auto">{errMessage ?? errMessage}</span>
           </div>
           <section className="grid grid-cols-5 items-center gap-y-4 mb-10">
             <label htmlFor="number">Number</label>
