@@ -100,44 +100,49 @@ const PaymentHistory = ({ onCancel, rental }) => {
                 {rental?.dueDate
                   ? (() => {
                       const dueDate = new Date(rental?.dueDate);
+                      const startDate = new Date(rental?.startDate);
                       const today = new Date();
+
+                      if (startDate > today) {
+                        return null;
+                      }
+
                       const diffTime = today - dueDate;
-                      const diffDays = Math.ceil(
-                        diffTime / (1000 * 60 * 60 * 24)
-                      );
+                      const diffDays =
+                        Math.ceil(diffTime / (1000 * 60 * 60 * 24)) - 1;
 
                       if (diffDays > 0) {
                         return (
-                          <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                          <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                             <FontAwesomeIcon
                               icon={faCircle}
                               className="w-3 text-rose-600"
                             />
-                            <span>
+                            <p>
                               {diffDays === 1
-                                ? `Due 1 day ago`
-                                : `Due ${diffDays} days ago`}
-                            </span>
+                                ? `Due 2 days ago`
+                                : `Due ${diffDays + 1} days ago`}
+                            </p>
                           </div>
                         );
                       } else if (diffDays === 0) {
                         return (
-                          <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                          <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                             <FontAwesomeIcon
                               icon={faCircle}
                               className="w-3 text-orange-400"
                             />
-                            <span>Due is Today</span>
+                            <p>Due is Today</p>
                           </div>
                         );
                       } else {
                         return (
-                          <div className="flex items-center gap-x-2 text-xs text-slate-700">
+                          <div className="flex items-start md:items-center gap-x-2 text-xs text-slate-700 sm:flex-row flex-col">
                             <FontAwesomeIcon
                               icon={faCircle}
                               className="w-3 text-emerald-600"
                             />
-                            <span>Paid</span>
+                            <p>Paid</p>
                           </div>
                         );
                       }
@@ -160,7 +165,7 @@ const PaymentHistory = ({ onCancel, rental }) => {
 
             <div className="mt-5">
               <div className="text-slate-600/80">
-                Total amount accumulated:{" "}
+                Total amount accumulated:
                 <span className="font-semibold text-lg text-sky-800">
                   ₱ {totalAmount.toFixed(2)}
                 </span>

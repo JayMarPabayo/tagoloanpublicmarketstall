@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCalendarDays,
   faFileInvoice,
+  faFilter,
 } from "@fortawesome/free-solid-svg-icons";
 
 import Rental from "./Rental";
@@ -20,6 +21,8 @@ const RentalsList = () => {
   const [isDailyPaymentModalOpen, setIsDailyPaymentModalOpen] = useState(false);
   const [isSummaryPaymentModalOpen, setIsSummaryPaymentModalOpen] =
     useState(false);
+  const [selectedGroup, setSelectedGroup] = useState("All");
+  const [paymentStatus, setPaymentStatus] = useState("All");
   const { isStaff } = useAuth();
 
   const {
@@ -55,11 +58,36 @@ const RentalsList = () => {
   if (isSuccess) {
     const { ids, entities } = rentals;
 
+    const sectionGroups = [
+      "All",
+      ...new Set(
+        ids
+          .map((rentalId) => entities[rentalId]?.stall?.section?.group)
+          .filter((group) => group)
+      ),
+    ];
+
     const filteredIds = ids.filter((rentalId) => {
       const rental = entities[rentalId];
       const today = new Date();
-      return rental && !rental.endDate && new Date(rental.startDate) <= today;
+
+      const isActive =
+        rental && !rental.endDate && new Date(rental.startDate) <= today;
+      const matchesGroup =
+        selectedGroup === "All" ||
+        rental?.stall?.section?.group === selectedGroup;
+      const matchesPaymentStatus =
+        paymentStatus === "All" ||
+        (paymentStatus === "Paid" &&
+          rental?.dueDate &&
+          new Date(rental?.dueDate) > today) ||
+        (paymentStatus === "Due" &&
+          rental?.dueDate &&
+          new Date(rental?.dueDate) <= today);
+
+      return isActive && matchesGroup && matchesPaymentStatus;
     });
+
     const tableContent = filteredIds.length ? (
       filteredIds.map((rentalId) => (
         <Rental key={rentalId} rentalId={rentalId} />
@@ -101,6 +129,30 @@ const RentalsList = () => {
           )}
         </section>
         <div className="grid grid-cols-12 py-5 md:p-5 gap-x-5">
+          <div className="flex items-center gap-x-2 col-span-full mb-3">
+            <FontAwesomeIcon icon={faFilter} className="h-5 me-3" />
+            <select
+              value={selectedGroup}
+              onChange={(e) => setSelectedGroup(e.target.value)}
+              className="w-36 cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-xs tracking-wide p-2 float-end"
+            >
+              {sectionGroups.map((group, index) => (
+                <option key={index} value={group}>
+                  {group}
+                </option>
+              ))}
+            </select>
+
+            <select
+              value={paymentStatus}
+              onChange={(e) => setPaymentStatus(e.target.value)}
+              className="w-36 cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-xs tracking-wide p-2 float-end ml-3"
+            >
+              <option value="All">All</option>
+              <option value="Paid">Paid</option>
+              <option value="Due">Due</option>
+            </select>
+          </div>
           <div className="col-span-12">
             <table className="w-full text-xs md:text-sm">
               <thead>
