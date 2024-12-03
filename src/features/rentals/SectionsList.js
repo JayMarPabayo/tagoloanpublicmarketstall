@@ -37,8 +37,8 @@ const SectionsList = () => {
     .filter((section) => section.group === selectedGroup)
     .sort((a, b) => a.name.localeCompare(b.name));
 
-  const handleGroupChange = (event) => {
-    setSelectedGroup(event.target.value);
+  const handleGroupChange = (group) => {
+    setSelectedGroup(group);
   };
 
   const content = (
@@ -54,23 +54,21 @@ const SectionsList = () => {
         </div>
       </div>
 
-      <div
-        className="group-select mb-4 flex items-center gap-x-2 px-2 outline-transparent border-none bg-white"
-        style={{ border: 0 }}
-      >
-        <FontAwesomeIcon icon={faMapLocation} />
-        <select
-          className="p-2 border-none rounded w-full bg-transparent"
-          value={selectedGroup}
-          onChange={handleGroupChange}
-        >
-          <option value="">Select Group</option>
+      <div className="mb-4 text-xs">
+        <div className="flex space-x-4 overflow-x-auto items-center">
+          <FontAwesomeIcon icon={faMapLocation} className="h-6" />
           {groups.map((group) => (
-            <option key={group} value={group}>
+            <button
+              key={group}
+              className={`px-4 py-2 rounded-full border ${
+                selectedGroup === group ? "bg-blue-500 text-white" : "bg-white"
+              }`}
+              onClick={() => handleGroupChange(group)}
+            >
               {group} Area
-            </option>
+            </button>
           ))}
-        </select>
+        </div>
       </div>
 
       {selectedGroup && (
