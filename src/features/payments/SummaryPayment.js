@@ -90,7 +90,7 @@ const SummaryPayment = ({ onCancel }) => {
           {groupedPayments.map(({ displayPeriod, total }) => (
             <tr key={displayPeriod} className="border-b border-slate-600/20">
               <td>{displayPeriod}</td>
-              <td>{total.toFixed(2)}</td>
+              <td>₱ {total.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
