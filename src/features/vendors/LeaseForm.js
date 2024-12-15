@@ -26,10 +26,6 @@ const LeaseForm = () => {
           <FontAwesomeIcon icon={faPrint} />
           <h3 className="font-medium">Print</h3>
         </button>
-        {/* <button className="btn-secondary flex items-center gap-x-2 w-28">
-          <FontAwesomeIcon icon={faFilePdf} />
-          <h3 className="font-medium">Download</h3>
-        </button> */}
       </section>
       <div ref={contentRef}>
         <div className="page-container bg-white rounded-sm shadow-md p-12 w-[1000px] h-[1320px] mx-auto text-slate-800 text-base mb-10">

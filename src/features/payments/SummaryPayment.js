@@ -3,6 +3,9 @@ import dayjs from "dayjs";
 
 import { useGetPaymentsQuery } from "./paymentsApiSlice";
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPrint } from "@fortawesome/free-solid-svg-icons";
+
 import Spinner from "../../utils/Spinner";
 
 const SummaryPayment = ({ onCancel }) => {
@@ -121,6 +124,18 @@ const SummaryPayment = ({ onCancel }) => {
             <option value="Monthly">Monthly</option>
             <option value="Yearly">Yearly</option>
           </select>
+          <button
+            onClick={() => {
+              window.open(
+                `/dashboard/collection/summary-report/${mode}`,
+                "_blank"
+              );
+            }}
+            className="btn-secondary flex items-center gap-x-2"
+          >
+            <FontAwesomeIcon icon={faPrint} />
+            <div>Print</div>
+          </button>
         </section>
         <hr className="border-t border-slate-400/50 my-3" />
 

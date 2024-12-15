@@ -36,6 +36,8 @@ import { ROLES } from "./config/roles";
 import useTitle from "./hooks/useTitle";
 
 import Account from "./features/auth/Account";
+import Daily from "./features/reports/Daily";
+import SummaryDaily from "./features/reports/SummaryDaily";
 
 function App() {
   useTitle("Tagoloan Public Market Stall FMS");
@@ -61,6 +63,11 @@ function App() {
                   </Route>
                   <Route path="collection">
                     <Route index element={<RentalsList />} />
+                    <Route path="report/daily" element={<Daily />} />
+                    <Route
+                      path="summary-report/:mode"
+                      element={<SummaryDaily />}
+                    />
                   </Route>
                   <Route path="vendors">
                     <Route index element={<VendorsList />} />

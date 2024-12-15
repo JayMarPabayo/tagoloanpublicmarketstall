@@ -1,16 +1,26 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRef, useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useReactToPrint } from "react-to-print";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint } from "@fortawesome/free-solid-svg-icons";
+import { faPrint, faCalendarDay } from "@fortawesome/free-solid-svg-icons";
+import "../../lease.css";
 
 import { useGetRentalsQuery } from "../rentals/rentalsApiSlice";
-import { useGetPaymentsQuery } from "./paymentsApiSlice";
+import { useGetPaymentsQuery } from "../payments/paymentsApiSlice";
 
 import Spinner from "../../utils/Spinner";
 
-const DailyPayment = ({ onCancel }) => {
-  const navigate = useNavigate();
+const Daily = () => {
+  const [searchParams] = useSearchParams();
+  const dateParam = searchParams.get("date");
+  const status = searchParams.get("status");
+
+  const [selectedDate, setSelectedDate] = useState(
+    dateParam ? new Date(dateParam) : new Date()
+  );
+
+  const [statusFilter, setStatusFilter] = useState(status);
 
   const {
     data: rentals,
@@ -30,28 +40,11 @@ const DailyPayment = ({ onCancel }) => {
     refetchOnMountOrArgChange: true,
   });
 
-  const [selectedDate, setSelectedDate] = useState(
-    new Date().toISOString().slice(0, 10)
-  );
-
-  const [statusFilter, setStatusFilter] = useState("All");
-
-  const handleOverlayClick = (e) => {
-    e.stopPropagation();
-    onCancel();
-  };
-
-  const handleModalClick = (e) => {
-    e.stopPropagation();
-  };
-
-  const handleDateChange = (e) => {
-    setSelectedDate(e.target.value);
-  };
-
-  const handleFilterChange = (e) => {
-    setStatusFilter(e.target.value);
-  };
+  const contentRef = useRef(null);
+  const reactToPrintFn = useReactToPrint({
+    contentRef,
+    paperSize: "A4",
+  });
 
   let content;
 
@@ -60,6 +53,14 @@ const DailyPayment = ({ onCancel }) => {
   if (isError) {
     content = <p className="error">{error?.data?.message}</p>;
   }
+
+  console.log(dateParam);
+  console.log(selectedDate);
+  const formattedDate = new Intl.DateTimeFormat("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  }).format(new Date(selectedDate));
 
   if (isSuccess) {
     const { ids, entities } = rentals;
@@ -71,7 +72,6 @@ const DailyPayment = ({ onCancel }) => {
       return rental && !rental.endDate && new Date(rental.startDate) <= today;
     });
 
-    // Apply the filter for "Paid", "Not Paid", or "All"
     const filteredContent = filteredIds.filter((rentalId) => {
       const rental = entities[rentalId];
       const hasPaid = payments?.ids.some((paymentId) => {
@@ -103,7 +103,7 @@ const DailyPayment = ({ onCancel }) => {
 
         return (
           <tr
-            key={rentalId} // Add unique key for each row
+            key={rentalId}
             className="border-b border-slate-600/20 hover:scale-[98%] active:scale-[96%] cursor-pointer duration-300"
           >
             <td className="md:hidden">
@@ -133,10 +133,8 @@ const DailyPayment = ({ onCancel }) => {
 
             <td>
               <p
-                className={`md:py-1 md:px-3 rounded-md text-center font-medium md:text-white text-[0.6rem] md:text-xs ${
-                  hasPaid
-                    ? "text-green-700 md:bg-green-600"
-                    : "text-red-700 md:bg-red-600"
+                className={`text-center font-medium text-[0.9rem] ${
+                  hasPaid ? "text-green-700" : "text-red-700"
                 }`}
               >
                 {hasPaid ? "Paid" : "Not Paid"}
@@ -154,72 +152,60 @@ const DailyPayment = ({ onCancel }) => {
     );
 
     content = (
-      <div
-        onClick={handleOverlayClick}
-        className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center z-50"
-      >
-        <div
-          onClick={handleModalClick}
-          className="bg-slate-100/90 p-5 pb-10 rounded-lg shadow-md w-full md:w-3/4"
-        >
-          <section className="flex items-center justify-end gap-x-2 md:px-5">
-            <h3 className="text-sky-800 font-medium me-auto text-xs md:text-base">
-              Daily Overview
-            </h3>
-            <input
-              type="date"
-              value={selectedDate}
-              onChange={handleDateChange}
-              className=" cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md w-36 text-xs md:text-sm tracking-wide p-2"
-            />
-            <select
-              value={statusFilter}
-              onChange={handleFilterChange}
-              className="cursor-pointer text-sky-800 outline-slate-200 hover:outline-slate-400 duration-300 rounded-md text-xs md:text-sm tracking-wide p-2"
-            >
-              <option value="All">All</option>
-              <option value="Paid">Paid</option>
-              <option value="Not Paid">Not Paid</option>
-            </select>
-            <button
-              onClick={() => {
-                window.open(
-                  `/dashboard/collection/report/daily?date=${selectedDate}&status=${statusFilter}`,
-                  "_blank"
-                );
-              }}
-              className="btn-secondary flex items-center gap-x-2"
-            >
-              <FontAwesomeIcon icon={faPrint} />
-              <div>Print</div>
-            </button>
-          </section>
-          <hr className="border-t border-slate-400/50 my-3" />
-          <div className="grid grid-cols-12 py-5 md:p-5 gap-x-5 ">
-            <div className="col-span-12">
-              <table className="w-full text-xs md:text-sm">
-                <thead>
-                  <tr>
-                    <th className="hidden md:table-cell">Store</th>
-                    <th className="hidden md:table-cell">Owner</th>
-                    <th className="md:hidden">Store/Owner</th>
+      <table className="w-full text-xs md:text-sm">
+        <thead>
+          <tr>
+            <th className="hidden md:table-cell">Store</th>
+            <th className="hidden md:table-cell">Owner</th>
+            <th className="md:hidden">Store/Owner</th>
 
-                    <th className="hidden md:table-cell">Section</th>
-                    <th className="hidden md:table-cell">Stall</th>
-                    <th className="md:hidden">Stall Section</th>
-                    <th className="text-center">Status</th>
-                  </tr>
-                </thead>
-                <tbody>{tableContent}</tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-      </div>
+            <th className="hidden md:table-cell">Section</th>
+            <th className="hidden md:table-cell">Stall</th>
+            <th className="md:hidden">Stall Section</th>
+            <th className="text-center">Status</th>
+          </tr>
+        </thead>
+        <tbody>{tableContent}</tbody>
+      </table>
     );
   }
 
-  return content;
+  return (
+    <div>
+      <section className="mx-auto flex gap-x-2 justify-center items-center mb-2">
+        <button
+          onClick={reactToPrintFn}
+          className="btn-primary flex items-center gap-x-2 w-28"
+        >
+          <FontAwesomeIcon icon={faPrint} />
+          <h3 className="font-medium">Print</h3>
+        </button>
+      </section>
+      <div ref={contentRef}>
+        <div className="page-container bg-white rounded-sm shadow-md p-12 w-[1000px] h-[1320px] mx-auto text-slate-800 text-base mb-10">
+          <section className="text-center mb-10">
+            <h1>Republic of the Philippines</h1>
+            <h1>PROVINCE OF MISAMIS ORIENTAL</h1>
+            <h1 className="mb-2">Municipality of Tagoloan</h1>
+            <h1 className="font-bold text-base">
+              TAGOLOAN PUBLIC MARKET RENTAL STALL
+            </h1>
+          </section>
+          <section className="text-start mb-10">
+            <h1 className="font-bold text-base">Daily Stall Payment Status</h1>
+            <div className="flex items-center gap-x-2">
+              <FontAwesomeIcon icon={faCalendarDay} />
+              <h1 className="font-medium text-base text-slate-700">
+                {formattedDate}
+              </h1>
+            </div>
+          </section>
+
+          {content}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-export default DailyPayment;
+export default Daily;

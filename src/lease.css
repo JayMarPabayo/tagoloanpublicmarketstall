@@ -1,3 +1,8 @@
+table {
+  box-shadow: none !important;
+  @apply border text-slate-800;
+}
+
 @media print {
   html,
   body {
