@@ -25,6 +25,10 @@ const DashHeader = () => {
       return "/dashboard";
     }
 
+    if (thirdLastSegment === "report") {
+      return "/dashboard/collection";
+    }
+
     if (thirdLastSegment === "stalls") {
       return "/dashboard/sections";
     }

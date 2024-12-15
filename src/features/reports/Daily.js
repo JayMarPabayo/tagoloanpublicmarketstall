@@ -16,11 +16,9 @@ const Daily = () => {
   const dateParam = searchParams.get("date");
   const status = searchParams.get("status");
 
-  const [selectedDate, setSelectedDate] = useState(
-    dateParam ? new Date(dateParam) : new Date()
-  );
+  const [selectedDate] = useState(dateParam ? new Date(dateParam) : new Date());
 
-  const [statusFilter, setStatusFilter] = useState(status);
+  const [statusFilter] = useState(status);
 
   const {
     data: rentals,
@@ -54,8 +52,6 @@ const Daily = () => {
     content = <p className="error">{error?.data?.message}</p>;
   }
 
-  console.log(dateParam);
-  console.log(selectedDate);
   const formattedDate = new Intl.DateTimeFormat("en-GB", {
     day: "2-digit",
     month: "long",
